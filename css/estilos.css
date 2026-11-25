@@ -66,3 +66,60 @@ a { color: var(--color-azul-noche); }
   margin: 0;
   font-size: var(--texto-m);
 }
+
+/* ===== Utilidades ===== */
+.texto-vivo { color: var(--color-azul-vivo); }
+
+.boton--degradado {
+  background: linear-gradient(180deg, var(--color-azul-noche), #0f1a33);
+}
+
+.boton--borde {
+  background: var(--color-blanco);
+  color: var(--color-azul-noche);
+  border: 2px solid var(--color-azul-noche);
+}
+.boton--borde:hover { background: var(--color-fondo-claro); }
+
+/* ===== Bienvenida: ajustes ===== */
+.bienvenida { min-height: 100vh; }
+.bienvenida__logo { width: 180px; }
+.bienvenida__titulo { color: #0f2a5c; }
+.bienvenida__texto { color: #6b7280; }
+
+/* ===== Verificación estudiantil ===== */
+.verificacion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-m);
+  text-align: center;
+}
+.verificacion__titulo { margin: 0; font-size: var(--texto-l); color: #0f2a5c; }
+.verificacion__icono {
+  display: grid;
+  place-items: center;
+  width: 140px;
+  height: 140px;
+  font-size: 4rem;
+  background: var(--color-blanco);
+  border-radius: 50%;
+}
+.verificacion__texto { margin: 0; font-size: var(--texto-s); color: #0f2a5c; }
+.verificacion__pregunta { margin: 0; font-size: var(--texto-s); }
+.verificacion__aviso { margin: 0; font-size: var(--texto-s); color: var(--color-azul-noche); }
+
+/* ===== Tarjeta de beneficios (Grid) ===== */
+.beneficios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  padding: var(--espacio-m) var(--espacio-s);
+  background: var(--color-blanco);
+  border: 1px solid var(--color-azul-noche);
+  border-radius: var(--radio-l);
+}
+.beneficios__item { padding: 0 var(--espacio-s); font-size: 0.75rem; }
+.beneficios__item + .beneficios__item { border-left: 1px solid var(--color-azul-noche); }
+.beneficios__item p { margin: var(--espacio-s) 0 0; }
+.beneficios__icono { font-size: 1.5rem; }
