@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nueva contraseña - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app nueva-contrasena" style="display: flex; flex-direction: column; min-height: 100vh; padding: 20px; box-sizing: border-box;">
+
+    <!-- Barra superior: Regresar / Nueva contraseña -->
+    <header style="display: flex; align-items: center; gap: 14px; margin-bottom: 32px;">
+      <a href="recuperar-contrasena.html" aria-label="Regresar" style="display: inline-flex; align-items: center; color: #0f2a5c; text-decoration: none;">
+        <img src="../img/icono-atras.png" alt="Regresar" width="18" height="18">
+      </a>
+      <h1 style="color: #0f2a5c; font-size: 18px; font-weight: 700; margin: 0;">Nueva contraseña</h1>
+    </header>
+
+    <!-- Ícono circular de candado y textos -->
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 28px;">
+      <div style="width: 112px; height: 112px; border-radius: 50%; background: #0f2a5c; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="4" y="11" width="16" height="10" rx="2" ry="2"></rect>
+          <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+        </svg>
+      </div>
+
+      <h2 style="color: #0f2a5c; font-size: 20px; font-weight: 700; margin: 0 0 10px 0;">
+        Crear una nueva contraseña
+      </h2>
+
+      <p style="color: #475569; font-size: 14px; line-height: 1.45; max-width: 300px; width: 100%; margin: 0 auto; text-align: center;">
+        Elige una contraseña segura para proteger tu cuenta de UCA Space.
+      </p>
+    </div>
+
+    <!-- Formulario de nueva contraseña -->
+    <form id="form-nueva-contrasena" action="iniciar-sesion.html" style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 380px; margin: 0 auto;">
+
+      <!-- Nueva contraseña -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <label for="nueva-password" style="color: #334155; font-size: 13px; font-weight: 600;">
+          Nueva contraseña
+        </label>
+        <div style="display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 12px 16px;">
+          <input type="password" id="nueva-password" name="nueva_password" placeholder="Contraseña" minlength="8" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+          <button type="button" onclick="const p = document.getElementById('nueva-password'); p.type = p.type === 'password' ? 'text' : 'password';" aria-label="Mostrar u ocultar contraseña" style="background: none; border: none; padding: 0; cursor: pointer; display: inline-flex; align-items: center;">
+            <img src="../img/icono-ojo.svg" alt="" width="20" height="20">
+          </button>
+        </div>
+      </div>
+
+      <!-- Confirmar contraseña -->
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <label for="confirmar-password" style="color: #334155; font-size: 13px; font-weight: 600;">
+          Confirmar contraseña
+        </label>
+        <div style="display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 12px 16px;">
+          <input type="password" id="confirmar-password" name="confirmar_password" placeholder="Contraseña" minlength="8" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+        </div>
+      </div>
+
+      <p id="mensaje-validacion" style="color: #64748b; font-size: 12px; text-align: center; margin: 2px 0 6px 0;">
+        La contraseña debe tener al menos 8 caracteres.
+      </p>
+
+      <!-- Botón Guardar contraseña -->
+      <button type="submit" class="boton" style="background: #364B7A; color: #ffffff; border: none; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%;">
+        Guardar contraseña
+      </button>
+    </form>
+
+    <!-- Enlace inferior Volver a iniciar sesión -->
+    <div style="margin-top: 22px; text-align: center;">
+      <a href="iniciar-sesion.html" style="color: #64748b; font-size: 13px; text-decoration: none;">
+        Volver a iniciar sesión
+      </a>
+    </div>
+
+  </main>
+
+  <script>
+    const formNuevaPass = document.getElementById('form-nueva-contrasena');
+    const pass1 = document.getElementById('nueva-password');
+    const pass2 = document.getElementById('confirmar-password');
+    const msgValidacion = document.getElementById('mensaje-validacion');
+
+    formNuevaPass.addEventListener('submit', function (e) {
+      if (pass1.value.length < 8) {
+        e.preventDefault();
+        msgValidacion.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+        msgValidacion.style.color = '#dc2626';
+        return;
+      }
+      if (pass1.value !== pass2.value) {
+        e.preventDefault();
+        msgValidacion.textContent = 'Las contraseñas no coinciden.';
+        msgValidacion.style.color = '#dc2626';
+      }
+    });
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
