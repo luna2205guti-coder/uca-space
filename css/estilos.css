@@ -123,3 +123,13 @@ a { color: var(--color-azul-noche); }
 .beneficios__item + .beneficios__item { border-left: 1px solid var(--color-azul-noche); }
 .beneficios__item p { margin: var(--espacio-s) 0 0; }
 .beneficios__icono { font-size: 1.5rem; }
+
+/* ===== Íconos ===== */
+.verificacion__icono img { max-width: 100%; height: auto; }
+.beneficios__icono { display: block; margin: 0 auto; }
+.verificacion__aviso {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-s);
+  text-align: left;
+}
