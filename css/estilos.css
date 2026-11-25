@@ -262,3 +262,7 @@ a { color: var(--color-azul-noche); }
 .campo:focus-within { outline: 2px solid var(--color-azul-vivo); }
 
 .etiqueta .campo { padding: var(--espacio-s) var(--espacio-m); }
+
+/* ===== Iniciar sesión ===== */
+
+/* ===== Iniciar sesión ===== */ que te di antes (.sesion, .sesion__marca, .sesion__titulo, .sesion__olvido, .sesion__registro y .boton--suave)

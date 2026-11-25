@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app sesion">
+    <p class="sesion__marca">UCA <span class="texto-vivo">Space</span></p>
+    <h1 class="sesion__titulo">Iniciar sesión</h1>
+
+    <form class="formulario" action="inicio.html">
+      <label class="campo">
+        <img src="../img/icono-correo.svg" alt="" width="24" height="24">
+        <input type="email" name="correo" placeholder="Correo institucional" required>
+      </label>
+
+      <label class="campo">
+        <img src="../img/icono-candado.svg" alt="" width="24" height="24">
+        <input type="password" name="contrasena" placeholder="Contraseña" required>
+      </label>
+
+      <button class="boton boton--oscuro boton--auto" type="submit">Iniciar sesión</button>
+      <a class="sesion__olvido" href="#">¿Olvidaste tu contraseña?</a>
+    </form>
+
+    <div class="sesion__registro">
+      <p>¿No tienes una cuenta?</p>
+      <a class="boton boton--suave" href="crear-cuenta.html">Crear cuenta</a>
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>
