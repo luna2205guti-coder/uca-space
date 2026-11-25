@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultado de espacios - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app resultados">
+    <header class="encabezado-pantalla">
+      <a href="filtrar.html" aria-label="Volver">
+        <img src="../img/icono-atras.png" alt="" width="24" height="24">
+      </a>
+      <h1>Resultado de espacios</h1>
+    </header>
+
+    <p class="resultados__texto">Espacios que coinciden con tu búsqueda</p>
+
+    <div class="resultados__vista" role="group" aria-label="Cambiar vista">
+      <button type="button" class="vista-btn vista-btn--activa">Lista</button>
+      <a href="mapa.html" class="vista-btn">Mapa</a>
+    </div>
+
+    <p class="resultados__conteo">3 espacios encontrados</p>
+
+    <section class="lista-espacios" aria-label="Espacios encontrados">
+      <a href="detalle.html" class="tarjeta-espacio">
+        <div class="tarjeta-espacio__foto" aria-hidden="true">Fotografía</div>
+        <div class="tarjeta-espacio__info">
+          <h2 class="tarjeta-espacio__titulo">Área de descanso</h2>
+          <p class="tarjeta-espacio__meta">A 150 m · Disponible</p>
+        </div>
+      </a>
+
+      <a href="detalle.html" class="tarjeta-espacio">
+        <div class="tarjeta-espacio__foto" aria-hidden="true">Fotografía</div>
+        <div class="tarjeta-espacio__info">
+          <h2 class="tarjeta-espacio__titulo">Zona de estudio</h2>
+          <p class="tarjeta-espacio__meta">A 300 m · Disponible</p>
+        </div>
+      </a>
+
+      <a href="detalle.html" class="tarjeta-espacio">
+        <div class="tarjeta-espacio__foto" aria-hidden="true">Fotografía</div>
+        <div class="tarjeta-espacio__info">
+          <h2 class="tarjeta-espacio__titulo">Espacio al aire libre</h2>
+          <p class="tarjeta-espacio__meta">A 450 m · Por confirmar</p>
+        </div>
+      </a>
+    </section>
+
+    <div class="resultados__acciones">
+      <a href="mapa.html" class="boton boton--oscuro">Ver mapa</a>
+    </div>
+  </main>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
