@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtrar espacios - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app filtros">
+    <header class="encabezado-pantalla">
+      <a href="inicio.html" aria-label="Volver">
+        <img src="../img/icono-atras.png" alt="" width="24" height="24">
+      </a>
+      <h1>Filtrar espacios</h1>
+    </header>
+
+    <p class="filtros__texto">Encuentra un lugar según tus necesidades</p>
+
+    <form action="resultados.html">
+      <fieldset class="grupo">
+        <legend>Tipo de espacio</legend>
+        <div class="fichas">
+          <label class="ficha"><input type="checkbox" name="tipo" value="descanso"><span>Descanso</span></label>
+          <label class="ficha"><input type="checkbox" name="tipo" value="estudio"><span>Estudio</span></label>
+          <label class="ficha"><input type="checkbox" name="tipo" value="reunion"><span>Reunión</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Disponibilidad</legend>
+        <div class="fichas">
+          <label class="ficha"><input type="checkbox" name="disponibilidad" value="disponible"><span>Disponible</span></label>
+          <label class="ficha"><input type="checkbox" name="disponibilidad" value="por-confirmar"><span>Por confirmar</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Distancia</legend>
+        <input class="deslizador" type="range" name="distancia" min="0" max="1" step="0.1" value="0.5">
+        <div class="deslizador__rango"><span>Min 0 km</span><span>Max 1 km</span></div>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Características</legend>
+        <label class="casilla"><input type="checkbox" name="caracteristica" value="mesas"> Con mesas</label>
+        <label class="casilla"><input type="checkbox" name="caracteristica" value="aire-libre"> Aire libre</label>
+        <label class="casilla"><input type="checkbox" name="caracteristica" value="enchufes"> Con enchufes</label>
+        <label class="casilla"><input type="checkbox" name="caracteristica" value="grupos"> Para grupos</label>
+      </fieldset>
+
+      <button class="boton boton--oscuro boton--auto" type="submit">Ver resultados</button>
+    </form>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>
