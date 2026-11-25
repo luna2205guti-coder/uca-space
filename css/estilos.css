@@ -266,3 +266,40 @@ a { color: var(--color-azul-noche); }
 /* ===== Iniciar sesión ===== */
 
 /* ===== Iniciar sesión ===== */ que te di antes (.sesion, .sesion__marca, .sesion__titulo, .sesion__olvido, .sesion__registro y .boton--suave)
+
+/* ===== Iniciar sesión ===== */
+.boton--suave {
+  background: #b3c6f2;
+  color: #0f2a5c;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.sesion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-l);
+  text-align: center;
+}
+.sesion__marca {
+  margin: var(--espacio-xl) 0 0;
+  font-size: var(--texto-xl);
+  font-weight: 700;
+  color: #0f2a5c;
+}
+.sesion__titulo { margin: 0; font-size: var(--texto-l); color: #0f2a5c; }
+.sesion__olvido { font-size: var(--texto-s); color: #0f2a5c; text-decoration: none; }
+
+.sesion__registro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-m);
+  width: 100%;
+  margin-top: var(--espacio-xl);
+  font-size: var(--texto-s);
+  color: #0f2a5c;
+}
+.sesion__registro p { margin: 0; }
+.sesion__registro .boton { width: auto; padding: var(--espacio-s) var(--espacio-xl); }
