@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cómo llegar - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app ruta">
+    <header class="encabezado-pantalla">
+      <a href="detalle.html" id="ruta-volver" aria-label="Volver">
+        <img src="../img/icono-atras.png" alt="" width="24" height="24">
+      </a>
+      <h1>Cómo llegar</h1>
+    </header>
+
+    <div class="ruta__resumen">
+      <p class="ruta__destino">Destino: <strong id="ruta-nombre">Área de descanso</strong></p>
+      <p class="ruta__tiempo" id="ruta-tiempo">2 min caminando · 150 m</p>
+    </div>
+
+    <section class="ruta__mapa" aria-label="Ruta en el mapa">
+      <div class="mapa__placeholder">
+        <span>Mapa con ruta trazada</span>
+        <small>(Aquí irá la imagen de la ruta)</small>
+      </div>
+    </section>
+
+    <section class="ruta__pasos" aria-label="Indicaciones">
+      <h2>Indicaciones</h2>
+      <ol class="lista-pasos" id="ruta-lista">
+        <li>Sal hacia el pasillo principal frente a las aulas.</li>
+        <li>Camina recto unos 100 metros en dirección a la plaza central.</li>
+        <li>Gira a la izquierda junto a los jardines; verás el área de descanso.</li>
+      </ol>
+    </section>
+
+    <div class="ruta__acciones">
+      <a href="inicio.html" class="boton boton--oscuro">Volver al inicio</a>
+    </div>
+  </main>
+
+  <script>
+    const rutasEspacios = {
+      descanso: {
+        nombre: "Área de descanso",
+        tiempo: "2 min caminando · 150 m",
+        volver: "detalle.html?espacio=descanso",
+        pasos: [
+          "Sal hacia el pasillo principal frente a las aulas.",
+          "Camina recto unos 100 metros en dirección a la plaza central.",
+          "Gira a la izquierda junto a los jardines; verás el área de descanso."
+        ]
+      },
+      estudio: {
+        nombre: "Zona de estudio",
+        tiempo: "4 min caminando · 300 m",
+        volver: "detalle.html?espacio=estudio",
+        pasos: [
+          "Dirígete hacia el edificio de biblioteca siguiendo el sendero techado.",
+          "Sube al segundo nivel por las escaleras principales.",
+          "Ingresa al ala norte donde están las mesas con enchufes."
+        ]
+      },
+      "aire-libre": {
+        nombre: "Espacio al aire libre",
+        tiempo: "6 min caminando · 450 m",
+        volver: "detalle.html?espacio=aire-libre",
+        pasos: [
+          "Toma el camino peatonal hacia la zona verde del campus.",
+          "Continúa pasando la cafetería principal.",
+          "Encontrarás las mesas al aire libre frente al jardín central."
+        ]
+      }
+    };
+
+    const paramsRuta = new URLSearchParams(window.location.search);
+    const claveRuta = rutasEspacios[paramsRuta.get("espacio")] ? paramsRuta.get("espacio") : "descanso";
+    const datosRuta = rutasEspacios[claveRuta];
+
+    document.getElementById("ruta-nombre").textContent = datosRuta.nombre;
+    document.getElementById("ruta-tiempo").textContent = datosRuta.tiempo;
+    document.getElementById("ruta-volver").href = datosRuta.volver;
+
+    const listaPasos = document.getElementById("ruta-lista");
+    listaPasos.innerHTML = datosRuta.pasos
+      .map((paso) => `<li>${paso}</li>`)
+      .join("");
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
