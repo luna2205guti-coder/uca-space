@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa del campus - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app mapa">
+    <header class="encabezado-pantalla">
+      <a href="resultados.html" aria-label="Volver">
+        <img src="../img/icono-atras.png" alt="" width="24" height="24">
+      </a>
+      <h1>Mapa del campus</h1>
+    </header>
+
+    <p class="mapa__texto">Explora la ubicación de los espacios disponibles</p>
+
+    <div class="resultados__vista" role="group" aria-label="Cambiar vista">
+      <a href="resultados.html" class="vista-btn">Lista</a>
+      <button type="button" class="vista-btn vista-btn--activa">Mapa</button>
+    </div>
+
+    <section class="mapa__contenedor" aria-label="Mapa interactivo del campus">
+      <div class="mapa__placeholder">
+        <span>Mapa del campus UCA</span>
+        <small>(Aquí irá la imagen o mapa del campus)</small>
+      </div>
+
+      <!-- Pines simulados sobre el mapa -->
+      <a href="detalle.html" class="mapa__pin mapa__pin--1" title="Área de descanso">1</a>
+      <a href="detalle.html" class="mapa__pin mapa__pin--2" title="Zona de estudio">2</a>
+      <a href="detalle.html" class="mapa__pin mapa__pin--3" title="Espacio al aire libre">3</a>
+    </section>
+
+    <!-- Tarjeta resumen del espacio seleccionado -->
+    <article class="tarjeta-espacio mapa__tarjeta">
+      <div class="tarjeta-espacio__foto" aria-hidden="true">Foto</div>
+      <div class="tarjeta-espacio__info">
+        <h2 class="tarjeta-espacio__titulo">Área de descanso</h2>
+        <p class="tarjeta-espacio__meta">A 150 m · Disponible</p>
+      </div>
+      <a href="detalle.html" class="mapa__ver">Ver</a>
+    </article>
+
+    <div class="mapa__acciones">
+      <a href="como-llegar.html" class="boton boton--oscuro">Cómo llegar</a>
+    </div>
+  </main>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
