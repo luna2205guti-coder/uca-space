@@ -133,3 +133,11 @@ a { color: var(--color-azul-noche); }
   gap: var(--espacio-s);
   text-align: left;
 }
+
+.beneficios__icono {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  object-fit: contain;
+}
