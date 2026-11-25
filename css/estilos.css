@@ -175,3 +175,8 @@ a { color: var(--color-azul-noche); }
   gap: var(--espacio-s);
   text-align: left;
 }
+
+/* ===== Ajustes de formularios ===== */
+.formulario--izquierda { align-items: stretch; text-align: left; }
+.formulario__subtitulo { margin: 0; font-size: var(--texto-s); color: #0f2a5c; }
+.boton--auto { width: auto; align-self: center; padding: var(--espacio-s) var(--espacio-xl); }

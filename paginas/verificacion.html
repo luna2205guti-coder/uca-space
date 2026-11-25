@@ -34,14 +34,25 @@
       </div>
     </section>
 
-    <a class="boton" href="iniciar-sesion.html">Iniciar sesión</a>
-    <p class="verificacion__pregunta">¿No tienes una cuenta?</p>
-    <a class="boton boton--borde" href="crear-cuenta.html">Crear cuenta</a>
+    <form class="formulario formulario--izquierda" action="inicio.html">
+      <h2 class="formulario__subtitulo">Datos de verificación</h2>
 
-    <p class="verificacion__aviso">
-      <img src="../img/icono-info.svg" alt="" width="20" height="20">
-      Tu información será verificada con los registros oficiales de la Universidad.
-    </p>
+      <label class="campo">
+        <img src="../img/icono-correo.svg" alt="" width="24" height="24">
+        <input type="email" name="correo" placeholder="Correo institucional UCA" required>
+      </label>
+
+      <label class="campo">
+        <input type="text" name="carnet" placeholder="Número de carnet estudiantil" required>
+      </label>
+
+      <p class="verificacion__aviso">
+        <img src="../img/icono-info.svg" alt="" width="20" height="20">
+        Tu información será verificada con los registros oficiales de la Universidad.
+      </p>
+
+      <button class="boton boton--oscuro boton--auto" type="submit">Verificar</button>
+    </form>
   </main>
   <script src="../js/main.js"></script>
 </body>
