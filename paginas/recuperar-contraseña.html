@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar contraseña - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app recuperar" style="display: flex; flex-direction: column; min-height: 100vh; padding: 20px; box-sizing: border-box;">
+
+    <!-- Barra superior: Regresar / Recuperar contraseña -->
+    <header style="display: flex; align-items: center; gap: 14px; margin-bottom: 36px;">
+      <a href="iniciar-sesion.html" aria-label="Regresar" style="display: inline-flex; align-items: center; color: #0f2a5c; text-decoration: none;">
+        <img src="../img/icono-atras.png" alt="Regresar" width="18" height="18">
+      </a>
+      <h1 style="color: #0f2a5c; font-size: 18px; font-weight: 700; margin: 0;">Recuperar contraseña</h1>
+    </header>
+
+    <!-- Ícono circular de candado y textos -->
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 32px;">
+      <div style="width: 112px; height: 112px; border-radius: 50%; background: #0f2a5c; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+        <img src="../img/icono-candado-blanco.svg" alt="Candado" width="44" height="44">
+      </div>
+
+      <h2 style="color: #0f2a5c; font-size: 20px; font-weight: 700; margin: 0 0 10px 0;">
+        ¿Olvidaste tu contraseña?
+      </h2>
+
+      <p style="color: #475569; font-size: 14px; line-height: 1.45; max-width: 300px; margin: 0;">
+        No te preocupes. Ingresa tu correo institucional y te enviaremos instrucciones para recuperarla.
+      </p>
+    </div>
+
+    <!-- Formulario de recuperación -->
+    <form action="iniciar-sesion.html" style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 380px; margin: 0 auto;">
+
+      <!-- Correo institucional -->
+      <label class="campo" style="display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 13px 16px;">
+        <img src="../img/icono-correo.svg" alt="" width="20" height="20">
+        <input type="email" name="correo" placeholder="correo@uca.edu.sv" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+      </label>
+
+      <!-- Número de carnet estudiantil -->
+      <label class="campo" style="display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 13px 16px;">
+        <img src="../img/icono-carnet.svg" alt="" width="20" height="20">
+        <input type="text" name="carnet" placeholder="Número de carnet estudiantil" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+      </label>
+
+      <!-- Botón Enviar instrucciones -->
+      <button type="submit" class="boton" style="margin-top: 22px; background: #364B7A; color: #ffffff; border: none; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%;">
+        Enviar instrucciones
+      </button>
+    </form>
+
+    <!-- Enlace inferior Volver al inicio -->
+    <div style="margin-top: 22px; text-align: center;">
+      <a href="../index.html" style="color: #64748b; font-size: 13px; text-decoration: none;">
+        Volver al inicio
+      </a>
+    </div>
+
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>
