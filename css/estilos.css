@@ -507,3 +507,91 @@ a { color: var(--color-azul-noche); }
 .mapa__acciones {
   margin-top: var(--espacio-s);
 }
+
+.mapa__pin {
+  border: none;
+  cursor: pointer;
+}
+
+.mapa__pin--activo {
+  background: #2563eb;
+  transform: scale(1.15);
+}
+
+/* ===== Detalle del espacio ===== */
+.detalle__foto {
+  width: 100%;
+  height: 190px;
+  margin: var(--espacio-l) 0 var(--espacio-m);
+  border-radius: 16px;
+  background: #dbe6fc;
+  border: 2px dashed #8faae6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f2a5c;
+  font-weight: 600;
+}
+
+.detalle__cuerpo {
+  margin-bottom: var(--espacio-l);
+}
+
+.detalle__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-s);
+  margin-bottom: var(--espacio-xs);
+}
+
+.detalle__titulo {
+  margin: 0;
+  font-size: var(--texto-l, 1.25rem);
+  color: #0f2a5c;
+}
+
+.detalle__estado {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #b3c6f2;
+  color: #0f2a5c;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.detalle__distancia {
+  margin: 0 0 var(--espacio-m);
+  font-size: var(--texto-s);
+  font-weight: 600;
+  color: #0f2a5c;
+  opacity: 0.85;
+}
+
+.detalle__descripcion {
+  margin: 0 0 var(--espacio-l);
+  font-size: var(--texto-s);
+  line-height: 1.5;
+  color: #0f2a5c;
+}
+
+.detalle__caracteristicas h3 {
+  margin: 0 0 var(--espacio-s);
+  font-size: var(--texto-s);
+  color: #0f2a5c;
+}
+
+.ficha-estatica {
+  display: inline-block;
+  padding: var(--espacio-xs) var(--espacio-m);
+  background: #e8effd;
+  color: #0f2a5c;
+  border-radius: 999px;
+  font-size: var(--texto-s);
+  font-weight: 600;
+}
+
+.detalle__acciones {
+  margin-top: var(--espacio-m);
+}

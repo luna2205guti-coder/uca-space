@@ -16,7 +16,7 @@
       <h1>Mapa del campus</h1>
     </header>
 
-    <p class="mapa__texto">Explora la ubicación de los espacios disponibles</p>
+    <p class="mapa__texto">Toca un punto en el mapa para ver el espacio</p>
 
     <div class="resultados__vista" role="group" aria-label="Cambiar vista">
       <a href="resultados.html" class="vista-btn">Lista</a>
@@ -26,30 +26,66 @@
     <section class="mapa__contenedor" aria-label="Mapa interactivo del campus">
       <div class="mapa__placeholder">
         <span>Mapa del campus UCA</span>
-        <small>(Aquí irá la imagen o mapa del campus)</small>
+        <small>(Aquí irá la imagen del mapa)</small>
       </div>
 
-      <!-- Pines simulados sobre el mapa -->
-      <a href="detalle.html" class="mapa__pin mapa__pin--1" title="Área de descanso">1</a>
-      <a href="detalle.html" class="mapa__pin mapa__pin--2" title="Zona de estudio">2</a>
-      <a href="detalle.html" class="mapa__pin mapa__pin--3" title="Espacio al aire libre">3</a>
+      <!-- Pines interactivos -->
+      <button type="button" class="mapa__pin mapa__pin--1 mapa__pin--activo" data-id="descanso" aria-label="Área de descanso">1</button>
+      <button type="button" class="mapa__pin mapa__pin--2" data-id="estudio" aria-label="Zona de estudio">2</button>
+      <button type="button" class="mapa__pin mapa__pin--3" data-id="aire-libre" aria-label="Espacio al aire libre">3</button>
     </section>
 
-    <!-- Tarjeta resumen del espacio seleccionado -->
+    <!-- Tarjeta dinámica según el pin elegido -->
     <article class="tarjeta-espacio mapa__tarjeta">
       <div class="tarjeta-espacio__foto" aria-hidden="true">Foto</div>
       <div class="tarjeta-espacio__info">
-        <h2 class="tarjeta-espacio__titulo">Área de descanso</h2>
-        <p class="tarjeta-espacio__meta">A 150 m · Disponible</p>
+        <h2 class="tarjeta-espacio__titulo" id="mapa-titulo">Área de descanso</h2>
+        <p class="tarjeta-espacio__meta" id="mapa-meta">A 150 m · Disponible</p>
       </div>
-      <a href="detalle.html" class="mapa__ver">Ver</a>
+      <a href="detalle.html?espacio=descanso" class="mapa__ver" id="mapa-enlace">Ver</a>
     </article>
 
     <div class="mapa__acciones">
-      <a href="como-llegar.html" class="boton boton--oscuro">Cómo llegar</a>
+      <a href="como-llegar.html?espacio=descanso" class="boton boton--oscuro" id="mapa-llegar">Cómo llegar</a>
     </div>
   </main>
 
+  <script>
+    const espaciosMapa = {
+      descanso: {
+        titulo: "Área de descanso",
+        meta: "A 150 m · Disponible"
+      },
+      estudio: {
+        titulo: "Zona de estudio",
+        meta: "A 300 m · Disponible"
+      },
+      "aire-libre": {
+        titulo: "Espacio al aire libre",
+        meta: "A 450 m · Por confirmar"
+      }
+    };
+
+    const pines = document.querySelectorAll(".mapa__pin");
+    const titulo = document.getElementById("mapa-titulo");
+    const meta = document.getElementById("mapa-meta");
+    const enlace = document.getElementById("mapa-enlace");
+    const llegar = document.getElementById("mapa-llegar");
+
+    pines.forEach((pin) => {
+      pin.addEventListener("click", () => {
+        pines.forEach((p) => p.classList.remove("mapa__pin--activo"));
+        pin.classList.add("mapa__pin--activo");
+
+        const id = pin.dataset.id;
+        const datos = espaciosMapa[id];
+        titulo.textContent = datos.titulo;
+        meta.textContent = datos.meta;
+        enlace.href = `detalle.html?espacio=${id}`;
+        llegar.href = `como-llegar.html?espacio=${id}`;
+      });
+    });
+  </script>
   <script src="../js/main.js"></script>
 </body>
 </html>

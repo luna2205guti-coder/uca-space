@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del espacio - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app detalle">
+    <header class="encabezado-pantalla">
+      <a href="resultados.html" aria-label="Volver">
+        <img src="../img/icono-atras.png" alt="" width="24" height="24">
+      </a>
+      <h1>Detalle del espacio</h1>
+    </header>
+
+    <div class="detalle__foto" aria-hidden="true">
+      <span>Fotografía del espacio</span>
+    </div>
+
+    <section class="detalle__cuerpo">
+      <div class="detalle__cabecera">
+        <h2 class="detalle__titulo" id="detalle-titulo">Área de descanso</h2>
+        <span class="detalle__estado" id="detalle-estado">Disponible</span>
+      </div>
+
+      <p class="detalle__distancia" id="detalle-distancia">A 150 m de tu ubicación actual</p>
+
+      <p class="detalle__descripcion" id="detalle-descripcion">
+        Espacio tranquilo ideal para descansar entre clases, con sombra y asientos cómodos dentro del campus.
+      </p>
+
+      <div class="detalle__caracteristicas">
+        <h3>Características</h3>
+        <div class="fichas" id="detalle-chips">
+          <span class="ficha-estatica">Con mesas</span>
+          <span class="ficha-estatica">Aire libre</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="detalle__acciones">
+      <a href="como-llegar.html?espacio=descanso" class="boton boton--oscuro" id="detalle-llegar">Cómo llegar</a>
+    </div>
+  </main>
+
+  <script>
+    const detalleEspacios = {
+      descanso: {
+        titulo: "Área de descanso",
+        estado: "Disponible",
+        distancia: "A 150 m de tu ubicación actual",
+        descripcion: "Espacio tranquilo ideal para descansar entre clases, con sombra y asientos cómodos dentro del campus.",
+        caracteristicas: ["Con mesas", "Aire libre"],
+        llegarHref: "como-llegar.html?espacio=descanso"
+      },
+      estudio: {
+        titulo: "Zona de estudio",
+        estado: "Disponible",
+        distancia: "A 300 m de tu ubicación actual",
+        descripcion: "Área pensada para concentrarse o avanzar tareas, con mesas amplias y acceso a enchufes.",
+        caracteristicas: ["Con mesas", "Con enchufes", "Para grupos"],
+        llegarHref: "como-llegar.html?espacio=estudio"
+      },
+      "aire-libre": {
+        titulo: "Espacio al aire libre",
+        estado: "Por confirmar",
+        distancia: "A 450 m de tu ubicación actual",
+        descripcion: "Zona abierta rodeada de áreas verdes, ideal para reuniones informales o tomar aire fresco.",
+        caracteristicas: ["Aire libre", "Para grupos"],
+        llegarHref: "como-llegar.html?espacio=aire-libre"
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const clave = detalleEspacios[params.get("espacio")] ? params.get("espacio") : "descanso";
+    const info = detalleEspacios[clave];
+
+    document.getElementById("detalle-titulo").textContent = info.titulo;
+    document.getElementById("detalle-estado").textContent = info.estado;
+    document.getElementById("detalle-distancia").textContent = info.distancia;
+    document.getElementById("detalle-descripcion").textContent = info.descripcion;
+    document.getElementById("detalle-llegar").href = info.llegarHref;
+
+    const contenedorChips = document.getElementById("detalle-chips");
+    contenedorChips.innerHTML = info.caracteristicas
+      .map((item) => `<span class="ficha-estatica">${item}</span>`)
+      .join("");
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
