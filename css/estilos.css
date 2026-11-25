@@ -18,13 +18,17 @@ a { color: var(--color-azul-noche); }
 /* ===== Botón primario ===== */
 .boton {
   display: inline-block;
+  width: 100%;
   padding: var(--espacio-m) var(--espacio-l);
   border: none;
   border-radius: var(--radio-m);
   background: var(--color-azul-noche);
   color: var(--color-blanco);
   font-family: inherit;
+  font-size: var(--texto-m);
   font-weight: 600;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
 }
 .boton:hover { background: var(--color-azul-vivo); }
@@ -36,4 +40,29 @@ a { color: var(--color-azul-noche); }
   min-height: 100vh;
   background: var(--color-fondo-claro);
   padding: var(--espacio-l);
+}
+
+/* ===== Pantalla de Bienvenida (Flexbox) ===== */
+.bienvenida {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--espacio-l);
+  text-align: center;
+}
+
+.bienvenida__logo {
+  width: 160px;
+  height: auto;
+}
+
+.bienvenida__titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+}
+
+.bienvenida__texto {
+  margin: 0;
+  font-size: var(--texto-m);
 }
