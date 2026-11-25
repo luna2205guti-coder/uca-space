@@ -141,3 +141,12 @@ a { color: var(--color-azul-noche); }
   margin: 0 auto;
   object-fit: contain;
 }
+
+/* ===== Íconos de beneficios (círculos) ===== */
+.beneficios__icono {
+  display: block;
+  width: 36px;
+  height: 36px;
+  margin: 0 auto;
+  object-fit: contain;
+}
