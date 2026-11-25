@@ -303,3 +303,9 @@ a { color: var(--color-azul-noche); }
 }
 .sesion__registro p { margin: 0; }
 .sesion__registro .boton { width: auto; padding: var(--espacio-s) var(--espacio-xl); }
+
+/* ===== Ajuste: marca centrada ===== */
+.sesion__marca {
+  width: 100%;
+  text-align: center;
+}
