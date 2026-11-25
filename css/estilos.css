@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ===== Base ===== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--fuente-base);
+  font-size: var(--texto-m);
+  color: var(--color-gris-noche);
+  background: var(--color-fondo-claro);
+}
+
+h1, h2, h3 { color: var(--color-azul-vivo); }
+
+a { color: var(--color-azul-noche); }
+
+/* ===== Botón primario ===== */
+.boton {
+  display: inline-block;
+  padding: var(--espacio-m) var(--espacio-l);
+  border: none;
+  border-radius: var(--radio-m);
+  background: var(--color-azul-noche);
+  color: var(--color-blanco);
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.boton:hover { background: var(--color-azul-vivo); }
+
+/* ===== Contenedor estilo móvil ===== */
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--color-fondo-claro);
+  padding: var(--espacio-l);
+}

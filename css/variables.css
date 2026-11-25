@@ -1,0 +1,32 @@
+/* ==========================================
+   UCA Space - Design System (variables)
+   Fuente: archivo de Figma del equipo
+   ========================================== */
+:root {
+  /* ----- Colores ----- */
+  --color-azul-vivo: #3077E8;     /* marca, títulos, texto principal */
+  --color-azul-noche: #3A5088;    /* botones primarios y enlaces */
+  --color-gris-noche: #31343F;    /* estados suaves y detalles */
+  --color-fondo-claro: #F4F6FD;   /* fondos y superficies */
+  --color-blanco: #FFFFFF;
+
+  /* ----- Tipografía ----- */
+  --fuente-base: "Inter", system-ui, sans-serif;
+  --texto-s: 0.875rem;
+  --texto-m: 1rem;
+  --texto-l: 1.25rem;
+  --texto-xl: 1.75rem;
+
+  /* ----- Espaciado ----- */
+  --espacio-xs: 4px;
+  --espacio-s: 8px;
+  --espacio-m: 16px;
+  --espacio-l: 24px;
+  --espacio-xl: 32px;
+
+  /* ----- Bordes y sombras ----- */
+  --radio-s: 8px;
+  --radio-m: 16px;
+  --radio-l: 24px;
+  --sombra-suave: 0 2px 8px rgba(49, 52, 63, 0.12);
+}
