@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificación estudiantil - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app verificacion" style="display: flex; flex-direction: column; min-height: 100vh; padding: 20px; box-sizing: border-box;">
+
+    <!-- Barra superior: Regresar -->
+    <header style="display: flex; align-items: center; gap: 12px; margin-bottom: 56px;">
+      <a href="iniciar-sesion.html" aria-label="Regresar" style="display: inline-flex; align-items: center; color: #0f2a5c; text-decoration: none; gap: 10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f2a5c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span style="color: #0f2a5c; font-size: 16px; font-weight: 700;">Regresar</span>
+      </a>
+    </header>
+
+    <!-- Ícono superior y textos centrados -->
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; margin-bottom: 28px;">
+      <div style="display: flex; align-items: center; justify-content: center; margin: 0 auto 14px auto;">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#364B7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <line x1="19" y1="8" x2="19" y2="14"></line>
+          <line x1="22" y1="11" x2="16" y2="11"></line>
+        </svg>
+      </div>
+
+      <h1 style="color: #0f2a5c; font-size: 24px; font-weight: 700; width: 100%; margin: 0 auto 10px auto; text-align: center;">
+        Verificación estudiantil
+      </h1>
+
+      <p style="color: #64748b; font-size: 14px; line-height: 1.45; max-width: 310px; width: 100%; margin: 0 auto; text-align: center;">
+        Confirma que eres parte de la comunidad estudiantil de la UCA para acceder a todas las funciones de la app
+      </p>
+    </div>
+
+    <!-- Formulario de verificación estudiantil -->
+    <form id="form-verificacion" action="iniciar-sesion.html" style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 380px; margin: 0 auto;">
+
+      <!-- Correo institucional -->
+      <div style="display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 13px 16px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#364B7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;">
+          <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+        </svg>
+        <input type="email" id="correo-uca" name="correo" placeholder="correo@uca.edu.sv" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+      </div>
+
+      <!-- Número de carnet estudiantil -->
+      <div style="display: flex; align-items: center; gap: 12px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 13px 16px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#364B7A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;">
+          <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+          <line x1="6" y1="10" x2="10" y2="10"></line>
+          <line x1="6" y1="14" x2="12" y2="14"></line>
+          <circle cx="16.5" cy="12" r="1.5"></circle>
+        </svg>
+        <input type="text" id="carnet-estudiantil" name="carnet" placeholder="Número de carnet estudiantil" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+      </div>
+
+      <p id="mensaje-verificacion" style="color: #dc2626; font-size: 12px; text-align: center; margin: 0; min-height: 16px;"></p>
+
+      <!-- Botón Verificar -->
+      <button type="submit" class="boton" style="margin-top: 8px; background: #364B7A; color: #ffffff; border: none; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%;">
+        Verificar
+      </button>
+    </form>
+
+  </main>
+
+  <script>
+    const formVerificacion = document.getElementById('form-verificacion');
+    const correoInput = document.getElementById('correo-uca');
+    const msgVerificacion = document.getElementById('mensaje-verificacion');
+
+    formVerificacion.addEventListener('submit', function (e) {
+      const correo = correoInput.value.trim().toLowerCase();
+      if (!correo.endsWith('@uca.edu.sv')) {
+        e.preventDefault();
+        msgVerificacion.textContent = 'Usa tu correo institucional (@uca.edu.sv).';
+      } else {
+        msgVerificacion.textContent = '';
+      }
+    });
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
