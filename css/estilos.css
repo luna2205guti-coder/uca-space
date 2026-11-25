@@ -122,7 +122,7 @@ a { color: var(--color-azul-noche); }
 .beneficios__item { padding: 0 var(--espacio-s); font-size: 0.75rem; }
 .beneficios__item + .beneficios__item { border-left: 1px solid var(--color-azul-noche); }
 .beneficios__item p { margin: var(--espacio-s) 0 0; }
-.beneficios__icono { font-size: 1.5rem; }
+ 
 
 /* ===== Íconos ===== */
 .verificacion__icono img { max-width: 100%; height: auto; }
@@ -134,16 +134,19 @@ a { color: var(--color-azul-noche); }
   text-align: left;
 }
 
+
+
+/* ===== Íconos de beneficios (círculos) ===== */
 .beneficios__icono {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   margin: 0 auto;
   object-fit: contain;
 }
 
 /* ===== Íconos de beneficios (círculos) ===== */
-.beneficios__icono {
+.beneficios__item .beneficios__icono {
   display: block;
   width: 36px;
   height: 36px;
