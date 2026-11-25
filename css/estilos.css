@@ -648,3 +648,78 @@ a { color: var(--color-azul-noche); }
 .ruta__acciones {
   margin-top: var(--espacio-m);
 }
+
+/* ===== Crear cuenta / Registro ===== */
+.registro__encabezado {
+  margin-bottom: var(--espacio-m);
+}
+
+.registro__regresar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #0f2a5c;
+  font-weight: 700;
+  font-size: var(--texto-m, 1rem);
+  text-decoration: none;
+}
+
+.registro__logo {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--espacio-m);
+}
+
+.registro__subtitulo {
+  margin: 0 0 var(--espacio-l);
+  font-size: var(--texto-s);
+  color: #2c4a82;
+}
+
+.registro__form .campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--espacio-m);
+}
+
+.registro__form label {
+  font-size: var(--texto-s);
+  font-weight: 600;
+  color: #111827;
+}
+
+.registro__form input[type="text"],
+.registro__form input[type="email"],
+.registro__form input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  background: var(--color-blanco, #ffffff);
+  font-size: var(--texto-s);
+  color: #0f2a5c;
+  box-sizing: border-box;
+}
+
+.registro__form input::placeholder {
+  color: #94a3b8;
+}
+
+.registro__terminos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: var(--espacio-m) 0 var(--espacio-l);
+  font-size: var(--texto-s);
+  color: #64748b;
+  cursor: pointer;
+}
+
+.registro__terminos input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #0f2a5c;
+}
