@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear cuenta - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app cuenta">
+    <h1 class="cuenta__titulo">Crear cuenta</h1>
+    <p class="cuenta__subtitulo">Regístrate con tu correo institucional</p>
+
+    <form class="formulario formulario--izquierda" action="verificacion.html">
+      <label class="etiqueta">
+        Nombre completo
+        <span class="campo">
+          <input type="text" name="nombre" required>
+        </span>
+      </label>
+
+      <label class="etiqueta">
+        Correo institucional
+        <span class="campo">
+          <input type="email" name="correo" required>
+        </span>
+      </label>
+
+      <label class="etiqueta">
+        Contraseña
+        <span class="campo">
+          <input type="password" name="contrasena" id="contrasena" required>
+          <button class="campo__ojo" type="button" data-mostrar="contrasena" aria-label="Mostrar contraseña">
+            <img src="../img/icono-ojo.svg" alt="" width="20" height="20">
+          </button>
+        </span>
+      </label>
+
+      <label class="etiqueta">
+        Confirmar contraseña
+        <span class="campo">
+          <input type="password" name="confirmar" id="confirmar" required>
+        </span>
+      </label>
+
+      <label class="casilla">
+        <input type="checkbox" name="terminos" required>
+        Acepto los términos y condiciones
+      </label>
+
+      <button class="boton boton--oscuro boton--auto" type="submit">Crear cuenta</button>
+    </form>
+
+    <p class="cuenta__pie">¿Ya tienes cuenta? <a href="iniciar-sesion.html">Inicia sesión</a></p>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

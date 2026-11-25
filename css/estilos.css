@@ -180,3 +180,39 @@ a { color: var(--color-azul-noche); }
 .formulario--izquierda { align-items: stretch; text-align: left; }
 .formulario__subtitulo { margin: 0; font-size: var(--texto-s); color: #0f2a5c; }
 .boton--auto { width: auto; align-self: center; padding: var(--espacio-s) var(--espacio-xl); }
+
+/* ===== Crear cuenta ===== */
+.cuenta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-m);
+}
+.cuenta__titulo { margin: var(--espacio-l) 0 0; text-align: center; font-size: var(--texto-l); color: #0f2a5c; }
+.cuenta__subtitulo { margin: 0; text-align: center; font-size: var(--texto-s); color: #0f2a5c; }
+.cuenta__pie { margin: 0; text-align: center; font-size: var(--texto-s); color: #0f2a5c; }
+
+.etiqueta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-xs);
+  font-size: var(--texto-s);
+  color: #0f2a5c;
+}
+.etiqueta .campo { padding: var(--espacio-s) var(--espacio-m); }
+
+.campo__ojo {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.casilla {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-s);
+  font-size: var(--texto-s);
+  color: #0f2a5c;
+}
