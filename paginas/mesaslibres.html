@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesas libres en tiempo real - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: inherit;
+      background: #f4f6fb;
+    }
+
+    .pantalla-tarjeta {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .tarjeta-espacio {
+      width: 100%;
+      max-width: 390px;
+      border-radius: 28px;
+      padding: 18px;
+      background: linear-gradient(155deg, #e3e7fa 0%, #dbe6fb 55%, #c7daf8 100%);
+      box-shadow: 0 14px 30px rgba(15, 42, 92, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .marco-foto {
+      width: 100%;
+      aspect-ratio: 1 / 1.05;
+      border-radius: 26px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.55);
+      padding: 8px;
+    }
+
+    .marco-foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .panel-inferior {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.45) 0%, rgba(214, 227, 252, 0.65) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 26px;
+      padding: 22px 20px 18px;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .titulo-tarjeta {
+      margin: 0;
+      color: #0f2a5c;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.25;
+      max-width: 240px;
+    }
+
+    .fila-accion {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+
+    .btn-flecha {
+      width: 52px;
+      height: 44px;
+      border-radius: 14px;
+      border: none;
+      background: #0f2a5c;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+
+    .btn-flecha:hover {
+      background: #364B7A;
+      transform: translateX(2px);
+    }
+
+    /* Visor de +10 fotos al pulsar la flecha */
+    .galeria-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 48, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 999;
+    }
+
+    .galeria-modal.activa {
+      display: flex;
+    }
+
+    .galeria-caja {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .galeria-cabecera {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #0f2a5c;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .btn-cerrar-galeria {
+      border: none;
+      background: #e2e8f0;
+      color: #0f2a5c;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .visor-principal {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0f172a;
+    }
+
+    .visor-principal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pie-foto {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .titulo-foto {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f2a5c;
+    }
+
+    .contador-fotos {
+      font-size: 13px;
+      font-weight: 700;
+      color: #364B7A;
+      white-space: nowrap;
+    }
+
+    .controles-nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-nav {
+      flex: 1;
+      padding: 11px;
+      border-radius: 12px;
+      border: none;
+      background: #0f2a5c;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .tira-miniaturas {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .miniatura {
+      width: 54px;
+      height: 54px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+      opacity: 0.55;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .miniatura.activa {
+      opacity: 1;
+      border-color: #0f2a5c;
+    }
+  </style>
+</head>
+<body>
+  <main class="pantalla-tarjeta">
+    <section class="tarjeta-espacio" aria-label="Mesas libres en tiempo real">
+      <div class="marco-foto">
+        <img id="foto-portada" src="../img/mesas-1.jpg" alt="Mesas al aire libre bajo árboles en la UCA">
+      </div>
+
+      <div class="panel-inferior">
+        <h2 class="titulo-tarjeta">Mesas libres en tiempo real</h2>
+
+        <div class="fila-accion">
+          <button type="button" id="btn-abrir-galeria" class="btn-flecha" aria-label="Ver más de 10 fotos de mesas disponibles">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal con 12 fotos -->
+  <div id="galeria-modal" class="galeria-modal" role="dialog" aria-modal="true" aria-labelledby="galeria-titulo">
+    <div class="galeria-caja">
+      <div class="galeria-cabecera">
+        <span id="galeria-titulo">Fotos de mesas en la UCA</span>
+        <button type="button" id="btn-cerrar-galeria" class="btn-cerrar-galeria" aria-label="Cerrar galería">✕</button>
+      </div>
+
+      <div class="visor-principal">
+        <img id="foto-activa" src="" alt="">
+      </div>
+
+      <div class="pie-foto">
+        <p id="descripcion-foto" class="titulo-foto"></p>
+        <span id="contador-fotos" class="contador-fotos">1 / 12</span>
+      </div>
+
+      <div class="controles-nav">
+        <button type="button" id="btn-anterior" class="btn-nav">← Anterior</button>
+        <button type="button" id="btn-siguiente" class="btn-nav">Siguiente →</button>
+      </div>
+
+      <div id="tira-miniaturas" class="tira-miniaturas"></div>
+    </div>
+  </div>
+
+  <script>
+    // Agrega aquí las rutas de tus 12+ fotos reales en ../img/ o URLs
+    const fotosMesas = [
+      { src: '../img/mesas-1.jpg', titulo: 'Zona de mesas bajo árboles - Foto 1' },
+      { src: '../img/mesas-2.jpg', titulo: 'Mesas de ladrillo disponibles - Foto 2' },
+      { src: '../img/mesas-3.jpg', titulo: 'Área de estudio al aire libre - Foto 3' },
+      { src: '../img/mesas-4.jpg', titulo: 'Mesas cerca de edificios - Foto 4' },
+      { src: '../img/mesas-5.jpg', titulo: 'Espacio sombreado para grupos - Foto 5' },
+      { src: '../img/mesas-6.jpg', titulo: 'Bancas y mesas libres - Foto 6' },
+      { src: '../img/mesas-7.jpg', titulo: 'Sendero y zona de lectura - Foto 7' },
+      { src: '../img/mesas-8.jpg', titulo: 'Mesas disponibles en jornada matutina - Foto 8' },
+      { src: '../img/mesas-9.jpg', titulo: 'Rincón verde con mesas - Foto 9' },
+      { src: '../img/mesas-10.jpg', titulo: 'Área de descanso y trabajo - Foto 10' },
+      { src: '../img/mesas-11.jpg', titulo: 'Mesas libres cerca de áreas verdes - Foto 11' },
+      { src: '../img/mesas-12.jpg', titulo: 'Vista general de mesas en campus - Foto 12' }
+    ];
+
+    const modal = document.getElementById('galeria-modal');
+    const btnAbrir = document.getElementById('btn-abrir-galeria');
+    const btnCerrar = document.getElementById('btn-cerrar-galeria');
+    const btnAnterior = document.getElementById('btn-anterior');
+    const btnSiguiente = document.getElementById('btn-siguiente');
+    const fotoActivaEl = document.getElementById('foto-activa');
+    const descFotoEl = document.getElementById('descripcion-foto');
+    const contadorEl = document.getElementById('contador-fotos');
+    const miniaturasEl = document.getElementById('tira-miniaturas');
+
+    let indiceActual = 0;
+
+    function renderMiniaturas() {
+      miniaturasEl.innerHTML = '';
+      fotosMesas.forEach((foto, idx) => {
+        const thumb = document.createElement('img');
+        thumb.src = foto.src;
+        thumb.alt = foto.titulo;
+        thumb.className = 'miniatura' + (idx === indiceActual ? ' activa' : '');
+        thumb.addEventListener('click', () => {
+          indiceActual = idx;
+          actualizarVisor();
+        });
+        miniaturasEl.appendChild(thumb);
+      });
+    }
+
+    function actualizarVisor() {
+      const actual = fotosMesas[indiceActual];
+      fotoActivaEl.src = actual.src;
+      fotoActivaEl.alt = actual.titulo;
+      descFotoEl.textContent = actual.titulo;
+      contadorEl.textContent = `${indiceActual + 1} / ${fotosMesas.length}`;
+
+      const thumbs = miniaturasEl.querySelectorAll('.miniatura');
+      thumbs.forEach((t, i) => {
+        t.classList.toggle('activa', i === indiceActual);
+        if (i === indiceActual) {
+          t.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    }
+
+    btnAbrir.addEventListener('click', () => {
+      indiceActual = 0;
+      renderMiniaturas();
+      actualizarVisor();
+      modal.classList.add('activa');
+    });
+
+    btnCerrar.addEventListener('click', () => {
+      modal.classList.remove('activa');
+    });
+
+    btnAnterior.addEventListener('click', () => {
+      indiceActual = (indiceActual - 1 + fotosMesas.length) % fotosMesas.length;
+      actualizarVisor();
+    });
+
+    btnSiguiente.addEventListener('click', () => {
+      indiceActual = (indiceActual + 1) % fotosMesas.length;
+      actualizarVisor();
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('activa');
+      }
+    });
+  </script>
+</body>
+</html>
