@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear cuenta - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app registro" style="display: flex; flex-direction: column; min-height: 100vh; padding: 20px; box-sizing: border-box;">
+
+    <!-- Barra superior: Regresar -->
+    <header style="display: flex; justify-content: flex-start; align-items: center; width: 100%; max-width: 100%; margin: 0 0 36px 0; padding: 0; text-align: left;">
+      <a href="iniciar-sesion.html" aria-label="Regresar" style="display: inline-flex; align-items: center; justify-content: flex-start; width: auto; margin: 0; color: #0f2a5c; text-decoration: none; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f2a5c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span style="color: #0f2a5c; font-size: 16px; font-weight: 700;">Regresar</span>
+      </a>
+    </header>
+
+    <!-- Formulario de registro -->
+    <form id="form-registro" action="iniciar-sesion.html" style="display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 380px; margin: 0 auto;">
+
+      <p style="color: #364B7A; font-size: 14px; font-weight: 500; margin: 0 0 4px 0; text-align: left;">
+        Regístrate con tu correo institucional
+      </p>
+
+      <!-- Nombre completo -->
+      <div style="display: flex; flex-direction: column; gap: 6px; text-align: left;">
+        <label for="nombre-completo" style="color: #0f2a5c; font-size: 14px; font-weight: 600;">
+          Nombre completo
+        </label>
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 13px 16px;">
+          <input type="text" id="nombre-completo" name="nombre" placeholder="Escribe tu nombre" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+        </div>
+      </div>
+
+      <!-- Correo institucional -->
+      <div style="display: flex; flex-direction: column; gap: 6px; text-align: left;">
+        <label for="correo-institucional" style="color: #0f2a5c; font-size: 14px; font-weight: 600;">
+          Correo institucional
+        </label>
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 13px 16px;">
+          <input type="email" id="correo-institucional" name="correo" placeholder="Escribe tu correo" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+        </div>
+      </div>
+
+      <!-- Contraseña -->
+      <div style="display: flex; flex-direction: column; gap: 6px; text-align: left;">
+        <label for="password-registro" style="color: #0f2a5c; font-size: 14px; font-weight: 600;">
+          Contraseña
+        </label>
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 13px 16px;">
+          <input type="password" id="password-registro" name="password" placeholder="Escribe tu contraseña" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+        </div>
+      </div>
+
+      <!-- Confirma tu contraseña -->
+      <div style="display: flex; flex-direction: column; gap: 6px; text-align: left;">
+        <label for="confirmar-password" style="color: #0f2a5c; font-size: 14px; font-weight: 600;">
+          Confirma tu contraseña
+        </label>
+        <div style="display: flex; align-items: center; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 13px 16px;">
+          <input type="password" id="confirmar-password" name="confirmar_password" placeholder="Repite tu contraseña" required style="border: none; outline: none; width: 100%; font-size: 14px; color: #1e293b; background: transparent;">
+        </div>
+      </div>
+
+      <!-- Términos y condiciones -->
+      <label for="aceptar-terminos" style="display: flex; align-items: center; gap: 10px; margin-top: 4px; cursor: pointer; text-align: left;">
+        <input type="checkbox" id="aceptar-terminos" name="terminos" required style="width: 18px; height: 18px; accent-color: #364B7A; cursor: pointer; flex-shrink: 0;">
+        <span style="color: #64748b; font-size: 13px; text-decoration: underline;">
+          Acepto los términos y condiciones
+        </span>
+      </label>
+
+      <p id="mensaje-registro" style="color: #dc2626; font-size: 12px; text-align: center; margin: 0; min-height: 16px;"></p>
+
+      <!-- Botón Registrarse -->
+      <button type="submit" class="boton" style="margin-top: 6px; background: #364B7A; color: #ffffff; border: none; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%;">
+        Registrarse
+      </button>
+    </form>
+
+  </main>
+
+  <script>
+    const formRegistro = document.getElementById('form-registro');
+    const correoReg = document.getElementById('correo-institucional');
+    const passReg = document.getElementById('password-registro');
+    const confirmReg = document.getElementById('confirmar-password');
+    const terminosReg = document.getElementById('aceptar-terminos');
+    const msgRegistro = document.getElementById('mensaje-registro');
+
+    formRegistro.addEventListener('submit', function (e) {
+      const correo = correoReg.value.trim().toLowerCase();
+      const pass = passReg.value;
+      const confirm = confirmReg.value;
+
+      if (!correo.endsWith('@uca.edu.sv')) {
+        e.preventDefault();
+        msgRegistro.textContent = 'Usa tu correo institucional (@uca.edu.sv).';
+        return;
+      }
+
+      if (pass.length < 8) {
+        e.preventDefault();
+        msgRegistro.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+        return;
+      }
+
+      if (pass !== confirm) {
+        e.preventDefault();
+        msgRegistro.textContent = 'Las contraseñas no coinciden.';
+        return;
+      }
+
+      if (!terminosReg.checked) {
+        e.preventDefault();
+        msgRegistro.textContent = 'Debes aceptar los términos y condiciones.';
+        return;
+      }
+
+      msgRegistro.textContent = '';
+    });
+  </script>
+  <script src="../js/main.js"></script>
+</body>
+</html>
