@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reportes de daños y derrames - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: inherit;
+      background: #f4f6fb;
+    }
+
+    .pantalla-tarjeta {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .tarjeta-espacio {
+      width: 100%;
+      max-width: 390px;
+      border-radius: 28px;
+      padding: 18px;
+      background: linear-gradient(155deg, #e3e7fa 0%, #dbe6fb 55%, #c7daf8 100%);
+      box-shadow: 0 14px 30px rgba(15, 42, 92, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .marco-foto {
+      width: 100%;
+      aspect-ratio: 1 / 1.05;
+      border-radius: 26px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.55);
+      padding: 8px;
+    }
+
+    .marco-foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .panel-inferior {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.45) 0%, rgba(214, 227, 252, 0.65) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 26px;
+      padding: 22px 20px 18px;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .titulo-tarjeta {
+      margin: 0;
+      color: #0f2a5c;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.25;
+      max-width: 260px;
+    }
+
+    .fila-accion {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+
+    .btn-flecha {
+      width: 52px;
+      height: 44px;
+      border-radius: 14px;
+      border: none;
+      background: #0f2a5c;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+
+    .btn-flecha:hover {
+      background: #364B7A;
+      transform: translateX(2px);
+    }
+
+    /* Modal de reporte */
+    .reporte-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 48, 0.82);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 999;
+      overflow-y: auto;
+    }
+
+    .reporte-modal.activa {
+      display: flex;
+    }
+
+    .reporte-caja {
+      width: 100%;
+      max-width: 410px;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .reporte-cabecera {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #0f2a5c;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .btn-cerrar-reporte {
+      border: none;
+      background: #e2e8f0;
+      color: #0f2a5c;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .campo-reporte {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+    }
+
+    .campo-reporte label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f2a5c;
+    }
+
+    .campo-reporte select,
+    .campo-reporte input[type="text"],
+    .campo-reporte textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      color: #1e293b;
+      background: #ffffff;
+      outline: none;
+    }
+
+    .campo-reporte textarea {
+      min-height: 76px;
+      resize: vertical;
+    }
+
+    .zona-subir-foto {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px dashed #364B7A;
+      border-radius: 14px;
+      background: #f8faff;
+      color: #0f2a5c;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .zona-subir-foto:hover {
+      background: #eef3ff;
+    }
+
+    .input-foto-oculto {
+      display: none;
+    }
+
+    .previa-fotos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .item-previa {
+      position: relative;
+      width: 68px;
+      height: 68px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+    }
+
+    .item-previa img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .btn-quitar-foto {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 20px;
+      height: 20px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(15, 42, 92, 0.85);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-enviar-reporte {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 13px;
+      background: #0f2a5c;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-enviar-reporte:hover {
+      background: #364B7A;
+    }
+
+    .estado-reporte {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      min-height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <main class="pantalla-tarjeta">
+    <section class="tarjeta-espacio" aria-label="Reportes de daños y derrames">
+      <div class="marco-foto">
+        <img id="foto-reporte" src="../img/reportes-1.jpg" alt="">
+      </div>
+
+      <div class="panel-inferior">
+        <h2 class="titulo-tarjeta">Reportes de daños y derrames</h2>
+
+        <div class="fila-accion">
+          <button type="button" id="btn-abrir-reporte" class="btn-flecha" aria-label="Abrir formulario de reportes de daños y derrames">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal para registrar reporte con fotos -->
+  <div id="reporte-modal" class="reporte-modal" role="dialog" aria-modal="true" aria-labelledby="reporte-titulo">
+    <div class="reporte-caja">
+      <div class="reporte-cabecera">
+        <span id="reporte-titulo">Nuevo reporte</span>
+        <button type="button" id="btn-cerrar-reporte" class="btn-cerrar-reporte" aria-label="Cerrar ventana">✕</button>
+      </div>
+
+      <form id="form-reporte" style="display: flex; flex-direction: column; gap: 12px;">
+        <div class="campo-reporte">
+          <label for="tipo-reporte">Tipo de incidente</label>
+          <select id="tipo-reporte" name="tipo" required>
+            <option value="Mesa dañada">Mesa dañada</option>
+            <option value="Daño en mobiliario o infraestructura">Daño en mobiliario o infraestructura</option>
+            <option value="Derrame de líquidos o residuos">Derrame de líquidos o residuos</option>
+            <option value="Falla eléctrica o iluminación">Falla eléctrica o iluminación</option>
+          </select>
+        </div>
+
+        <div class="campo-reporte">
+          <label for="ubicacion-reporte">Espacio o zona en la UCA</label>
+          <input type="text" id="ubicacion-reporte" name="ubicacion" placeholder="Ej. Áreas verdes, cafetería, biblioteca..." required>
+        </div>
+
+        <div class="campo-reporte">
+          <label for="detalle-reporte">Descripción breve</label>
+          <textarea id="detalle-reporte" name="detalle" placeholder="Indica qué le pasó a la mesa o qué ocurrió..." required></textarea>
+        </div>
+
+        <!-- Campo accesible para agregar fotos de mesa dañada -->
+        <div class="campo-reporte">
+          <label for="fotos-dano">Fotos de la mesa dañada (opcional)</label>
+          <label for="fotos-dano" class="zona-subir-foto">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span>Agregar o tomar foto</span>
+          </label>
+          <input type="file" id="fotos-dano" name="fotos" accept="image/*" capture="environment" multiple class="input-foto-oculto">
+          <div id="previa-fotos" class="previa-fotos"></div>
+        </div>
+
+        <p id="estado-reporte" class="estado-reporte"></p>
+
+        <button type="submit" class="btn-enviar-reporte">Enviar reporte</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modalReporte = document.getElementById('reporte-modal');
+    const btnAbrirReporte = document.getElementById('btn-abrir-reporte');
+    const btnCerrarReporte = document.getElementById('btn-cerrar-reporte');
+    const formReporte = document.getElementById('form-reporte');
+    const estadoReporte = document.getElementById('estado-reporte');
+    const inputFotos = document.getElementById('fotos-dano');
+    const previaFotos = document.getElementById('previa-fotos');
+
+    let fotosSeleccionadas = [];
+
+    function renderPreviaFotos() {
+      previaFotos.innerHTML = '';
+      fotosSeleccionadas.forEach((item, index) => {
+        const contenedor = document.createElement('div');
+        contenedor.className = 'item-previa';
+
+        const img = document.createElement('img');
+        img.src = item.url;
+        img.alt = '';
+
+        const btnQuitar = document.createElement('button');
+        btnQuitar.type = 'button';
+        btnQuitar.className = 'btn-quitar-foto';
+        btnQuitar.setAttribute('aria-label', 'Quitar foto');
+        btnQuitar.textContent = '×';
+        btnQuitar.addEventListener('click', () => {
+          URL.revokeObjectURL(item.url);
+          fotosSeleccionadas.splice(index, 1);
+          renderPreviaFotos();
+        });
+
+        contenedor.appendChild(img);
+        contenedor.appendChild(btnQuitar);
+        previaFotos.appendChild(contenedor);
+      });
+    }
+
+    function limpiarFotos() {
+      fotosSeleccionadas.forEach((item) => URL.revokeObjectURL(item.url));
+      fotosSeleccionadas = [];
+      inputFotos.value = '';
+      renderPreviaFotos();
+    }
+
+    inputFotos.addEventListener('change', (e) => {
+      const archivos = Array.from(e.target.files || []);
+      archivos.forEach((archivo) => {
+        if (archivo.type.startsWith('image/')) {
+          fotosSeleccionadas.push({
+            archivo,
+            url: URL.createObjectURL(archivo)
+          });
+        }
+      });
+      renderPreviaFotos();
+      inputFotos.value = '';
+    });
+
+    btnAbrirReporte.addEventListener('click', () => {
+      estadoReporte.textContent = '';
+      modalReporte.classList.add('activa');
+    });
+
+    btnCerrarReporte.addEventListener('click', () => {
+      modalReporte.classList.remove('activa');
+    });
+
+    modalReporte.addEventListener('click', (e) => {
+      if (e.target === modalReporte) {
+        modalReporte.classList.remove('activa');
+      }
+    });
+
+    formReporte.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const tipo = document.getElementById('tipo-reporte').value;
+      const ubicacion = document.getElementById('ubicacion-reporte').value.trim();
+      const cantidadFotos = fotosSeleccionadas.length;
+
+      if (!ubicacion) {
+        estadoReporte.style.color = '#dc2626';
+        estadoReporte.textContent = 'Escribe el espacio o zona del campus.';
+        return;
+      }
+
+      estadoReporte.style.color = '#0f2a5c';
+      estadoReporte.textContent = cantidadFotos > 0
+        ? `Reporte registrado (${tipo} en ${ubicacion}) con ${cantidadFotos} foto(s).`
+        : `Reporte registrado (${tipo} en ${ubicacion}).`;
+
+      formReporte.reset();
+      limpiarFotos();
+    });
+  </script>
+</body>
+</html>
