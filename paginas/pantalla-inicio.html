@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: inherit;
+      background: #f4f6fb;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-inicio {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      padding: 20px 18px 104px;
+      background: linear-gradient(155deg, #e5e8fa 0%, #dbe4fb 45%, #b3cdf8 85%, #89aef3 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+    }
+
+    /* Barra superior */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .marca-uca {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #0f2a5c;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .avatar-usuario {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #364B7A;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Encabezado principal */
+    .encabezado-inicio h1 {
+      margin: 0 0 4px 0;
+      color: #0f2a5c;
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .encabezado-inicio p {
+      margin: 0;
+      color: #5b6880;
+      font-size: 14px;
+    }
+
+    /* Buscador */
+    .buscador-caja {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 12px 16px;
+      box-shadow: 0 6px 18px rgba(15, 42, 92, 0.06);
+    }
+
+    .buscador-caja input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 14px;
+      color: #1e293b;
+      background: transparent;
+    }
+
+    /* Imagen destacada */
+    .foto-destacada {
+      width: 100%;
+      height: 205px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #cbd5e1;
+      box-shadow: 0 10px 24px rgba(15, 42, 92, 0.1);
+    }
+
+    .foto-destacada img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Sección Espacio sugerido */
+    .bloque-seccion {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .fila-titulo-seccion {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .titulo-seccion {
+      margin: 0;
+      color: #1e293b;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .enlace-ver-todos {
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .tarjeta-sugerido {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 16px 18px;
+      box-shadow: 0 8px 20px rgba(15, 42, 92, 0.07);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .codigo-espacio {
+      margin: 0;
+      color: #0f2a5c;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .badge-libre {
+      display: inline-block;
+      background: #d1fae5;
+      color: #15803d;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .detalle-espacio {
+      margin: 2px 0 0 0;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    /* Cuadrícula Mesas libres por zona */
+    .grid-zonas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .tarjeta-zona {
+      background: rgba(255, 255, 255, 0.45);
+      border: 1.5px solid #2b4c8c;
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .tarjeta-zona:hover,
+    .tarjeta-zona.activa {
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .nombre-zona {
+      margin: 0;
+      color: #0f2a5c;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .conteo-zona {
+      margin: 0;
+      color: #5b6880;
+      font-size: 13px;
+    }
+
+    /* Barra de navegación inferior */
+    .nav-inferior-contenedor {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 398px;
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 8px 10px;
+      box-shadow: 0 10px 28px rgba(15, 42, 92, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 8px 6px;
+      border-radius: 22px;
+      text-decoration: none;
+      color: #2563eb;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .nav-item.activo {
+      background: linear-gradient(135deg, #1d3587 0%, #24429c 100%);
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 28px;
+    }
+  </style>
+</head>
+<body>
+  <main class="app-inicio">
+
+    <!-- Barra superior: Logo búho + UCA Space + Avatar -->
+    <header class="top-bar">
+      <a href="inicio.html" class="marca-uca">
+        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M12 16L22 22C25 20.5 28.5 19.8 32 19.8C35.5 19.8 39 20.5 42 22L52 16L49 32C49 43 41.5 51 32 56C22.5 51 15 43 15 32L12 16Z" fill="#0f2a5c"/>
+          <circle cx="25" cy="31" r="6.5" fill="#ffffff"/>
+          <circle cx="39" cy="31" r="6.5" fill="#ffffff"/>
+          <circle cx="25" cy="31" r="3" fill="#0f2a5c"/>
+          <circle cx="39" cy="31" r="3" fill="#0f2a5c"/>
+          <polygon points="32,35 28.5,40 35.5,40" fill="#ffffff"/>
+        </svg>
+        <span>UCA Space</span>
+      </a>
+
+      <a href="perfil.html" class="avatar-usuario" aria-label="Perfil de usuario">E</a>
+    </header>
+
+    <!-- Título y subtítulo -->
+    <section class="encabezado-inicio">
+      <h1>Inicio de UCA Space</h1>
+      <p>Encuentra mesas disponibles para estudiar</p>
+    </section>
+
+    <!-- Barra de búsqueda -->
+    <div class="buscador-caja">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#364B7A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="search" id="input-busqueda" placeholder="Buscar un espacio..." aria-label="Buscar un espacio">
+    </div>
+
+    <!-- Fotografía del campus -->
+    <div class="foto-destacada">
+      <img src="../img/mesas-1.jpg" alt="">
+    </div>
+
+    <!-- Espacio sugerido -->
+    <section class="bloque-seccion">
+      <div class="fila-titulo-seccion">
+        <h2 class="titulo-seccion">Espacio sugerido</h2>
+        <a href="resultados.html" class="enlace-ver-todos">Ver todos</a>
+      </div>
+
+      <a href="resultados.html" id="tarjeta-sugerido" class="tarjeta-sugerido">
+        <h3 id="sugerido-codigo" class="codigo-espacio">M5</h3>
+        <span id="sugerido-estado" class="badge-libre">Libre</span>
+        <p id="sugerido-detalle" class="detalle-espacio">Bosque · 130 m</p>
+      </a>
+    </section>
+
+    <!-- Mesas libres por zona -->
+    <section class="bloque-seccion">
+      <h2 class="titulo-seccion">Mesas libres por zona</h2>
+
+      <div class="grid-zonas" id="grid-zonas">
+        <button type="button" class="tarjeta-zona" data-zona="Biblioteca" data-codigo="B2" data-distancia="45 m">
+          <span class="nombre-zona">Biblioteca</span>
+          <span class="conteo-zona">6 de 6 libres</span>
+        </button>
+
+        <button type="button" class="tarjeta-zona" data-zona="Cafetería" data-codigo="C4" data-distancia="90 m">
+          <span class="nombre-zona">Cafetería</span>
+          <span class="conteo-zona">8 de 8 libres</span>
+        </button>
+
+        <button type="button" class="tarjeta-zona activa" data-zona="Bosque" data-codigo="M5" data-distancia="130 m">
+          <span class="nombre-zona">Bosque</span>
+          <span class="conteo-zona">8 de 8 libres</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Barra de navegación inferior -->
+    <nav class="nav-inferior-contenedor" aria-label="Navegación principal">
+      <a href="inicio.html" class="nav-item activo">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z"></path>
+        </svg>
+        <span>Inicio</span>
+      </a>
+
+      <a href="mapa.html" class="nav-item">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+          <line x1="8" y1="2" x2="8" y2="18"></line>
+          <line x1="16" y1="6" x2="16" y2="22"></line>
+        </svg>
+        <span>Mapa</span>
+      </a>
+
+      <a href="guardados.html" class="nav-item">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Guardados</span>
+      </a>
+
+      <a href="perfil.html" class="nav-item">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Perfil</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <script>
+    const inputBusqueda = document.getElementById('input-busqueda');
+    const tarjetasZonas = document.querySelectorAll('.tarjeta-zona');
+    const sugeridoCodigo = document.getElementById('sugerido-codigo');
+    const sugeridoDetalle = document.getElementById('sugerido-detalle');
+
+    // Cambiar el espacio sugerido al tocar una zona
+    tarjetasZonas.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        tarjetasZonas.forEach((z) => z.classList.remove('activa'));
+        btn.classList.add('activa');
+
+        const zona = btn.dataset.zona;
+        const codigo = btn.dataset.codigo;
+        const distancia = btn.dataset.distancia;
+
+        sugeridoCodigo.textContent = codigo;
+        sugeridoDetalle.textContent = `${zona} · ${distancia}`;
+      });
+    });
+
+    // Filtrar zonas al escribir en el buscador
+    inputBusqueda.addEventListener('input', () => {
+      const texto = inputBusqueda.value.trim().toLowerCase();
+      tarjetasZonas.forEach((btn) => {
+        const nombre = btn.dataset.zona.toLowerCase();
+        const codigo = btn.dataset.codigo.toLowerCase();
+        const coincide = nombre.includes(texto) || codigo.includes(texto);
+        btn.style.display = coincide ? 'flex' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
