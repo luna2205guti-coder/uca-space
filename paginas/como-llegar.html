@@ -20,7 +20,7 @@
     </header>
 
     <main class="contenido-ruta">
-      <!-- Mapa con imagen mapa-comollegar.png -->
+      <!-- Mapa con imagen mapa-comollegar.png (sin textos duplicados) -->
       <section class="contenedor-mapa" aria-label="Mapa de ruta en el campus">
         <img
           id="img-mapa-campus"
@@ -31,31 +31,10 @@
           onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } })(this);"
         >
 
-        <!-- Puntos interactivos sobre la imagen -->
-        <button type="button" class="pin-mesa pin-b3" data-mesa="B3" aria-label="Seleccionar Mesa B3">B3</button>
-        <button type="button" class="pin-mesa pin-b4" data-mesa="B4" aria-label="Seleccionar Mesa B4">B4</button>
-        <button type="button" class="pin-mesa pin-b5 activo" data-mesa="B5" aria-label="Seleccionar Mesa B5">B5</button>
-
-        <div id="badge-mesa-libre" class="badge-mesa-libre">
-          <span id="texto-badge-mesa">Mesa B5 · Libre</span>
-        </div>
-
-        <div class="pin-tu-grupo" aria-label="Tu ubicación">
-          <span class="etiqueta-tu">Tú</span>
-          <span class="punto-tu-mapa"></span>
-        </div>
-
-        <!-- Leyenda inferior del mapa -->
-        <div class="leyenda-mapa" aria-label="Leyenda del mapa">
-          <span class="item-leyenda">
-            <span class="punto-leyenda punto-tu"></span>
-            <span>Tú</span>
-          </span>
-          <span class="item-leyenda">
-            <span class="punto-leyenda punto-mesa"></span>
-            <span>Mesa libre</span>
-          </span>
-        </div>
+        <!-- Zonas clicables transparentes sobre B3, B4 y B5 -->
+        <button type="button" class="pin-mesa pin-b3" data-mesa="B3" aria-label="Seleccionar Mesa B3"></button>
+        <button type="button" class="pin-mesa pin-b4" data-mesa="B4" aria-label="Seleccionar Mesa B4"></button>
+        <button type="button" class="pin-mesa pin-b5 activo" data-mesa="B5" aria-label="Seleccionar Mesa B5"></button>
       </section>
 
       <!-- Información del destino y ruta -->
