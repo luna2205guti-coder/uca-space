@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi perfil - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/perfil.css">
+</head>
+<body>
+  <div class="pantalla-perfil">
+    <header class="encabezado-perfil">
+      <h1 class="titulo-perfil">Mi perfil</h1>
+    </header>
+
+    <main class="contenido-perfil">
+      <!-- Tarjeta de usuario -->
+      <section class="tarjeta-perfil tarjeta-usuario" aria-label="Información del estudiante">
+        <div class="usuario-superior">
+          <div id="avatar-inicial" class="avatar-circulo" aria-hidden="true">E</div>
+          <div class="usuario-datos">
+            <h2 id="perfil-nombre" class="usuario-nombre">Estudiante UCA</h2>
+            <p id="perfil-correo" class="usuario-correo">correo@uca.edu.sv</p>
+            <span class="insignia-verificada">Cuenta verificada</span>
+          </div>
+        </div>
+
+        <hr class="divisor-tarjeta">
+
+        <div class="estadisticas-grid">
+          <button type="button" class="stat-item" data-stat="guardados">
+            <strong id="stat-guardados" class="stat-numero">4</strong>
+            <span class="stat-etiqueta">Guardados</span>
+          </button>
+
+          <button type="button" class="stat-item" data-stat="reportes">
+            <strong id="stat-reportes" class="stat-numero">3</strong>
+            <span class="stat-etiqueta">Reportes</span>
+          </button>
+
+          <button type="button" class="stat-item" data-stat="opiniones">
+            <strong id="stat-opiniones" class="stat-numero">2</strong>
+            <span class="stat-etiqueta">Opiniones</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Preferencias -->
+      <section class="tarjeta-perfil" aria-labelledby="titulo-preferencias">
+        <h2 id="titulo-preferencias" class="bloque-titulo">Preferencias</h2>
+
+        <label for="select-zona" class="campo-etiqueta">Zona preferida</label>
+        <div class="select-contenedor">
+          <select id="select-zona" class="select-zona">
+            <option value="todas">Todas las zonas</option>
+            <option value="biblioteca">Biblioteca</option>
+            <option value="cafeteria">Cafetería</option>
+            <option value="bosque">Bosque</option>
+            <option value="aulas">Aulas y edificios</option>
+          </select>
+          <span class="select-flecha" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1e3c78" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </div>
+
+        <div class="fila-switch">
+          <div class="switch-info">
+            <strong class="switch-titulo">Avisos de mesas libres</strong>
+            <p class="switch-desc">Te avisamos cuando se libere una mesa en tu zona.</p>
+          </div>
+          <label class="switch-control" aria-label="Avisos de mesas libres">
+            <input type="checkbox" id="toggle-avisos" checked>
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="fila-switch">
+          <div class="switch-info">
+            <strong class="switch-titulo">Mostrar mi ubicación</strong>
+            <p class="switch-desc">Úsala para calcular distancias y rutas en el campus.</p>
+          </div>
+          <label class="switch-control" aria-label="Mostrar mi ubicación">
+            <input type="checkbox" id="toggle-ubicacion" checked>
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Cuenta y ayuda -->
+      <section class="tarjeta-perfil" aria-labelledby="titulo-cuenta">
+        <h2 id="titulo-cuenta" class="bloque-titulo">Cuenta y ayuda</h2>
+
+        <div class="lista-opciones">
+          <button type="button" class="opcion-fila" data-accion="contrasena">
+            <span class="opcion-izq">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2c4373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <span>Cambiar contraseña</span>
+            </span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5875" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="opcion-fila" data-accion="faq">
+            <span class="opcion-izq">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2c4373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span>Preguntas frecuentes</span>
+            </span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5875" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="opcion-fila" data-accion="soporte">
+            <span class="opcion-izq">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2c4373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+              <span>Contactar soporte</span>
+            </span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5875" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="opcion-fila" data-accion="privacidad">
+            <span class="opcion-izq">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2c4373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+              <span>Privacidad y condiciones</span>
+            </span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5875" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- Cerrar sesión -->
+      <button type="button" id="btn-cerrar-sesion" class="btn-cerrar-sesion">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        <span>Cerrar sesión</span>
+      </button>
+    </main>
+
+    <!-- Notificación rápida (toast) -->
+    <div id="toast-perfil" class="toast-perfil" role="status" aria-live="polite"></div>
+
+    <!-- Modal interactivo -->
+    <div id="modal-perfil" class="modal-perfil" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-caja">
+        <h3 id="modal-perfil-titulo" class="modal-titulo"></h3>
+        <div id="modal-perfil-contenido" class="modal-cuerpo"></div>
+        <div class="modal-acciones">
+          <button type="button" id="btn-modal-secundario" class="btn-modal-sec">Cerrar</button>
+          <button type="button" id="btn-modal-primario" class="btn-modal-pri">Aceptar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra inferior -->
+    <nav class="barra-inferior" aria-label="Navegación principal">
+      <button type="button" class="nav-item" data-destino="bienvenida.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"></path>
+        </svg>
+        <span>Inicio</span>
+      </button>
+
+      <button type="button" class="nav-item" data-destino="mapa.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+          <line x1="8" y1="2" x2="8" y2="18"></line>
+          <line x1="16" y1="6" x2="16" y2="22"></line>
+        </svg>
+        <span>Mapa</span>
+      </button>
+
+      <button type="button" class="nav-item" data-destino="guardados.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Guardados</span>
+      </button>
+
+      <button type="button" class="nav-item activo" data-destino="perfil.html" aria-current="page">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Perfil</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="../js/perfil.js"></script>
+</body>
+</html>
