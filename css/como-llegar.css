@@ -61,7 +61,7 @@ body {
   letter-spacing: -0.015em;
 }
 
-/* Mapa */
+/* Mapa con imagen */
 .contenedor-mapa {
   position: relative;
   width: 100%;
@@ -69,10 +69,97 @@ body {
   background: #8ee33e;
 }
 
-.mapa-svg {
+.imagen-mapa-campus {
   width: 100%;
   height: 285px;
+  object-fit: cover;
   display: block;
+}
+
+.pin-mesa {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: #187a3b;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 9.5px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.12s ease;
+}
+
+.pin-mesa:active {
+  transform: scale(0.94);
+}
+
+.pin-mesa.activo {
+  box-shadow: 0 0 0 5px rgba(24, 122, 59, 0.28), 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.pin-b3 {
+  top: 32%;
+  left: 42%;
+}
+
+.pin-b4 {
+  top: 28.5%;
+  left: 49%;
+}
+
+.pin-b5 {
+  top: 36.5%;
+  left: 55%;
+}
+
+.badge-mesa-libre {
+  position: absolute;
+  top: 19%;
+  left: 58%;
+  background: #ffffff;
+  border: 1.5px solid #187a3b;
+  color: #152c55;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+}
+
+.pin-tu-grupo {
+  position: absolute;
+  top: 61%;
+  left: 27%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.etiqueta-tu {
+  background: #0d2a5c;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.punto-tu-mapa {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1e5eff;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 0 5px rgba(30, 94, 255, 0.22);
 }
 
 .leyenda-mapa {

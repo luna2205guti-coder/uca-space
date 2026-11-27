@@ -20,26 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
     B3: {
       mesa: 'Mesa B3',
       zona: 'Biblioteca',
-      distancia: '≈ 128 m · 2 min a pie',
-      puntosRuta: '126,220 218,220 218,96 176,96',
-      x: 176,
-      y: 96
+      distancia: '≈ 128 m · 2 min a pie'
     },
     B4: {
       mesa: 'Mesa B4',
       zona: 'Biblioteca',
-      distancia: '≈ 140 m · 2 min a pie',
-      puntosRuta: '126,220 218,220 218,86 204,86',
-      x: 204,
-      y: 86
+      distancia: '≈ 140 m · 2 min a pie'
     },
     B5: {
       mesa: 'Mesa B5',
       zona: 'Biblioteca',
-      distancia: '≈ 152 m · 2 min a pie',
-      puntosRuta: '126,220 218,220 218,108 228,108',
-      x: 228,
-      y: 108
+      distancia: '≈ 152 m · 2 min a pie'
     }
   };
 
@@ -49,20 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const tituloDestinoEl = document.getElementById('titulo-destino');
   const datoDistanciaEl = document.getElementById('dato-distancia-tiempo');
-  const lineaRutaEl = document.getElementById('linea-ruta');
   const textoBadgeEl = document.getElementById('texto-badge-mesa');
-  const badgeGrupoEl = document.getElementById('badge-mesa-libre');
   const pasoZonaEl = document.getElementById('paso-zona');
   const pasoMesaEl = document.getElementById('paso-mesa');
+  const pinesMesa = Array.from(document.querySelectorAll('.pin-mesa'));
 
   function seleccionarDestino(codigoMesa, zonaNombre = 'Biblioteca') {
     const info = datosMesas[codigoMesa] || {
       mesa: codigoMesa || 'Mesa B5',
       zona: zonaNombre,
-      distancia: '≈ 152 m · 2 min a pie',
-      puntosRuta: '126,220 218,220 218,108 228,108',
-      x: 228,
-      y: 108
+      distancia: '≈ 152 m · 2 min a pie'
     };
 
     const etiquetaMesaCorta = info.mesa.replace(/^Mesa\s+/i, '');
@@ -72,16 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (datoDistanciaEl) {
       datoDistanciaEl.textContent = info.distancia;
     }
-    if (lineaRutaEl) {
-      lineaRutaEl.setAttribute('points', info.puntosRuta);
-    }
     if (textoBadgeEl) {
       textoBadgeEl.textContent = `${info.mesa} · Libre`;
-    }
-    if (badgeGrupoEl) {
-      const badgeX = Math.min(298, Math.max(140, info.x + 8));
-      const badgeY = Math.max(12, info.y - 52);
-      badgeGrupoEl.setAttribute('transform', `translate(${badgeX}, ${badgeY})`);
     }
     if (pasoZonaEl) {
       pasoZonaEl.textContent = `Llegarás a la zona ${info.zona}.`;
@@ -89,13 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pasoMesaEl) {
       pasoMesaEl.textContent = `Busca la mesa ${etiquetaMesaCorta.toLowerCase()}.`;
     }
+
+    pinesMesa.forEach((pin) => {
+      pin.classList.toggle('activo', pin.dataset.mesa === codigoMesa);
+    });
   }
 
   seleccionarDestino(mesaParam, zonaParam);
 
-  document.querySelectorAll('.marcador-mesa').forEach((marcador) => {
-    marcador.addEventListener('click', () => {
-      const codigo = marcador.dataset.mesa;
+  pinesMesa.forEach((pin) => {
+    pin.addEventListener('click', () => {
+      const codigo = pin.dataset.mesa;
       if (codigo) seleccionarDestino(codigo, 'Biblioteca');
     });
   });
