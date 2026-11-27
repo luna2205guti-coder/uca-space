@@ -89,63 +89,33 @@
     tabindex="0"
     aria-label="Continuar en UCA Space"
   >
-    <!-- Emblema búho-pin con lentes -->
-    <svg
+    <img
+      src="../img/logo-buho.svg"
+      alt="Logo UCA Space"
       class="emblema-buho"
-      viewBox="0 0 180 205"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Emblema UCA Space"
     >
-      <!-- Cuerpo en forma de pin / gota con orejas de búho -->
-      <path
-        d="M90 196C90 196 26 138 26 88C26 56 44 37 64 31L54 13L79 23C83 22.3 86.6 22 90 22C93.4 22 97 22.3 101 23L126 13L116 31C136 37 154 56 154 88C154 138 90 196 90 196Z"
-        fill="#162e57"
-      />
-
-      <!-- Máscara facial clara en forma de corazón con lentes -->
-      <path
-        d="M90 116C90 116 44 89 44 63C44 49 54 40 67 40C77 40 85 45 90 53C95 45 103 40 113 40C126 40 136 49 136 63C136 89 90 116 90 116Z"
-        fill="#dce3fb"
-      />
-
-      <!-- Lente izquierdo -->
-      <circle cx="71" cy="67" r="13.5" fill="#162e57" />
-      <circle cx="71" cy="67" r="8.5" fill="#dce3fb" />
-
-      <!-- Lente derecho -->
-      <circle cx="109" cy="67" r="13.5" fill="#162e57" />
-      <circle cx="109" cy="67" r="8.5" fill="#dce3fb" />
-
-      <!-- Puente de los lentes -->
-      <rect x="83" y="64" width="14" height="5" rx="2.5" fill="#162e57" />
-
-      <!-- Pico central -->
-      <path
-        d="M85 69H95L93 88C92.5 91.5 91.2 93 90 93C88.8 93 87.5 91.5 87 88L85 69Z"
-        fill="#162e57"
-      />
-
-      <!-- Línea curva decorativa en el pecho / ala -->
-      <path
-        d="M36 108C62 114 88 138 90 192"
-        stroke="#dce3fb"
-        stroke-width="4.5"
-        stroke-linecap="round"
-      />
-    </svg>
 
     <h1 class="marca-titulo">UCA <span>Space</span></h1>
     <p class="marca-subtitulo">TU CAMPUS, MÁS CERCA</p>
   </main>
 
   <script>
-    // Ajusta esta ruta a tu siguiente pantalla (por ejemplo 'actividades.html' o la siguiente pantalla inicial)
+    // Ajusta esta ruta a la pantalla a la que debe avanzar al tocar
     const SIGUIENTE_RUTA = 'actividades.html';
 
-    document.getElementById('pantalla-marca').addEventListener('click', () => {
+    const pantallaMarca = document.getElementById('pantalla-marca');
+
+    function continuar() {
       if (SIGUIENTE_RUTA) {
         window.location.href = SIGUIENTE_RUTA;
+      }
+    }
+
+    pantallaMarca.addEventListener('click', continuar);
+    pantallaMarca.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        continuar();
       }
     });
   </script>
