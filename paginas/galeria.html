@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería de espacios - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: inherit;
+      background: #f4f6fb;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-galeria {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      padding: 22px 20px 108px;
+      background: linear-gradient(180deg, #f3f5fc 0%, #eaeffa 58%, #d8e2fa 100%);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Cabecera */
+    .cabecera-galeria {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-top: 2px;
+    }
+
+    .btn-regresar {
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: #0e2959;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-regresar:hover {
+      background: rgba(14, 41, 89, 0.08);
+    }
+
+    .titulo-galeria {
+      margin: 0;
+      color: #0e2959;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* Bloque principal de galería */
+    .contenido-galeria {
+      margin-top: 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .subtitulo-sector {
+      width: 100%;
+      max-width: 332px;
+      margin: 0 0 18px 0;
+      color: #0e2959;
+      font-size: 17px;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    /* Imagen principal grande */
+    .marco-principal {
+      width: 100%;
+      max-width: 332px;
+      aspect-ratio: 4 / 3.05;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #cbd5e1;
+      box-shadow: 0 10px 24px rgba(14, 41, 89, 0.08);
+    }
+
+    .marco-principal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Tira de 3 vistas */
+    .grid-vistas {
+      width: 100%;
+      max-width: 332px;
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 11px;
+    }
+
+    .item-vista {
+      border: none;
+      background: transparent;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .thumb-vista {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      background: #cbd5e1;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .item-vista.activa .thumb-vista {
+      border-color: #0e2959;
+    }
+
+    .thumb-vista img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .etiqueta-vista {
+      color: #4b5563;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    .item-vista.activa .etiqueta-vista {
+      color: #0e2959;
+      font-weight: 600;
+    }
+
+    /* Paginación de sectores */
+    .paginacion-sectores {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .puntos-sectores {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .punto-sector {
+      width: 8px;
+      height: 8px;
+      border: none;
+      border-radius: 50%;
+      padding: 0;
+      background: #cbd5e1;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .punto-sector.activo {
+      background: #0e2959;
+      transform: scale(1.1);
+    }
+
+    .texto-sectores {
+      margin: 0;
+      color: #4b5563;
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+
+    /* Botón Volver al espacio */
+    .btn-volver-espacio {
+      margin-top: 30px;
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      padding: 15px 20px;
+      background: #364f82;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-volver-espacio:hover {
+      background: #0e2959;
+    }
+
+    /* Barra inferior flotante */
+    .barra-inferior-flotante {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 28px);
+      max-width: 402px;
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 6px 10px;
+      box-shadow: 0 -2px 14px rgba(14, 41, 89, 0.08), 0 8px 22px rgba(14, 41, 89, 0.1);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      gap: 4px;
+      z-index: 50;
+    }
+
+    .nav-tab {
+      border: none;
+      background: transparent;
+      border-radius: 999px;
+      padding: 8px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: #2563eb;
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .nav-tab svg {
+      stroke: #364f82;
+    }
+
+    .nav-tab.activa {
+      background: linear-gradient(135deg, #0b1996 0%, #2b4482 100%);
+      color: #ffffff;
+      padding: 9px 10px;
+    }
+
+    .nav-tab.activa svg {
+      stroke: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <main class="app-galeria">
+
+    <!-- Cabecera -->
+    <header class="cabecera-galeria">
+      <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h1 class="titulo-galeria">Galería de espacios</h1>
+    </header>
+
+    <!-- Galería principal -->
+    <section class="contenido-galeria">
+      <h2 id="titulo-sector" class="subtitulo-sector">Área de descanso</h2>
+
+      <div class="marco-principal">
+        <img id="foto-principal" src="../img/galeria-descanso-principal.jpg" alt="">
+      </div>
+
+      <div id="grid-vistas" class="grid-vistas" role="group" aria-label="Vistas del sector"></div>
+
+      <!-- Indicador de sectores -->
+      <div class="paginacion-sectores">
+        <div id="puntos-sectores" class="puntos-sectores" role="tablist" aria-label="Sectores"></div>
+        <p id="texto-sectores" class="texto-sectores">1 de 4 sectores</p>
+      </div>
+
+      <!-- Botón Volver al espacio -->
+      <button type="button" id="btn-volver-espacio" class="btn-volver-espacio">Volver al espacio</button>
+    </section>
+
+    <!-- Barra de navegación inferior -->
+    <nav class="barra-inferior-flotante" aria-label="Navegación principal">
+      <button type="button" class="nav-tab activa" data-ruta="pantalla-inicio.html">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5"></path>
+          <path d="M5 9.5V20h14V9.5"></path>
+          <path d="M9.5 20v-6h5v6"></path>
+        </svg>
+        <span>Inicio</span>
+      </button>
+
+      <button type="button" class="nav-tab" data-ruta="mapa.html">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+          <line x1="9" y1="3" x2="9" y2="18"></line>
+          <line x1="15" y1="6" x2="15" y2="21"></line>
+        </svg>
+        <span>Mapa</span>
+      </button>
+
+      <button type="button" class="nav-tab" data-ruta="">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"></path>
+        </svg>
+        <span>Guardados</span>
+      </button>
+
+      <button type="button" class="nav-tab" data-ruta="">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M4 20c0-3.8 3.6-6.5 8-6.5s8 2.7 8 6.5"></path>
+        </svg>
+        <span>Perfil</span>
+      </button>
+    </nav>
+
+  </main>
+
+  <script>
+    const RUTAS_GALERIA = {
+      volverEspacio: 'detalle.html',
+      inicio: 'pantalla-inicio.html'
+    };
+
+    // Reemplaza las rutas ../img/... por los nombres reales de tus fotos en la carpeta img/
+    const sectores = [
+      {
+        nombre: 'Área de descanso',
+        principal: '../img/galeria-descanso-principal.jpg',
+        vistas: [
+          { etiqueta: 'Vista 1', img: '../img/galeria-descanso-1.jpg' },
+          { etiqueta: 'Vista 2', img: '../img/galeria-descanso-2.jpg' },
+          { etiqueta: 'Vista 3', img: '../img/galeria-descanso-3.jpg' }
+        ]
+      },
+      {
+        nombre: 'Zona de estudio',
+        principal: '../img/galeria-estudio-principal.jpg',
+        vistas: [
+          { etiqueta: 'Vista 1', img: '../img/galeria-estudio-1.jpg' },
+          { etiqueta: 'Vista 2', img: '../img/galeria-estudio-2.jpg' },
+          { etiqueta: 'Vista 3', img: '../img/galeria-estudio-3.jpg' }
+        ]
+      },
+      {
+        nombre: 'Bosque UCA',
+        principal: '../img/galeria-bosque-principal.jpg',
+        vistas: [
+          { etiqueta: 'Vista 1', img: '../img/galeria-bosque-1.jpg' },
+          { etiqueta: 'Vista 2', img: '../img/galeria-bosque-2.jpg' },
+          { etiqueta: 'Vista 3', img: '../img/galeria-bosque-3.jpg' }
+        ]
+      },
+      {
+        nombre: 'Cafetería',
+        principal: '../img/galeria-cafeteria-principal.jpg',
+        vistas: [
+          { etiqueta: 'Vista 1', img: '../img/galeria-cafeteria-1.jpg' },
+          { etiqueta: 'Vista 2', img: '../img/galeria-cafeteria-2.jpg' },
+          { etiqueta: 'Vista 3', img: '../img/galeria-cafeteria-3.jpg' }
+        ]
+      }
+    ];
+
+    let sectorActual = 0;
+    let vistaActiva = 0;
+
+    const tituloSectorEl = document.getElementById('titulo-sector');
+    const fotoPrincipalEl = document.getElementById('foto-principal');
+    const gridVistasEl = document.getElementById('grid-vistas');
+    const puntosSectoresEl = document.getElementById('puntos-sectores');
+    const textoSectoresEl = document.getElementById('texto-sectores');
+    const btnRegresar = document.getElementById('btn-regresar');
+    const btnVolverEspacio = document.getElementById('btn-volver-espacio');
+
+    function renderGaleria() {
+      const sector = sectores[sectorActual];
+      tituloSectorEl.textContent = sector.nombre;
+      fotoPrincipalEl.src = vistaActiva === -1 ? sector.principal : sector.vistas[vistaActiva].img;
+      fotoPrincipalEl.alt = '';
+
+      gridVistasEl.innerHTML = '';
+      sector.vistas.forEach((vista, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'item-vista' + (idx === vistaActiva ? ' activa' : '');
+        btn.innerHTML = `
+          <div class="thumb-vista">
+            <img src="${vista.img}" alt="">
+          </div>
+          <span class="etiqueta-vista">${vista.etiqueta}</span>
+        `;
+        btn.addEventListener('click', () => {
+          vistaActiva = idx;
+          fotoPrincipalEl.src = vista.img;
+          document.querySelectorAll('.item-vista').forEach((el, i) => {
+            el.classList.toggle('activa', i === idx);
+          });
+        });
+        gridVistasEl.appendChild(btn);
+      });
+
+      puntosSectoresEl.innerHTML = '';
+      sectores.forEach((sec, idx) => {
+        const punto = document.createElement('button');
+        punto.type = 'button';
+        punto.className = 'punto-sector' + (idx === sectorActual ? ' activo' : '');
+        punto.setAttribute('aria-label', `Sector ${idx + 1}: ${sec.nombre}`);
+        punto.addEventListener('click', () => {
+          sectorActual = idx;
+          vistaActiva = -1;
+          renderGaleria();
+        });
+        puntosSectoresEl.appendChild(punto);
+      });
+
+      textoSectoresEl.textContent = `${sectorActual + 1} de ${sectores.length} sectores`;
+    }
+
+    // Inicia mostrando la foto principal del sector 1 y resaltando Vista 1 como en la captura
+    vistaActiva = -1;
+    renderGaleria();
+    const primeraVista = gridVistasEl.querySelector('.item-vista');
+    if (primeraVista) primeraVista.classList.add('activa');
+
+    btnRegresar.addEventListener('click', () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = RUTAS_GALERIA.volverEspacio;
+      }
+    });
+
+    btnVolverEspacio.addEventListener('click', () => {
+      window.location.href = RUTAS_GALERIA.volverEspacio;
+    });
+
+    document.querySelectorAll('.nav-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const ruta = tab.dataset.ruta;
+        if (ruta) {
+          window.location.href = ruta;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
