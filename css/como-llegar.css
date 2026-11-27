@@ -1,0 +1,192 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100dvh;
+  background: linear-gradient(180deg, #d7def5 0%, #dee4fa 52%, #d4dbf7 100%);
+  display: flex;
+  justify-content: center;
+  font-family: inherit;
+  color: #162e57;
+}
+
+.pantalla-como-llegar {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  background: linear-gradient(180deg, #f5f7fe 0%, #eef2fc 55%, #c7d6f7 100%);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 32px;
+}
+
+/* Encabezado */
+.encabezado-ruta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px 12px;
+  background: transparent;
+}
+
+.btn-regresar {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: #132954;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.15s ease, transform 0.12s ease;
+}
+
+.btn-regresar:active {
+  background: rgba(13, 42, 92, 0.08);
+  transform: scale(0.95);
+}
+
+.titulo-ruta {
+  margin: 0;
+  font-size: 18.5px;
+  font-weight: 800;
+  color: #102652;
+  letter-spacing: -0.015em;
+}
+
+/* Mapa */
+.contenedor-mapa {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #8ee33e;
+}
+
+.mapa-svg {
+  width: 100%;
+  height: 285px;
+  display: block;
+}
+
+.leyenda-mapa {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 7px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  font-size: 11px;
+  font-weight: 600;
+  color: #1a2842;
+}
+
+.item-leyenda {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.punto-leyenda {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.punto-tu {
+  background: #1e5eff;
+}
+
+.punto-mesa {
+  background: #187a3b;
+}
+
+/* Información de destino y pasos */
+.info-destino {
+  padding: 18px 18px 10px;
+}
+
+.titulo-destino {
+  margin: 0 0 12px;
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #10254f;
+}
+
+.barra-resumen-ruta {
+  background: #ffffff;
+  border: 1px solid #d7e0f2;
+  border-radius: 14px;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(13, 42, 92, 0.03);
+}
+
+.etiqueta-esquematica {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6f7c96;
+}
+
+.dato-distancia-tiempo {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #132752;
+  white-space: nowrap;
+}
+
+.btn-indicaciones {
+  width: 100%;
+  margin-top: 14px;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 18px;
+  background: linear-gradient(180deg, #43619c 0%, #344f82 100%);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(35, 58, 105, 0.2);
+  transition: transform 0.12s ease, opacity 0.15s ease;
+}
+
+.btn-indicaciones:active {
+  transform: scale(0.99);
+  opacity: 0.95;
+}
+
+.lista-indicaciones {
+  margin: 16px 0 12px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13.5px;
+  line-height: 1.42;
+  color: #364563;
+}
+
+.lista-indicaciones.oculta {
+  display: none;
+}
+
+.nota-aproximada {
+  margin: 0;
+  font-size: 12px;
+  color: #6f7c96;
+}
