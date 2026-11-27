@@ -66,17 +66,21 @@ body {
   position: relative;
   width: 100%;
   max-width: 100%;
-  overflow: hidden;
+  overflow: visible;
   background: #7dd83a;
+  padding-bottom: 10px;
+  box-shadow: 0 8px 18px rgba(13, 42, 92, 0.12);
+  z-index: 2;
 }
 
 .imagen-mapa-campus {
   width: 100%;
   height: auto;
-  max-height: 330px;
+  max-height: 340px;
   object-fit: contain;
   object-position: center bottom;
   display: block;
+  filter: contrast(1.03) saturate(1.05);
 }
 
 /* Números B3, B4 y B5 dentro de los círculos */
@@ -125,7 +129,9 @@ body {
 
 /* Información de destino y pasos */
 .info-destino {
-  padding: 18px 18px 10px;
+  position: relative;
+  z-index: 1;
+  padding: 20px 18px 10px;
 }
 
 .titulo-destino {
