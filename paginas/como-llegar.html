@@ -3,67 +3,321 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cómo llegar - UCA Space</title>
-  <link rel="stylesheet" href="../css/variables.css">
-  <link rel="stylesheet" href="../css/estilos.css">
-  <link rel="stylesheet" href="../css/como-llegar.css">
+  <title>Biblioteca CRAI - UCA Space</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100dvh;
+      background: linear-gradient(180deg, #d7def5 0%, #dee4fa 52%, #d4dbf7 100%);
+      display: flex;
+      justify-content: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #162e57;
+    }
+
+    .pantalla-biblioteca {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      background: linear-gradient(180deg, #f6f8fe 0%, #eef2fc 58%, #cfdcf8 100%);
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 32px;
+    }
+
+    .encabezado-biblioteca {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 16px 12px;
+    }
+
+    .btn-regresar {
+      width: 34px;
+      height: 34px;
+      border: none;
+      background: transparent;
+      color: #132954;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-regresar:active {
+      background: rgba(13, 42, 92, 0.08);
+      transform: scale(0.95);
+    }
+
+    .titulo-biblioteca {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 800;
+      color: #102652;
+      letter-spacing: -0.015em;
+    }
+
+    .contenido-biblioteca {
+      padding: 6px 20px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .subtitulo-biblioteca {
+      width: 100%;
+      margin: 4px 0 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #566785;
+      text-align: left;
+    }
+
+    .selector-niveles {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .btn-nivel {
+      border: 1.5px solid #2b4c7e;
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: #f5f7fd;
+      color: #2b4c7e;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-nivel.activo {
+      background: #142b52;
+      border-color: #142b52;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .titulo-plano-nivel {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #132852;
+      text-align: center;
+    }
+
+    .contenedor-plano {
+      width: 100%;
+      max-width: 310px;
+      min-height: 220px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .imagen-plano-biblioteca {
+      width: 100%;
+      height: auto;
+      max-height: 410px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .leyenda-plano {
+      margin-top: 14px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      font-size: 12.5px;
+      color: #4f5f7d;
+    }
+
+    .item-leyenda-plano {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .punto-leyenda-plano {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #23262d;
+      display: inline-block;
+    }
+
+    .cuadro-leyenda-plano {
+      width: 13px;
+      height: 12px;
+      border-radius: 2px;
+      background: #9ab3e8;
+      border: 1px solid #455f94;
+      display: inline-block;
+    }
+
+    .tarjeta-info-nivel {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #2b4c7e;
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: 0 4px 12px rgba(16, 38, 82, 0.06);
+    }
+
+    .titulo-tarjeta-nivel {
+      margin: 0 0 4px;
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #10254f;
+    }
+
+    .descripcion-tarjeta-nivel {
+      margin: 0;
+      font-size: 12.5px;
+      color: #5b6b87;
+      line-height: 1.38;
+    }
+  </style>
 </head>
 <body>
-  <div class="pantalla-como-llegar">
-    <header class="encabezado-ruta">
+  <div class="pantalla-biblioteca">
+    <header class="encabezado-biblioteca">
       <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
-      <h1 class="titulo-ruta">Cómo llegar</h1>
+      <h1 class="titulo-biblioteca">Biblioteca CRAI</h1>
     </header>
 
-    <main class="contenido-ruta">
-      <!-- Mapa con imagen mapa-comollegar.png -->
-      <section class="contenedor-mapa" aria-label="Mapa de ruta en el campus">
-        <img
-          id="img-mapa-campus"
-          src="../img/mapa-comollegar.png"
-          data-fallbacks='["./mapa-comollegar.png","../imagenes/mapa-comollegar.png","../assets/mapa-comollegar.png","../mapa-comollegar.png"]'
-          alt="Mapa de ruta en el campus desde Tú hasta Mesa B5 Libre en la Biblioteca"
-          class="imagen-mapa-campus"
-          onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } })(this);"
-        >
+    <main class="contenido-biblioteca">
+      <p class="subtitulo-biblioteca">Biblioteca P. Florentino Idoate, S.J.</p>
 
-        <!-- Etiquetas B3, B4 y B5 visibles sobre los círculos -->
-        <button type="button" class="pin-mesa pin-b3" data-mesa="B3" aria-label="Seleccionar Mesa B3">B3</button>
-        <button type="button" class="pin-mesa pin-b4" data-mesa="B4" aria-label="Seleccionar Mesa B4">B4</button>
-        <button type="button" class="pin-mesa pin-b5 activo" data-mesa="B5" aria-label="Seleccionar Mesa B5">B5</button>
+      <div class="selector-niveles" role="tablist" aria-label="Niveles de la biblioteca">
+        <button type="button" class="btn-nivel" data-nivel="1" role="tab" aria-selected="false">Nivel 1</button>
+        <button type="button" class="btn-nivel" data-nivel="2" role="tab" aria-selected="false">Nivel 2</button>
+        <button type="button" class="btn-nivel activo" data-nivel="3" role="tab" aria-selected="true">Nivel 3</button>
+      </div>
+
+      <h2 id="titulo-plano-nivel" class="titulo-plano-nivel">Plano nivel 3</h2>
+
+      <section class="contenedor-plano" aria-label="Plano de la biblioteca">
+        <img
+          id="img-plano-biblioteca"
+          src="../img/plano-biblioteca-nivel-3.png"
+          data-fallbacks='["img/plano-biblioteca-nivel-3.png","./plano-biblioteca-nivel-3.png","../imagenes/plano-biblioteca-nivel-3.png","imagenes/plano-biblioteca-nivel-3.png"]'
+          alt="Plano del Nivel 3 de la Biblioteca CRAI"
+          class="imagen-plano-biblioteca"
+          onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } else { img.style.display = 'none'; } })(this);"
+        >
       </section>
 
-      <!-- Información del destino y ruta -->
-      <section class="info-destino" aria-label="Detalles de la ruta">
-        <h2 id="titulo-destino" class="titulo-destino">Destino: Mesa B5 · Biblioteca</h2>
+      <div class="leyenda-plano" aria-label="Leyenda del plano">
+        <span class="item-leyenda-plano">
+          <span class="punto-leyenda-plano punto-servicios"></span>
+          <span>Servicios</span>
+        </span>
+        <span class="item-leyenda-plano">
+          <span class="cuadro-leyenda-plano cuadro-areas"></span>
+          <span>Áreas y salas</span>
+        </span>
+      </div>
 
-        <div class="barra-resumen-ruta">
-          <span class="etiqueta-esquematica">Ruta esquemática</span>
-          <span id="dato-distancia-tiempo" class="dato-distancia-tiempo">≈ 152 m · 2 min a pie</span>
-        </div>
-
-        <button type="button" id="btn-toggle-indicaciones" class="btn-indicaciones" aria-expanded="true">
-          Ocultar indicaciones
-        </button>
-
-        <ol id="lista-indicaciones" class="lista-indicaciones">
-          <li>Sal desde tu ubicación, marcada como «Tú».</li>
-          <li>Sigue la línea azul del mapa.</li>
-          <li id="paso-zona">Llegarás a la zona Biblioteca.</li>
-          <li id="paso-mesa">Busca la mesa B5.</li>
-        </ol>
-
-        <p class="nota-aproximada">
-          La ruta es aproximada. Confirma el camino en el campus.
+      <section class="tarjeta-info-nivel" aria-label="Información del nivel seleccionado">
+        <h3 id="titulo-tarjeta-nivel" class="titulo-tarjeta-nivel">Nivel 3 - Biblioteca UCA</h3>
+        <p id="descripcion-tarjeta-nivel" class="descripcion-tarjeta-nivel">
+          Selecciona un nivel para explorar sus espacios
         </p>
       </section>
     </main>
   </div>
 
-  <script src="../js/como-llegar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btnRegresar = document.getElementById('btn-regresar');
+      if (btnRegresar) {
+        btnRegresar.addEventListener('click', () => {
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.href = 'bienvenido.html';
+          }
+        });
+      }
+
+      const datosNiveles = {
+        1: {
+          tituloPlano: 'Plano nivel 1',
+          tituloTarjeta: 'Nivel 1 - Biblioteca UCA',
+          descripcion: 'Selecciona un nivel para explorar sus espacios',
+          imgSrc: '../img/plano-biblioteca-nivel-1.png',
+          fallbacks: ['img/plano-biblioteca-nivel-1.png', './plano-biblioteca-nivel-1.png', '../imagenes/plano-biblioteca-nivel-1.png']
+        },
+        2: {
+          tituloPlano: 'Plano nivel 2',
+          tituloTarjeta: 'Nivel 2 - Biblioteca UCA',
+          descripcion: 'Selecciona un nivel para explorar sus espacios',
+          imgSrc: '../img/plano-biblioteca-nivel-2.png',
+          fallbacks: ['img/plano-biblioteca-nivel-2.png', './plano-biblioteca-nivel-2.png', '../imagenes/plano-biblioteca-nivel-2.png']
+        },
+        3: {
+          tituloPlano: 'Plano nivel 3',
+          tituloTarjeta: 'Nivel 3 - Biblioteca UCA',
+          descripcion: 'Selecciona un nivel para explorar sus espacios',
+          imgSrc: '../img/plano-biblioteca-nivel-3.png',
+          fallbacks: ['img/plano-biblioteca-nivel-3.png', './plano-biblioteca-nivel-3.png', '../imagenes/plano-biblioteca-nivel-3.png']
+        }
+      };
+
+      const botonesNivel = Array.from(document.querySelectorAll('.btn-nivel'));
+      const tituloPlanoEl = document.getElementById('titulo-plano-nivel');
+      const tituloTarjetaEl = document.getElementById('titulo-tarjeta-nivel');
+      const descripcionTarjetaEl = document.getElementById('descripcion-tarjeta-nivel');
+      const imgPlanoEl = document.getElementById('img-plano-biblioteca');
+
+      function seleccionarNivel(nivelNum) {
+        const info = datosNiveles[nivelNum] || datosNiveles[3];
+
+        botonesNivel.forEach((btn) => {
+          const esActivo = Number(btn.dataset.nivel) === Number(nivelNum);
+          btn.classList.toggle('activo', esActivo);
+          btn.setAttribute('aria-selected', String(esActivo));
+        });
+
+        if (tituloPlanoEl) tituloPlanoEl.textContent = info.tituloPlano;
+        if (tituloTarjetaEl) tituloTarjetaEl.textContent = info.tituloTarjeta;
+        if (descripcionTarjetaEl) descripcionTarjetaEl.textContent = info.descripcion;
+
+        if (imgPlanoEl) {
+          imgPlanoEl.style.display = 'block';
+          imgPlanoEl.dataset.idx = '0';
+          imgPlanoEl.dataset.fallbacks = JSON.stringify(info.fallbacks);
+          imgPlanoEl.alt = `${info.tituloPlano} de la Biblioteca CRAI`;
+          imgPlanoEl.src = info.imgSrc;
+        }
+      }
+
+      botonesNivel.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          seleccionarNivel(Number(btn.dataset.nivel));
+        });
+      });
+
+      seleccionarNivel(3);
+    });
+  </script>
 </body>
 </html>
