@@ -1,66 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+// ===== CRAI: cambiar de nivel =====
+const planos = {
+  1: "../img/mapa-nivel1.png",
+  2: "../img/mapa-nivel2.png",
+  3: "../img/mapa-tercelnivel.png"
+};
 
-/* ==========================================
-   Pantalla: CRAI nivel 2 (planos por nivel)
-   ========================================== */
-.crai {
-  margin: 0;
-  min-height: 100dvh;
-  display: flex;
-  justify-content: center;
-  font-family: "Inter", system-ui, sans-serif;
-  color: #0f2a5c;
-  background: linear-gradient(180deg, #f4f6fd 0%, #e9ecf8 55%, #e3ddfd 100%);
-}
-.crai * { box-sizing: border-box; }
+const botonesNivel = document.querySelectorAll(".niveles__boton");
+const imagenPlano = document.getElementById("imagen-plano");
+const tituloPlano = document.getElementById("titulo-plano");
+const infoTitulo = document.getElementById("info-titulo");
 
-.crai__contenido {
-  width: 100%;
-  max-width: 430px;
-  min-height: 100dvh;
-  padding: 24px 20px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+botonesNivel.forEach((boton) => {
+  boton.addEventListener("click", () => {
+    const nivel = boton.dataset.nivel;
 
-/* ----- Cabecera ----- */
-.crai__cabecera { display: flex; align-items: center; gap: 16px; }
-.crai__cabecera h1 { margin: 0; font-size: 1.1rem; font-weight: 700; }
-.crai__nombre { margin: 0; font-size: 0.8rem; }
+    botonesNivel.forEach((b) => b.classList.remove("niveles__boton--activo"));
+    boton.classList.add("niveles__boton--activo");
 
-/* ----- Botones de nivel (Flexbox) ----- */
-.niveles { display: flex; gap: 12px; }
-.niveles__boton {
-  flex: 1;
-  padding: 12px 8px;
-  background: #ffffff;
-  border: 1.5px solid #0f2a5c;
-  border-radius: 999px;
-  font-family: inherit;
-  font-size: 0.9rem;
-  color: #0f2a5c;
-  cursor: pointer;
-}
-.niveles__boton--activo { background: #0f2a5c; color: #ffffff; }
-
-/* ----- Plano ----- */
-.crai__plano-titulo { margin: 8px 0 0; text-align: center; font-size: 0.9rem; font-weight: 700; }
-.crai__plano { display: block; width: 100%; height: auto; }
-
-/* ----- Leyenda ----- */
-.leyenda { display: flex; gap: 24px; margin: 0; padding: 0; list-style: none; font-size: 0.8rem; }
-.leyenda li { display: flex; align-items: center; gap: 8px; }
-.leyenda__punto { width: 14px; height: 14px; }
-.leyenda__punto--servicios { background: #31343f; border-radius: 50%; }
-.leyenda__punto--salas { background: #a9bff2; border: 1px solid #0f2a5c; border-radius: 3px; }
-
-/* ----- Tarjeta de información ----- */
-.crai__info {
-  padding: 16px;
-  background: #ffffff;
-  border: 1.5px solid #0f2a5c;
-  border-radius: 12px;
-}
-.crai__info h3 { margin: 0 0 4px; font-size: 0.95rem; font-weight: 700; }
-.crai__info p { margin: 0; font-size: 0.8rem; }
+    imagenPlano.src = planos[nivel];
+    imagenPlano.alt = `Plano del nivel ${nivel} de la biblioteca`;
+    tituloPlano.textContent = `Plano nivel ${nivel}`;
+    infoTitulo.textContent = `Nivel ${nivel} - Biblioteca UCA`;
+  });
+});
