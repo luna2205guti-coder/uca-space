@@ -670,12 +670,24 @@
     });
 
     btnRegresar.addEventListener('click', () => {
-      if (window.history.length > 1) {
-        window.history.back();
-      } else if (RUTAS_RESULTADOS.volver) {
-        window.location.href = RUTAS_RESULTADOS.volver;
-      }
-    });
+  // Si estás viendo una zona (como "Bosque") o un filtro activo,
+  // limpia los filtros para volver a la vista general de "22 espacios encontrados"
+  if (zonaActiva || filtroEstado !== 'todos') {
+    zonaActiva = null;
+    filtroEstado = 'todos';
+    filtroEl.value = 'todos';
+    pillsZona.forEach((p) => p.classList.remove('activa'));
+    renderEspacios();
+    return;
+  }
+
+  // Si ya estás en la vista general sin filtros, vuelve a inicio
+  if (RUTAS_RESULTADOS.volver) {
+    window.location.href = RUTAS_RESULTADOS.volver;
+  } else if (window.history.length > 1) {
+    window.history.back();
+  }
+});
 
     btnMapa.addEventListener('click', () => {
       if (RUTAS_RESULTADOS.mapa) {
