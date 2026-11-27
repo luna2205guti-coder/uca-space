@@ -63,7 +63,7 @@
       line-height: 1.2;
     }
 
-    /* Foto superior igual a la captura */
+    /* Foto superior */
     .foto-superior {
       width: 100%;
       height: 196px;
@@ -273,7 +273,14 @@
 
     <!-- Fotografía superior -->
     <div class="foto-superior">
-      <img src="../img/filtrar-espacio.jpg" alt="">
+      <img
+        id="img-filtrar-espacios"
+        src="../img/imagen-filtrarespacios.jpeg"
+        data-fallbacks='["img/imagen-filtrarespacios.jpeg","./imagen-filtrarespacios.jpeg","../../img/imagen-filtrarespacios.jpeg","imagen-filtrarespacios.jpeg"]'
+        alt="Espacios disponibles en el campus"
+        onload="this.style.display='block';"
+        onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } })(this);"
+      >
     </div>
 
     <!-- Descripción -->
@@ -352,8 +359,8 @@
 
   <script>
     const RUTAS_FILTRAR = {
-      volver: 'pantalla-inicio.html',
-      resultados: 'resultados-espacios.html'
+      volver: 'bienvenido.html',
+      resultados: 'resultados.html'
     };
 
     const btnRegresar = document.getElementById('btn-regresar');
@@ -394,7 +401,10 @@
     });
 
     btnRegresar.addEventListener('click', () => {
-      if (window.history.length > 1) {
+      const origen = sessionStorage.getItem('uca_space_origen');
+      if (origen && origen !== window.location.href) {
+        window.location.href = origen;
+      } else if (window.history.length > 1) {
         window.history.back();
       } else if (RUTAS_FILTRAR.volver) {
         window.location.href = RUTAS_FILTRAR.volver;
@@ -414,6 +424,8 @@
         distanciaMax: Number(rangoCercania.value),
         caracteristicas
       }));
+
+      sessionStorage.setItem('uca_space_origen', window.location.href);
 
       if (RUTAS_FILTRAR.resultados) {
         window.location.href = RUTAS_FILTRAR.resultados;
