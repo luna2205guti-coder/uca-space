@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (window.history.length > 1) {
         window.history.back();
       } else {
-        window.location.href = 'guardados.html';
+        window.location.href = 'opiniones-calificaciones.html';
       }
     });
   }

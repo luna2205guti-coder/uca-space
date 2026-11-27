@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const tipo = btn.dataset.stat;
       if (tipo === 'guardados') {
         sessionStorage.setItem('uca_space_origen', 'perfil.html');
-        window.location.href = 'guardados.html';
+        window.location.href = 'opiniones-calificaciones.html';
       } else if (tipo === 'reportes') {
         abrirModal({
           titulo: 'Mis reportes (3)',
