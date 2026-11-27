@@ -6,10 +6,12 @@
   <title>Detalle del espacio - UCA Space</title>
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/detalle.css">
 </head>
 <body>
   <main class="app detalle">
-    <header class="encabezado-pantalla encabezado-pantalla--izquierda">
+
+    <header class="detalle__cabecera">
       <a href="resultados.html" aria-label="Volver">
         <img src="../img/icono-atras.png" alt="" width="24" height="24">
       </a>
@@ -18,8 +20,10 @@
 
     <img class="detalle__foto" src="../img/mesa-b5.jpg" alt="Mesa B5 en la biblioteca">
 
-    <h2 class="detalle__nombre">Mesa B5</h2>
-    <span class="estado estado--libre">Libre</span>
+    <div class="detalle__titulo">
+      <h2>Mesa B5</h2>
+      <span class="estado estado--libre">Libre</span>
+    </div>
 
     <dl class="datos">
       <div class="datos__fila"><dt>Ubicación</dt><dd>Biblioteca</dd></div>
@@ -28,12 +32,12 @@
       <div class="datos__fila"><dt>Ambiente</dt><dd>Techada</dd></div>
     </dl>
 
-    <div class="detalle__botones">
-      <a class="boton boton--borde" href="mapa.html">Ver en el mapa</a>
-      <a class="boton" href="como-llegar.html">Cómo llegar</a>
+    <div class="acciones">
+      <a class="acciones__boton acciones__boton--borde" href="mapa.html">Ver en el mapa</a>
+      <a class="acciones__boton" href="como-llegar.html">Cómo llegar</a>
     </div>
 
-    <button class="boton" type="button" id="boton-aqui">Me siento aquí</button>
+    <button class="acciones__boton acciones__boton--ancho" type="button" id="boton-aqui">Me siento aquí</button>
 
     <h3 class="detalle__subtitulo">Reportar un problema</h3>
 
@@ -55,6 +59,7 @@
       <span>Disponibilidad</span>
       <a class="boton-mini" href="#">Horarios</a>
     </div>
+
   </main>
   <script src="../js/main.js"></script>
 </body>
