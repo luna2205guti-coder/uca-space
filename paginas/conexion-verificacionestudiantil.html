@@ -1,0 +1,24 @@
+<button type="button" id="btn-regresar-verif">‹ Regresar</button>
+
+<form id="form-verificacion">
+  <input type="email" id="correo-uca" placeholder="correo@uca.edu.sv" required>
+  <input type="text" id="carnet-uca" placeholder="Número de carnet estudiantil" required>
+  <button type="submit" id="btn-verificar">Verificar</button>
+</form>
+
+<script>
+  document.getElementById('btn-regresar-verif').addEventListener('click', () => {
+    const origen = sessionStorage.getItem('uca_space_origen');
+    if (origen) {
+      window.location.href = origen;
+    } else {
+      window.history.back();
+    }
+  });
+
+  document.getElementById('form-verificacion').addEventListener('submit', (e) => {
+    e.preventDefault();
+    sessionStorage.setItem('uca_space_origen', window.location.href);
+    window.location.href = 'registro.html'; // Cambia por el nombre exacto de tu HTML de registro
+  });
+</script>

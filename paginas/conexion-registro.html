@@ -1,0 +1,24 @@
+<button type="button" id="btn-regresar-registro">‹ Regresar</button>
+
+<form id="form-registro">
+  <input type="text" id="nombre-completo" placeholder="Escribe tu nombre" required>
+  <input type="email" id="correo-institucional" placeholder="Escribe tu correo" required>
+  <input type="password" id="password" placeholder="Escribe tu contraseña" required>
+  <input type="password" id="confirm-password" placeholder="Repite tu contraseña" required>
+  <label>
+    <input type="checkbox" id="acepto-terminos" required>
+    Acepto los términos y condiciones
+  </label>
+  <button type="submit" id="btn-registrarse">Registrarse</button>
+</form>
+
+<script>
+  document.getElementById('btn-regresar-registro').addEventListener('click', () => {
+    window.location.href = 'verificacion-estudiantil.html';
+  });
+
+  document.getElementById('form-registro').addEventListener('submit', (e) => {
+    e.preventDefault();
+    window.location.href = 'bienvenido.html'; // Cambia por la siguiente pantalla del flujo
+  });
+</script>
