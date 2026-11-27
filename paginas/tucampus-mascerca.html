@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UCA Space - Tu campus, más cerca</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100dvh;
+      background: linear-gradient(180deg, #d7def5 0%, #dee4fa 48%, #dce3fb 78%, #d4dbf7 100%);
+      display: flex;
+      justify-content: center;
+      font-family: inherit;
+    }
+
+    .pantalla-marca {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .emblema-buho {
+      width: 156px;
+      height: auto;
+      display: block;
+      margin-bottom: 18px;
+      animation: aparecerSuave 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .marca-titulo {
+      margin: 0;
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #162e57;
+      animation: aparecerSuave 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .marca-titulo span {
+      color: #3b7be8;
+    }
+
+    .marca-subtitulo {
+      margin: 10px 0 0;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #3c4f73;
+      animation: aparecerSuave 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes aparecerSuave {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main
+    id="pantalla-marca"
+    class="pantalla-marca"
+    role="button"
+    tabindex="0"
+    aria-label="Continuar en UCA Space"
+  >
+    <!-- Emblema búho-pin con lentes -->
+    <svg
+      class="emblema-buho"
+      viewBox="0 0 180 205"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Emblema UCA Space"
+    >
+      <!-- Cuerpo en forma de pin / gota con orejas de búho -->
+      <path
+        d="M90 196C90 196 26 138 26 88C26 56 44 37 64 31L54 13L79 23C83 22.3 86.6 22 90 22C93.4 22 97 22.3 101 23L126 13L116 31C136 37 154 56 154 88C154 138 90 196 90 196Z"
+        fill="#162e57"
+      />
+
+      <!-- Máscara facial clara en forma de corazón con lentes -->
+      <path
+        d="M90 116C90 116 44 89 44 63C44 49 54 40 67 40C77 40 85 45 90 53C95 45 103 40 113 40C126 40 136 49 136 63C136 89 90 116 90 116Z"
+        fill="#dce3fb"
+      />
+
+      <!-- Lente izquierdo -->
+      <circle cx="71" cy="67" r="13.5" fill="#162e57" />
+      <circle cx="71" cy="67" r="8.5" fill="#dce3fb" />
+
+      <!-- Lente derecho -->
+      <circle cx="109" cy="67" r="13.5" fill="#162e57" />
+      <circle cx="109" cy="67" r="8.5" fill="#dce3fb" />
+
+      <!-- Puente de los lentes -->
+      <rect x="83" y="64" width="14" height="5" rx="2.5" fill="#162e57" />
+
+      <!-- Pico central -->
+      <path
+        d="M85 69H95L93 88C92.5 91.5 91.2 93 90 93C88.8 93 87.5 91.5 87 88L85 69Z"
+        fill="#162e57"
+      />
+
+      <!-- Línea curva decorativa en el pecho / ala -->
+      <path
+        d="M36 108C62 114 88 138 90 192"
+        stroke="#dce3fb"
+        stroke-width="4.5"
+        stroke-linecap="round"
+      />
+    </svg>
+
+    <h1 class="marca-titulo">UCA <span>Space</span></h1>
+    <p class="marca-subtitulo">TU CAMPUS, MÁS CERCA</p>
+  </main>
+
+  <script>
+    // Ajusta esta ruta a tu siguiente pantalla (por ejemplo 'actividades.html' o la siguiente pantalla inicial)
+    const SIGUIENTE_RUTA = 'actividades.html';
+
+    document.getElementById('pantalla-marca').addEventListener('click', () => {
+      if (SIGUIENTE_RUTA) {
+        window.location.href = SIGUIENTE_RUTA;
+      }
+    });
+  </script>
+</body>
+</html>
