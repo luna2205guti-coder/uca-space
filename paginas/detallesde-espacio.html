@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del espacio - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+  <main class="app detalle">
+    <header class="encabezado-pantalla encabezado-pantalla--izquierda">
+      <a href="resultados.html" aria-label="Volver">
+        <img src="../img/icono-atras.png" alt="" width="24" height="24">
+      </a>
+      <h1>Detalle del espacio</h1>
+    </header>
+
+    <img class="detalle__foto" src="../img/mesa-b5.jpg" alt="Mesa B5 en la biblioteca">
+
+    <h2 class="detalle__nombre">Mesa B5</h2>
+    <span class="estado estado--libre">Libre</span>
+
+    <dl class="datos">
+      <div class="datos__fila"><dt>Ubicación</dt><dd>Biblioteca</dd></div>
+      <div class="datos__fila"><dt>Capacidad</dt><dd>6 personas</dd></div>
+      <div class="datos__fila"><dt>Material</dt><dd>Madera</dd></div>
+      <div class="datos__fila"><dt>Ambiente</dt><dd>Techada</dd></div>
+    </dl>
+
+    <div class="detalle__botones">
+      <a class="boton boton--borde" href="mapa.html">Ver en el mapa</a>
+      <a class="boton" href="como-llegar.html">Cómo llegar</a>
+    </div>
+
+    <button class="boton" type="button" id="boton-aqui">Me siento aquí</button>
+
+    <h3 class="detalle__subtitulo">Reportar un problema</h3>
+
+    <div class="reporte">
+      <span>Sillas dañadas</span>
+      <div class="contador">
+        <button class="contador__boton" type="button" data-contar="-1" aria-label="Restar">−</button>
+        <output id="contador-sillas">0</output>
+        <button class="contador__boton" type="button" data-contar="1" aria-label="Sumar">+</button>
+      </div>
+    </div>
+
+    <div class="reporte">
+      <span>La mesa está dañada o mojada</span>
+      <button class="boton-mini" type="button" id="boton-reportar">Reportar</button>
+    </div>
+
+    <div class="reporte">
+      <span>Disponibilidad</span>
+      <a class="boton-mini" href="#">Horarios</a>
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>
