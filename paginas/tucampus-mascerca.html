@@ -4,84 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UCA Space - Tu campus, más cerca</title>
-  <link rel="stylesheet" href="../css/variables.css">
-  <link rel="stylesheet" href="../css/estilos.css">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100dvh;
-      background: linear-gradient(180deg, #d7def5 0%, #dee4fa 48%, #dce3fb 78%, #d4dbf7 100%);
-      display: flex;
-      justify-content: center;
-      font-family: inherit;
-    }
-
-    .pantalla-marca {
-      width: 100%;
-      max-width: 430px;
-      min-height: 100dvh;
-      padding: 40px 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .emblema-buho {
-      width: 156px;
-      height: auto;
-      display: block;
-      margin-bottom: 18px;
-      animation: aparecerSuave 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    .marca-titulo {
-      margin: 0;
-      font-size: 40px;
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: #162e57;
-      animation: aparecerSuave 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    .marca-titulo span {
-      color: #3b7be8;
-    }
-
-    .marca-subtitulo {
-      margin: 10px 0 0;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #3c4f73;
-      animation: aparecerSuave 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    @keyframes aparecerSuave {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/splash.css">
 </head>
-<body>
+<body class="splash">
   <main
     id="pantalla-marca"
     class="pantalla-marca"
@@ -90,7 +17,7 @@
     aria-label="Continuar en UCA Space"
   >
     <img
-      src="../img/logo-buho.svg"
+      src="img/logo-uca-space.svg"
       alt="Logo UCA Space"
       class="emblema-buho"
     >
@@ -100,15 +27,13 @@
   </main>
 
   <script>
-    // Ajusta esta ruta a la pantalla a la que debe avanzar al tocar
-    const SIGUIENTE_RUTA = 'actividades.html';
+    // Pantalla a la que avanza al tocar
+    const SIGUIENTE_RUTA = 'paginas/iniciar-sesion.html';
 
     const pantallaMarca = document.getElementById('pantalla-marca');
 
     function continuar() {
-      if (SIGUIENTE_RUTA) {
-        window.location.href = SIGUIENTE_RUTA;
-      }
+      window.location.href = SIGUIENTE_RUTA;
     }
 
     pantallaMarca.addEventListener('click', continuar);
