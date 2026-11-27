@@ -384,6 +384,20 @@
     const tarjetas = Array.from(document.querySelectorAll('.tarjeta-actividad'));
     const mensajeSinResultados = document.getElementById('mensaje-sin-resultados');
 
+    function obtenerPaginaActual() {
+      const partes = window.location.pathname.split('/').filter(Boolean);
+      return partes[partes.length - 1] || 'actividades.html';
+    }
+
+    function irAResultados(actividad, busqueda) {
+      sessionStorage.setItem('ucaSpaceActividad', JSON.stringify({
+        actividad,
+        busqueda
+      }));
+      sessionStorage.setItem('ucaSpaceOrigenResultados', obtenerPaginaActual());
+      window.location.href = RUTAS_ACTIVIDADES.resultados;
+    }
+
     btnRegresar.addEventListener('click', () => {
       if (window.history.length > 1) {
         window.history.back();
@@ -411,23 +425,13 @@
 
     inputBuscar.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        const consulta = inputBuscar.value.trim();
-        sessionStorage.setItem('ucaSpaceActividad', JSON.stringify({
-          actividad: null,
-          busqueda: consulta
-        }));
-        window.location.href = RUTAS_ACTIVIDADES.resultados;
+        irAResultados(null, inputBuscar.value.trim());
       }
     });
 
     tarjetas.forEach((tarjeta) => {
       tarjeta.addEventListener('click', () => {
-        const actividad = tarjeta.dataset.actividad;
-        sessionStorage.setItem('ucaSpaceActividad', JSON.stringify({
-          actividad,
-          busqueda: inputBuscar.value.trim()
-        }));
-        window.location.href = RUTAS_ACTIVIDADES.resultados;
+        irAResultados(tarjeta.dataset.actividad, inputBuscar.value.trim());
       });
     });
   </script>
