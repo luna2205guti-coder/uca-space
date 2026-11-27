@@ -19,22 +19,41 @@ document.addEventListener('DOMContentLoaded', () => {
       tituloPlano: 'Plano nivel 1',
       tituloTarjeta: 'Nivel 1 - Biblioteca UCA',
       descripcion: 'Selecciona un nivel para explorar sus espacios',
-      imgSrc: '../img/mapa-primernivel.png',
-      fallbacks: ['img/mapa-primernivel.png', './mapa-primernivel.png', '../img/mapa-niveldos.png', 'img/mapa-niveldos.png']
+      imgSrc: '../img/mapa-primernivel.svg',
+      fallbacks: [
+        'img/mapa-primernivel.svg',
+        './mapa-primernivel.svg',
+        '../img/mapa-primernivel.png',
+        'img/mapa-primernivel.png',
+        '../img/mapa-niveldos.svg',
+        'img/mapa-niveldos.svg'
+      ]
     },
     2: {
       tituloPlano: 'Plano nivel 2',
       tituloTarjeta: 'Nivel 2 - Biblioteca UCA',
       descripcion: 'Selecciona un nivel para explorar sus espacios',
-      imgSrc: '../img/mapa-niveldos.png',
-      fallbacks: ['img/mapa-niveldos.png', './mapa-niveldos.png', '../../img/mapa-niveldos.png', 'mapa-niveldos.png']
+      imgSrc: '../img/mapa-niveldos.svg',
+      fallbacks: [
+        'img/mapa-niveldos.svg',
+        './mapa-niveldos.svg',
+        '../../img/mapa-niveldos.svg',
+        'mapa-niveldos.svg'
+      ]
     },
     3: {
       tituloPlano: 'Plano nivel 3',
       tituloTarjeta: 'Nivel 3 - Biblioteca UCA',
       descripcion: 'Selecciona un nivel para explorar sus espacios',
-      imgSrc: '../img/mapa-tercernivel.png',
-      fallbacks: ['img/mapa-tercernivel.png', './mapa-tercernivel.png', '../img/mapa-niveldos.png', 'img/mapa-niveldos.png']
+      imgSrc: '../img/mapa-tercernivel.svg',
+      fallbacks: [
+        'img/mapa-tercernivel.svg',
+        './mapa-tercernivel.svg',
+        '../img/mapa-tercernivel.png',
+        'img/mapa-tercernivel.png',
+        '../img/mapa-niveldos.svg',
+        'img/mapa-niveldos.svg'
+      ]
     }
   };
 
