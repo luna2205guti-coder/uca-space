@@ -20,29 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const cajaAdjuntar = document.getElementById('caja-adjuntar-foto');
   const textoAdjuntar = document.getElementById('texto-adjuntar-foto');
   const ayudaFoto = document.getElementById('ayuda-adjuntar-foto');
-  const vistaPrevia = document.getElementById('vista-previa-foto');
-  const imgPrevia = document.getElementById('img-previa-foto');
-  const btnQuitarFoto = document.getElementById('btn-quitar-foto');
-  let fotoBase64 = '';
+ 
+  let fotoAdjunta = false;
 
   cajaAdjuntar.addEventListener('click', () => {
     inputFoto.click();
   });
 
-  inputFoto.addEventListener('change', () => {
+  inputFoto.addEventListener('change', () => 
     const archivo = inputFoto.files && inputFoto.files[0];
     if (!archivo) return;
 
-    const lector = new FileReader();
-    lector.onload = (evento) => {
-      fotoBase64 = evento.target.result;
-      imgPrevia.src = fotoBase64;
-      vistaPrevia.hidden = false;
-      textoAdjuntar.textContent = archivo.name;
-      ayudaFoto.textContent = 'Imagen lista para enviar';
+   {
+      fotoAdjunta = true;
+    textoAdjuntar.textContent = archivo.name;
+    ayudaFoto.textContent = 'Imagen lista para enviar';
+  });
     };
     lector.readAsDataURL(archivo);
-  });
+  );
 
   btnQuitarFoto.addEventListener('click', () => {
     inputFoto.value = '';
