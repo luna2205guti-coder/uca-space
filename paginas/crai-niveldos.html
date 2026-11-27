@@ -29,16 +29,19 @@
       <h2 id="titulo-plano-nivel" class="titulo-plano-nivel">Plano nivel 2</h2>
 
       <section class="mapa-niveldos" aria-label="Plano de la biblioteca">
-        <img
-          id="img-plano-biblioteca"
-          src="../img/mapa-niveldos.png"
-          data-fallbacks='["img/mapa-niveldos.png","./mapa-niveldos.png"]'
-          alt="Plano del Nivel 2 de la Biblioteca CRAI"
-          class="imagen-plano-biblioteca"
-          onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } })(this);"
-        >
-      </section>
-
+  <img
+    id="img-plano-biblioteca"
+    src="../img/mapa-niveldos.png"
+    data-fallbacks='["img/mapa-niveldos.png","./mapa-niveldos.png","../../img/mapa-niveldos.png","mapa-niveldos.png"]'
+    alt="Plano del Nivel 2 de la Biblioteca CRAI"
+    class="imagen-plano-biblioteca"
+    onload="this.style.display='block';"
+    onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } else { img.style.display='none'; var msg = document.getElementById('err-img-mapa'); if(msg){ msg.style.display='block'; } } })(this);"
+  >
+  <p id="err-img-mapa" style="display:none; font-size:12px; color:#566785; text-align:center; margin:0;">
+    Verifica que <strong>mapa-niveldos.png</strong> esté en <code>img/</code> con ese nombre exacto.
+  </p>
+</section>
       <div class="leyenda-plano" aria-label="Leyenda del plano">
         <span class="item-leyenda-plano">
           <span class="punto-leyenda-plano punto-servicios"></span>
