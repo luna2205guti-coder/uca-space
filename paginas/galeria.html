@@ -440,25 +440,35 @@
     if (primeraVista) primeraVista.classList.add('activa');
 
     // Lógica para recordar si saliste desde aquí usando la barra inferior
-    const CLAVE_VOLVER_GALERIA = 'ucaSpaceVolverGaleria';
+    const CLAVE_VOLVER_GALERIA = 'ucaSpaceDesdeGaleria';
 
-    if (sessionStorage.getItem(CLAVE_VOLVER_GALERIA) === 'true') {
-      sessionStorage.removeItem(CLAVE_VOLVER_GALERIA);
-      document.querySelectorAll('.nav-tab').forEach((t) => {
-        t.classList.toggle('activa', t.querySelector('span')?.textContent.trim() === 'Inicio');
-      });
+    function restaurarVistaInicialGaleria() {
       sectorActual = 0;
       vistaActiva = -1;
       renderGaleria();
-    }
 
-    btnRegresar.addEventListener('click', () => {
-      if (sessionStorage.getItem(CLAVE_VOLVER_GALERIA) === 'true') {
-        sessionStorage.removeItem(CLAVE_VOLVER_GALERIA);
-        window.location.reload();
-        return;
+      const primeraVista = gridVistasEl.querySelector('.item-vista');
+      if (primeraVista) {
+        primeraVista.classList.add('activa');
       }
 
+      document.querySelectorAll('.nav-tab').forEach((tab) => {
+        const texto = tab.querySelector('span')?.textContent.trim();
+        tab.classList.toggle('activa', texto === 'Inicio');
+      });
+    }
+
+    // Si volvemos a esta página después de haber salido por la barra inferior,
+    // reseteamos al estado inicial de la captura
+    window.addEventListener('pageshow', () => {
+      if (sessionStorage.getItem(CLAVE_VOLVER_GALERIA) === 'true') {
+        sessionStorage.removeItem(CLAVE_VOLVER_GALERIA);
+        restaurarVistaInicialGaleria();
+      }
+    });
+
+    // Flecha (<): regresa a la vista inicial de galería o a volverEspacio
+    btnRegresar.addEventListener('click', () => {
       if (window.history.length > 1) {
         window.history.back();
       } else {
@@ -470,17 +480,14 @@
       window.location.href = RUTAS_GALERIA.volverEspacio;
     });
 
+    // Barra inferior
     document.querySelectorAll('.nav-tab').forEach((tab) => {
       tab.addEventListener('click', () => {
-        const esInicio = tab.querySelector('span')?.textContent.trim() === 'Inicio';
+        const texto = tab.querySelector('span')?.textContent.trim();
         const ruta = tab.dataset.ruta;
 
-        if (esInicio) {
-          document.querySelectorAll('.nav-tab').forEach((t) => t.classList.remove('activa'));
-          tab.classList.add('activa');
-          sectorActual = 0;
-          vistaActiva = -1;
-          renderGaleria();
+        if (texto === 'Inicio') {
+          restaurarVistaInicialGaleria();
           return;
         }
 
@@ -490,6 +497,3 @@
         }
       });
     });
-  </script>
-</body>
-</html>
