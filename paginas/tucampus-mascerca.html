@@ -3,20 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UCA Space - Tu campus, más cerca</title>
+  <title>UCA Space</title>
   <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/splash.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <main class="app bienvenida">
+    <img class="bienvenida__logo" src="img/logo-uca-space.svg" alt="Logo de UCA Space, un búho con lentes">
+    <h1 class="bienvenida__titulo">Bienvenido/a <br>UCA <span class="texto-vivo">Space</span></h1>
+    <p class="bienvenida__texto">Tu espacio para explorar, conectar y vivir la UCA</p>
+    <a class="boton boton--degradado" href="paginas/iniciar-sesion.html">Comenzar</a>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UCA Space - Tu campus, más cerca</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/splash.css">
 </head>
 <body class="splash">
   <main id="pantalla-marca" class="pantalla-marca" role="button" tabindex="0" aria-label="Continuar en UCA Space">
-    <img src="img/logo-uca-space.svg" alt="Logo UCA Space, un búho con lentes" class="emblema-buho">
+    <img src="../img/logo-buho.png" alt="Logo UCA Space, un búho con lentes" class="emblema-buho">
     <h1 class="marca-titulo">UCA <span>Space</span></h1>
     <p class="marca-subtitulo">TU CAMPUS, MÁS CERCA</p>
   </main>
 
   <script>
     // Pantalla a la que avanza al tocar
-    const SIGUIENTE_RUTA = 'paginas/iniciar-sesion.html';
+    const SIGUIENTE_RUTA = '../index.html';
     const pantallaMarca = document.getElementById('pantalla-marca');
 
     function continuar() {
