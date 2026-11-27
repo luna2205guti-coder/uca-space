@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reportar un problema - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/reportar-problema.css">
+</head>
+<body>
+  <div class="pantalla-reporte">
+    <header class="encabezado-reporte">
+      <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h1 class="titulo-reporte">Reportar un problema</h1>
+    </header>
+
+    <main class="contenido-reporte">
+      <p class="subtitulo-reporte">
+        Ayúdanos a mantener actualizada la información de los espacios del campus.
+      </p>
+
+      <form id="form-reporte" class="formulario-reporte" novalidate>
+        <!-- Espacio relacionado -->
+        <div class="grupo-campo">
+          <label for="select-espacio" class="etiqueta-campo">Espacio relacionado</label>
+          <div class="select-caja">
+            <select id="select-espacio" class="control-select" required>
+              <option value="" selected disabled>Selecciona un espacio</option>
+              <option value="biblioteca-central">Biblioteca Central - Nivel 1</option>
+              <option value="biblioteca-silencio">Biblioteca Central - Sala de lectura</option>
+              <option value="cafeteria-central">Cafetería Central</option>
+              <option value="bosque-central">Bosque / Zonas verdes</option>
+              <option value="edificio-magna">Edificio Magna / Aulas</option>
+            </select>
+            <span class="select-icono" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#364f82" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Tipo de problema -->
+        <div class="grupo-campo">
+          <label for="select-problema" class="etiqueta-campo">Tipo de problema</label>
+          <div class="select-caja">
+            <select id="select-problema" class="control-select" required>
+              <option value="" selected disabled>Selecciona un tipo de problema</option>
+              <option value="Información incorrecta">Información incorrecta</option>
+              <option value="Mobiliario o equipo dañado">Mobiliario o equipo dañado</option>
+              <option value="Disponibilidad diferente">Disponibilidad diferente</option>
+            </select>
+            <span class="select-icono" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#364f82" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+
+          <ul class="lista-tipos-problema" aria-label="Ejemplos de tipos de problema">
+            <li>Información incorrecta</li>
+            <li>Mobiliario o equipo dañado</li>
+            <li>Disponibilidad diferente</li>
+          </ul>
+        </div>
+
+        <!-- Describe el problema -->
+        <div class="grupo-campo">
+          <label for="textarea-descripcion" class="etiqueta-campo">Describe el problema</label>
+          <textarea
+            id="textarea-descripcion"
+            class="control-textarea"
+            rows="5"
+            placeholder="Cuéntanos qué sucede en el espacio..."
+            required
+          ></textarea>
+        </div>
+
+        <!-- Adjuntar fotografía (opcional) -->
+        <div class="grupo-campo">
+          <span class="etiqueta-campo">Adjuntar fotografía (opcional)</span>
+          <input type="file" id="input-foto" accept="image/*" class="input-archivo-oculto">
+
+          <button type="button" id="caja-adjuntar-foto" class="caja-adjuntar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2f487a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span id="texto-adjuntar-foto">Toca para adjuntar una imagen</span>
+          </button>
+
+          <p id="ayuda-adjuntar-foto" class="texto-ayuda-foto">Toca para adjuntar una imagen</p>
+
+          <div id="vista-previa-foto" class="vista-previa-foto" hidden>
+            <img id="img-previa-foto" src="" alt="Vista previa de la fotografía adjunta">
+            <button type="button" id="btn-quitar-foto" class="btn-quitar-foto">Quitar imagen</button>
+          </div>
+        </div>
+
+        <p id="mensaje-error" class="mensaje-error" role="alert" aria-live="polite"></p>
+
+        <button type="submit" id="btn-enviar-reporte" class="btn-enviar-reporte">
+          Enviar reporte
+        </button>
+      </form>
+    </main>
+
+    <!-- Modal de confirmación -->
+    <div id="modal-reporte" class="modal-reporte" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-caja">
+        <h2 class="modal-titulo">Reporte enviado</h2>
+        <p id="modal-reporte-texto" class="modal-texto">
+          Gracias por ayudar a mantener actualizada la información de UCA Space.
+        </p>
+        <button type="button" id="btn-cerrar-modal" class="btn-modal-aceptar">Aceptar</button>
+      </div>
+    </div>
+
+    <!-- Barra inferior -->
+    <nav class="barra-inferior" aria-label="Navegación principal">
+      <button type="button" class="nav-item" data-destino="bienvenida.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"></path>
+        </svg>
+        <span>Inicio</span>
+      </button>
+
+      <button type="button" class="nav-item" data-destino="mapa.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+          <line x1="8" y1="2" x2="8" y2="18"></line>
+          <line x1="16" y1="6" x2="16" y2="22"></line>
+        </svg>
+        <span>Mapa</span>
+      </button>
+
+      <button type="button" class="nav-item activo" data-destino="guardados.html" aria-current="page">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Guardados</span>
+      </button>
+
+      <button type="button" class="nav-item" data-destino="perfil.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Perfil</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="../js/reportar-problema.js"></script>
+</body>
+</html>
