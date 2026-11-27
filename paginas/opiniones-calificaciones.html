@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opiniones y calificaciones - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/opiniones-calificaciones.css">
+</head>
+<body>
+  <div class="pantalla-opiniones">
+    <header class="encabezado-opiniones">
+      <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h1 class="titulo-opiniones">Opiniones y calificaciones</h1>
+    </header>
+
+    <main class="contenido-opiniones">
+      <!-- Resumen de calificación -->
+      <section class="resumen-espacio" aria-label="Resumen de calificación del espacio">
+        <h2 id="nombre-espacio" class="nombre-espacio">Área de descanso</h2>
+
+        <div class="puntaje-fila">
+          <span id="promedio-numero" class="promedio-numero">4.5</span>
+          <div id="estrellas-resumen" class="estrellas-resumen" aria-hidden="true"></div>
+        </div>
+
+        <p id="total-opiniones-texto" class="total-opiniones-texto">Basado en 24 opiniones</p>
+      </section>
+
+      <hr class="divisor-seccion">
+
+      <!-- Filtros y lista de opiniones -->
+      <section class="seccion-lista-opiniones" aria-labelledby="titulo-opiniones-lista">
+        <h2 id="titulo-opiniones-lista" class="subtitulo-opiniones">Opiniones</h2>
+
+        <div class="filtros-opiniones" role="group" aria-label="Filtrar opiniones">
+          <button type="button" class="btn-filtro activo" data-filtro="todas" aria-pressed="true">
+            Todas
+          </button>
+          <button type="button" class="btn-filtro" data-filtro="recientes" aria-pressed="false">
+            Más recientes
+          </button>
+        </div>
+
+        <div id="tarjeta-opiniones" class="tarjeta-opiniones">
+          <!-- Las opiniones se renderizan desde js/opiniones-calificaciones.js -->
+        </div>
+      </section>
+
+      <!-- Botón Escribir opinión -->
+      <button type="button" id="btn-escribir-opinion" class="btn-escribir-opinion">
+        Escribir opinión
+      </button>
+    </main>
+
+    <!-- Barra inferior -->
+    <nav class="barra-inferior" aria-label="Navegación principal">
+      <button type="button" class="nav-item" data-destino="bienvenida.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"></path>
+        </svg>
+        <span>Inicio</span>
+      </button>
+
+      <button type="button" class="nav-item" data-destino="mapa.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+          <line x1="8" y1="2" x2="8" y2="18"></line>
+          <line x1="16" y1="6" x2="16" y2="22"></line>
+        </svg>
+        <span>Mapa</span>
+      </button>
+
+      <button type="button" class="nav-item activo" data-destino="guardados.html" aria-current="page">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Guardados</span>
+      </button>
+
+      <button type="button" class="nav-item" data-destino="perfil.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Perfil</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="../js/opiniones-calificaciones.js"></script>
+</body>
+</html>
