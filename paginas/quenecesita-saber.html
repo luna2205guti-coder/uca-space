@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Qué necesitas hacer? - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: inherit;
+      background: #f4f6fb;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-actividades {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      padding: 20px 18px 34px;
+      background: linear-gradient(180deg, #f3f5fc 0%, #eaeffa 60%, #d5e0fa 100%);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Cabecera Regresar */
+    .cabecera-regresar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-regresar {
+      border: none;
+      background: transparent;
+      color: #0e2959;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 8px 6px 2px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-regresar:hover {
+      background: rgba(14, 41, 89, 0.08);
+    }
+
+    /* Encabezado principal */
+    .encabezado-actividades {
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    .titulo-principal {
+      margin: 0;
+      color: #0e2959;
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .subtitulo-principal {
+      margin: 8px 0 0;
+      color: #5a6782;
+      font-size: 13.5px;
+      font-weight: 400;
+    }
+
+    /* Barra de búsqueda */
+    .caja-buscar {
+      margin-top: 18px;
+      background: #ffffff;
+      border: 1.5px solid #cbd7f0;
+      border-radius: 15px;
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      box-shadow: 0 4px 14px rgba(14, 41, 89, 0.04);
+    }
+
+    .caja-buscar svg {
+      flex-shrink: 0;
+      color: #486094;
+    }
+
+    .input-buscar {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #0e2959;
+      font-family: inherit;
+      font-size: 15px;
+    }
+
+    .input-buscar::placeholder {
+      color: #8492ad;
+    }
+
+    /* Lista de tarjetas de actividad */
+    .lista-actividades {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .tarjeta-actividad {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #2b457a;
+      border-radius: 20px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(14, 41, 89, 0.05);
+      transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+    }
+
+    .tarjeta-actividad:hover {
+      transform: translateY(-2px);
+      border-color: #0e2959;
+      box-shadow: 0 10px 22px rgba(14, 41, 89, 0.09);
+    }
+
+    .tarjeta-actividad:active {
+      transform: scale(0.99);
+    }
+
+    .tarjeta-actividad.oculta {
+      display: none;
+    }
+
+    .icono-actividad {
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+      border: 1.5px solid #2b457a;
+      border-radius: 15px;
+      background: #ffffff;
+      color: #162e5e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info-actividad {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nombre-actividad {
+      margin: 0;
+      color: #0e2959;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .descripcion-actividad {
+      margin: 0;
+      color: #4b5563;
+      font-size: 13px;
+      line-height: 1.38;
+    }
+
+    .enlace-ver-espacios {
+      margin-top: 3px;
+      color: #5b6882;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    .flecha-tarjeta {
+      flex-shrink: 0;
+      color: #0e2959;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mensaje-sin-resultados {
+      display: none;
+      text-align: center;
+      color: #4b5563;
+      font-size: 14px;
+      padding: 24px 12px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 16px;
+    }
+
+    .mensaje-sin-resultados.visible {
+      display: block;
+    }
+
+    /* Nota al pie */
+    .nota-pie {
+      margin-top: 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: #5a6782;
+      font-size: 12.5px;
+      line-height: 1.4;
+      padding: 0 4px;
+    }
+
+    .nota-pie svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: #2b457a;
+    }
+  </style>
+</head>
+<body>
+  <main class="app-actividades">
+
+    <!-- Cabecera -->
+    <header class="cabecera-regresar">
+      <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>Regresar</span>
+      </button>
+    </header>
+
+    <!-- Título y subtítulo -->
+    <section class="encabezado-actividades">
+      <h1 class="titulo-principal">¿Qué necesitas hacer?</h1>
+      <p class="subtitulo-principal">Elige una actividad y encuentra un espacio adecuado.</p>
+    </section>
+
+    <!-- Buscador -->
+    <div class="caja-buscar">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        type="search"
+        id="input-buscar-actividad"
+        class="input-buscar"
+        placeholder="Buscar actividad"
+        aria-label="Buscar actividad"
+        autocomplete="off"
+      >
+    </div>
+
+    <!-- Tarjetas de actividades -->
+    <section class="lista-actividades" aria-label="Actividades disponibles">
+
+      <button type="button" class="tarjeta-actividad" data-actividad="Descansar" data-keywords="descansar pausa dormir relajar tranquilidad">
+        <span class="icono-actividad" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 14h18"></path>
+            <path d="M5 14v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3"></path>
+            <path d="M4 14v4"></path>
+            <path d="M20 14v4"></path>
+          </svg>
+        </span>
+        <span class="info-actividad">
+          <strong class="nombre-actividad">Descansar</strong>
+          <span class="descripcion-actividad">Lugares tranquilos para hacer una pausa entre clases.</span>
+          <span class="enlace-ver-espacios">Ver espacios</span>
+        </span>
+        <span class="flecha-tarjeta" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </button>
+
+      <button type="button" class="tarjeta-actividad" data-actividad="Estudiar" data-keywords="estudiar leer tareas concentrarse biblioteca">
+        <span class="icono-actividad" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="16" rx="3"></rect>
+            <line x1="7" y1="9" x2="17" y2="9"></line>
+            <line x1="7" y1="13" x2="14" y2="13"></line>
+          </svg>
+        </span>
+        <span class="info-actividad">
+          <strong class="nombre-actividad">Estudiar</strong>
+          <span class="descripcion-actividad">Espacios para leer, hacer tareas o concentrarte.</span>
+          <span class="enlace-ver-espacios">Ver espacios</span>
+        </span>
+        <span class="flecha-tarjeta" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </button>
+
+      <button type="button" class="tarjeta-actividad" data-actividad="Trabajar" data-keywords="trabajar computadora laptop oficina proyecto">
+        <span class="icono-actividad" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="12" rx="2"></rect>
+            <line x1="8" y1="20" x2="16" y2="20"></line>
+            <line x1="12" y1="16" x2="12" y2="20"></line>
+          </svg>
+        </span>
+        <span class="info-actividad">
+          <strong class="nombre-actividad">Trabajar</strong>
+          <span class="descripcion-actividad">Lugares cómodos para usar tu computadora.</span>
+          <span class="enlace-ver-espacios">Ver espacios</span>
+        </span>
+        <span class="flecha-tarjeta" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </button>
+
+      <button type="button" class="tarjeta-actividad" data-actividad="Reunirse" data-keywords="reunirse grupo equipo conversar companeros">
+        <span class="icono-actividad" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="3"></circle>
+            <path d="M6.5 18.5c0-2.7 2.5-4.5 5.5-4.5s5.5 1.8 5.5 4.5"></path>
+            <circle cx="6" cy="9.5" r="2.2"></circle>
+            <path d="M2.5 18c0-2 1.6-3.4 3.8-3.8"></path>
+            <circle cx="18" cy="9.5" r="2.2"></circle>
+            <path d="M21.5 18c0-2-1.6-3.4-3.8-3.8"></path>
+          </svg>
+        </span>
+        <span class="info-actividad">
+          <strong class="nombre-actividad">Reunirse</strong>
+          <span class="descripcion-actividad">Espacios para conversar o trabajar con otras personas.</span>
+          <span class="enlace-ver-espacios">Ver espacios</span>
+        </span>
+        <span class="flecha-tarjeta" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </button>
+
+      <p id="mensaje-sin-resultados" class="mensaje-sin-resultados">
+        No encontramos actividades con esa búsqueda.
+      </p>
+    </section>
+
+    <!-- Nota inferior -->
+    <p class="nota-pie">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span>También puedes buscar por nombre de edificio o aplicar filtros para encontrar un espacio.</span>
+    </p>
+
+  </main>
+
+  <script>
+    const RUTAS_ACTIVIDADES = {
+      volver: 'pantalla-inicio.html',
+      resultados: 'resultados-espacios.html'
+    };
+
+    const btnRegresar = document.getElementById('btn-regresar');
+    const inputBuscar = document.getElementById('input-buscar-actividad');
+    const tarjetas = Array.from(document.querySelectorAll('.tarjeta-actividad'));
+    const mensajeSinResultados = document.getElementById('mensaje-sin-resultados');
+
+    btnRegresar.addEventListener('click', () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else if (RUTAS_ACTIVIDADES.volver) {
+        window.location.href = RUTAS_ACTIVIDADES.volver;
+      }
+    });
+
+    inputBuscar.addEventListener('input', () => {
+      const termino = inputBuscar.value.trim().toLowerCase();
+      let visibles = 0;
+
+      tarjetas.forEach((tarjeta) => {
+        const nombre = (tarjeta.dataset.actividad || '').toLowerCase();
+        const desc = (tarjeta.querySelector('.descripcion-actividad')?.textContent || '').toLowerCase();
+        const extra = (tarjeta.dataset.keywords || '').toLowerCase();
+        const coincide = !termino || nombre.includes(termino) || desc.includes(termino) || extra.includes(termino);
+
+        tarjeta.classList.toggle('oculta', !coincide);
+        if (coincide) visibles++;
+      });
+
+      mensajeSinResultados.classList.toggle('visible', visibles === 0);
+    });
+
+    inputBuscar.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const consulta = inputBuscar.value.trim();
+        sessionStorage.setItem('ucaSpaceActividad', JSON.stringify({
+          actividad: null,
+          busqueda: consulta
+        }));
+        window.location.href = RUTAS_ACTIVIDADES.resultados;
+      }
+    });
+
+    tarjetas.forEach((tarjeta) => {
+      tarjeta.addEventListener('click', () => {
+        const actividad = tarjeta.dataset.actividad;
+        sessionStorage.setItem('ucaSpaceActividad', JSON.stringify({
+          actividad,
+          busqueda: inputBuscar.value.trim()
+        }));
+        window.location.href = RUTAS_ACTIVIDADES.resultados;
+      });
+    });
+  </script>
+</body>
+</html>
