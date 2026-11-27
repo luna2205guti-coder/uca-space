@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niveles del CRAI - UCA Space</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      font-family: "Inter", system-ui, sans-serif;
+      color: #0f2a5c;
+      background: linear-gradient(180deg, #f4f6fd 0%, #e9ecf8 55%, #e3ddfd 100%);
+    }
+
+    .contenido {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      padding: 24px 20px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cabecera { display: flex; align-items: center; gap: 16px; }
+    .cabecera h1 { margin: 0; font-size: 1.1rem; font-weight: 700; }
+    .nombre { margin: 0; font-size: 0.8rem; }
+
+    .niveles { display: flex; gap: 12px; }
+    .niveles button {
+      flex: 1;
+      padding: 12px 8px;
+      background: #fff;
+      border: 1.5px solid #0f2a5c;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: #0f2a5c;
+      cursor: pointer;
+    }
+    .niveles button.activo { background: #0f2a5c; color: #fff; }
+
+    .plano-titulo { margin: 8px 0 0; text-align: center; font-size: 0.9rem; font-weight: 700; }
+    .plano { display: block; width: 100%; height: auto; }
+
+    .leyenda { display: flex; gap: 24px; margin: 0; padding: 0; list-style: none; font-size: 0.8rem; }
+    .leyenda li { display: flex; align-items: center; gap: 8px; }
+    .punto { width: 14px; height: 14px; }
+    .punto.servicios { background: #31343f; border-radius: 50%; }
+    .punto.salas { background: #a9bff2; border: 1px solid #0f2a5c; border-radius: 3px; }
+
+    .info { padding: 16px; background: #fff; border: 1.5px solid #0f2a5c; border-radius: 12px; }
+    .info h3 { margin: 0 0 4px; font-size: 0.95rem; }
+    .info p { margin: 0; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <main class="contenido">
+
+    <header class="cabecera">
+      <a href="inicio.html" aria-label="Volver">
+        <img src="../img/icono-atras.png" alt="" width="24" height="24">
+      </a>
+      <h1>Biblioteca UCA</h1>
+    </header>
+
+    <p class="nombre">Biblioteca P. Florentino Idoate, S.J.</p>
+
+    <div class="niveles">
+      <button type="button" data-nivel="1">Nivel 1</button>
+      <button type="button" data-nivel="2" class="activo">Nivel 2</button>
+      <button type="button" data-nivel="3">Nivel 3</button>
+    </div>
+
+    <h2 class="plano-titulo" id="titulo-plano">Plano nivel 2</h2>
+    <img class="plano" id="imagen-plano" src="../img/mapa-nivel2.png" alt="Plano del nivel 2 de la biblioteca">
+
+    <ul class="leyenda">
+      <li><span class="punto servicios"></span>Servicios</li>
+      <li><span class="punto salas"></span>Áreas y salas</li>
+    </ul>
+
+    <section class="info">
+      <h3 id="info-titulo">Nivel 2 - Biblioteca UCA</h3>
+      <p>Selecciona un nivel para explorar sus espacios</p>
+    </section>
+
+  </main>
+
+  <script>
+    const botones = document.querySelectorAll(".niveles button");
+    const imagen = document.getElementById("imagen-plano");
+    const titulo = document.getElementById("titulo-plano");
+    const info = document.getElementById("info-titulo");
+
+    botones.forEach((boton) => {
+      boton.addEventListener("click", () => {
+        const nivel = boton.dataset.nivel;
+        botones.forEach((b) => b.classList.remove("activo"));
+        boton.classList.add("activo");
+        imagen.src = `../img/mapa-nivel${nivel}.png`;
+        imagen.alt = `Plano del nivel ${nivel} de la biblioteca`;
+        titulo.textContent = `Plano nivel ${nivel}`;
+        info.textContent = `Nivel ${nivel} - Biblioteca UCA`;
+      });
+    });
+  </script>
+</body>
+</html>
