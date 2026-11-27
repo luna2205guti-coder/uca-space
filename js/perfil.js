@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let toastTimer = null;
 
   function mostrarToast(mensaje) {
+    if (!toastEl) return;
     toastEl.textContent = mensaje;
     toastEl.classList.add('visible');
     clearTimeout(toastTimer);
@@ -54,34 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     guardarPreferencias(toggleUbicacion.checked ? 'Ubicación activada' : 'Ubicación oculta');
   });
 
-  // 2. Estadísticas superiores
-  document.querySelectorAll('.stat-item').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const tipo = btn.dataset.stat;
-      if (tipo === 'guardados') {
-        sessionStorage.setItem('uca_space_origen', 'perfil.html');
-        window.location.href = 'guardados.html';
-      } else if (tipo === 'reportes') {
-        abrirModal({
-          titulo: 'Mis reportes (3)',
-          html: 'Tienes 3 reportes recientes enviados sobre disponibilidad y estado de mesas en el campus.',
-          textoPrimario: 'Ver en mapa',
-          onConfirmar: () => {
-            sessionStorage.setItem('uca_space_origen', 'perfil.html');
-            window.location.href = 'mapa.html';
-          }
-        });
-      } else if (tipo === 'opiniones') {
-        abrirModal({
-          titulo: 'Mis opiniones (2)',
-          html: 'Has compartido 2 valoraciones sobre espacios de estudio en Biblioteca y Bosque.',
-          textoPrimario: 'Entendido'
-        });
-      }
-    });
-  });
-
-  // 3. Modal reutilizable
+  // 2. Modal reutilizable
   const modal = document.getElementById('modal-perfil');
   const modalTitulo = document.getElementById('modal-perfil-titulo');
   const modalContenido = document.getElementById('modal-perfil-contenido');
@@ -122,62 +96,53 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && modal.classList.contains('abierto')) cerrarModal();
   });
 
-  // 4. Opciones de Cuenta y ayuda
-  document.querySelectorAll('.opcion-fila').forEach((btn) => {
+  // 3. Estadísticas superiores
+  document.querySelectorAll('.stat-item').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const accion = btn.dataset.accion;
-
-      if (accion === 'privacidad') {
+      const tipo = btn.dataset.stat;
+      if (tipo === 'guardados') {
         sessionStorage.setItem('uca_space_origen', 'perfil.html');
-        window.location.href = 'privacidad-condiciones.html';
-        return;
-      }
-
-      if (accion === 'contrasena') {
+        window.location.href = 'guardados.html';
+      } else if (tipo === 'reportes') {
         abrirModal({
-          titulo: 'Cambiar contraseña',
-          html: 'Ingresa tu nueva contraseña para actualizar el acceso a tu cuenta:<input type="password" id="input-nueva-clave" class="modal-input" placeholder="Nueva contraseña (mín. 6 caracteres)">',
-          textoPrimario: 'Guardar',
+          titulo: 'Mis reportes (3)',
+          html: 'Tienes 3 reportes recientes enviados sobre disponibilidad y estado de mesas en el campus.',
+          textoPrimario: 'Ver en mapa',
           onConfirmar: () => {
-            const val = document.getElementById('input-nueva-clave')?.value || '';
-            if (val.length >= 6) {
-              mostrarToast('Contraseña actualizada');
-            } else {
-              mostrarToast('Usa al menos 6 caracteres');
-            }
+            sessionStorage.setItem('uca_space_origen', 'perfil.html');
+            window.location.href = 'mapa.html';
           }
         });
-        return;
-      }
-
-      if (accion === 'faq') {
+      } else if (tipo === 'opiniones') {
         abrirModal({
-          titulo: 'Preguntas frecuentes',
-          html: '<strong>¿Cómo veo si una mesa está libre?</strong><br>En el Mapa del campus los puntos verdes indican espacios disponibles y los rojos zonas ocupadas.<br><br><strong>¿Cómo reporto un espacio?</strong><br>Selecciona la zona en el mapa o en resultados y envía tu actualización.',
-          textoPrimario: 'Listo'
-        });
-        return;
-      }
-
-      if (accion === 'soporte') {
-        abrirModal({
-          titulo: 'Contactar soporte',
-          html: 'Describe brevemente tu consulta y el equipo de UCA Space te responderá a tu correo institucional:<textarea id="input-soporte" class="modal-input" rows="3" placeholder="Escribe tu mensaje aquí..."></textarea>',
-          textoPrimario: 'Enviar',
-          onConfirmar: () => {
-            const msg = document.getElementById('input-soporte')?.value.trim();
-            if (msg) {
-              mostrarToast('Mensaje enviado a soporte');
-            } else {
-              mostrarToast('Escribe un mensaje primero');
-            }
-          }
+          titulo: 'Mis opiniones (2)',
+          html: 'Has compartido 2 valoraciones sobre espacios de estudio en Biblioteca y Bosque.',
+          textoPrimario: 'Entendido'
         });
       }
     });
   });
 
-  // 5. Cerrar sesión
+  // 4. Opciones de Cuenta y ayuda conectadas a sus respectivas pantallas
+  const rutasCuentaAyuda = {
+    contrasena: 'nueva-contrasena.html',
+    faq: 'preguntas-frecuentes.html',
+    soporte: 'soporte.html',
+    privacidad: 'privacidad-condiciones.html'
+  };
+
+  document.querySelectorAll('.opcion-fila').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const accion = btn.dataset.accion;
+      const destino = rutasCuentaAyuda[accion];
+      if (!destino) return;
+
+      sessionStorage.setItem('uca_space_origen', 'perfil.html');
+      window.location.href = destino;
+    });
+  });
+
+  // 5. Cerrar sesión -> inicio-sesion.html
   document.getElementById('btn-cerrar-sesion').addEventListener('click', () => {
     abrirModal({
       titulo: 'Cerrar sesión',
@@ -187,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
       peligro: true,
       onConfirmar: () => {
         sessionStorage.clear();
-        window.location.href = '../index.html';
+        window.location.href = 'inicio-sesion.html';
       }
     });
   });
