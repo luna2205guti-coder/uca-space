@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtros avanzados - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: inherit;
+      background: #f4f6fb;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-filtros {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      padding: 20px 18px 34px;
+      background: linear-gradient(180deg, #f3f5fc 0%, #e9effb 58%, #d4dff9 100%);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Cabecera */
+    .btn-regresar {
+      width: fit-content;
+      border: none;
+      background: transparent;
+      color: #0e2959;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 8px 6px 2px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-regresar:hover {
+      background: rgba(14, 41, 89, 0.08);
+    }
+
+    /* Encabezado */
+    .encabezado-filtros {
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .titulo-filtros {
+      margin: 0;
+      color: #0e2959;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .subtitulo-filtros {
+      margin: 6px 0 0;
+      color: #556482;
+      font-size: 13px;
+    }
+
+    /* Secciones */
+    .bloque-filtro {
+      margin-top: 20px;
+    }
+
+    .etiqueta-seccion {
+      display: block;
+      margin: 0;
+      color: #0e2959;
+      font-size: 15.5px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .ayuda-seccion {
+      margin: 4px 0 0;
+      color: #5b6882;
+      font-size: 12.5px;
+    }
+
+    /* Selector Edificio o zona */
+    .select-edificio {
+      margin-top: 10px;
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #2b457a;
+      border-radius: 16px;
+      padding: 13px 16px;
+      color: #2b457a;
+      font-family: inherit;
+      font-size: 14.5px;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(14, 41, 89, 0.04);
+    }
+
+    .select-edificio:focus {
+      border-color: #0e2959;
+    }
+
+    /* Capacidad de personas */
+    .fila-capacidad {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .btn-capacidad {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 6px;
+      background: #677ba3;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .btn-capacidad:hover {
+      background: #4b618c;
+    }
+
+    .btn-capacidad.activa {
+      background: #0b2454;
+      font-weight: 700;
+    }
+
+    /* Características (checkboxes) */
+    .grid-caracteristicas {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 14px;
+    }
+
+    .item-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #2b3f66;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .item-checkbox input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 21px;
+      height: 21px;
+      flex-shrink: 0;
+      border: 1.6px solid #486094;
+      border-radius: 6px;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.14s ease, border-color 0.14s ease;
+    }
+
+    .item-checkbox input[type="checkbox"]:checked {
+      background: #0b2454;
+      border-color: #0b2454;
+    }
+
+    .item-checkbox input[type="checkbox"]:checked::after {
+      content: "";
+      width: 5px;
+      height: 10px;
+      border: solid #ffffff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      margin-bottom: 1px;
+    }
+
+    /* Disponibilidad */
+    .tarjeta-disponibilidad {
+      margin-top: 10px;
+      background: #eef3fc;
+      border: 1.5px solid #2b457a;
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .disponibilidad-izq {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #2b3f66;
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .radio-indicador {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      border: 2px solid #2b457a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .radio-indicador::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: transparent;
+      transition: background-color 0.14s ease;
+    }
+
+    .tarjeta-disponibilidad.activa .radio-indicador::after {
+      background: #0b2454;
+    }
+
+    .switch-disponibilidad {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+      border: none;
+      border-radius: 999px;
+      background: #677ba3;
+      padding: 0;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .switch-disponibilidad::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ffffff;
+      transition: transform 0.15s ease;
+    }
+
+    .tarjeta-disponibilidad.activa .switch-disponibilidad {
+      background: #364f82;
+    }
+
+    .tarjeta-disponibilidad.activa .switch-disponibilidad::after {
+      transform: translateX(20px);
+    }
+
+    /* Filtros seleccionados */
+    .lista-chips {
+      margin-top: 12px;
+      min-height: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .chip-filtro {
+      border: none;
+      border-radius: 999px;
+      padding: 9px 16px;
+      background: #677ba3;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background-color 0.14s ease;
+    }
+
+    .chip-filtro:hover {
+      background: #4b618c;
+    }
+
+    .chip-quitar {
+      font-size: 15px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .texto-sin-chips {
+      color: #5b6882;
+      font-size: 12.5px;
+    }
+
+    /* Botones inferiores */
+    .acciones-inferiores {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 14px;
+    }
+
+    .btn-limpiar {
+      border: none;
+      border-radius: 999px;
+      padding: 15px 16px;
+      background: #364f82;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-limpiar:hover {
+      background: #263a63;
+    }
+
+    .btn-ver-espacios {
+      border: none;
+      border-radius: 999px;
+      padding: 15px 18px;
+      background: #061b47;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-ver-espacios:hover {
+      background: #0e2959;
+    }
+  </style>
+</head>
+<body>
+  <main class="app-filtros">
+
+    <!-- Regresar -->
+    <header>
+      <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>Regresar</span>
+      </button>
+    </header>
+
+    <!-- Encabezado -->
+    <section class="encabezado-filtros">
+      <h1 class="titulo-filtros">Filtros avanzados</h1>
+      <p class="subtitulo-filtros">Personaliza tu búsqueda para encontrar el espacio ideal.</p>
+    </section>
+
+    <!-- Edificio o zona -->
+    <section class="bloque-filtro">
+      <label for="select-edificio" class="etiqueta-seccion">Edificio o zona</label>
+      <select id="select-edificio" class="select-edificio">
+        <option value="Todos los edificios" selected>Todos los edificios</option>
+        <option value="CRAI">CRAI</option>
+        <option value="Cafetería">Cafetería</option>
+        <option value="Bosque">Bosque</option>
+        <option value="Aulas">Aulas</option>
+      </select>
+    </section>
+
+    <!-- Capacidad de personas -->
+    <section class="bloque-filtro">
+      <h2 class="etiqueta-seccion">Capacidad de personas</h2>
+      <p class="ayuda-seccion">¿Cuántas personas usarán el espacio?</p>
+      <div class="fila-capacidad" role="group" aria-label="Capacidad de personas">
+        <button type="button" class="btn-capacidad activa" data-capacidad="1 persona">1 persona</button>
+        <button type="button" class="btn-capacidad" data-capacidad="2 - 4">2 - 4</button>
+        <button type="button" class="btn-capacidad" data-capacidad="5 - 8">5 - 8</button>
+        <button type="button" class="btn-capacidad" data-capacidad="9 o más">9 o más</button>
+      </div>
+    </section>
+
+    <!-- Características del espacio -->
+    <section class="bloque-filtro">
+      <h2 class="etiqueta-seccion">Características del espacio</h2>
+      <p class="ayuda-seccion">Selecciona las comodidades que necesitas.</p>
+      <div id="grid-caracteristicas" class="grid-caracteristicas">
+        <label class="item-checkbox">
+          <input type="checkbox" value="Mesas y sillas">
+          <span>Mesas y sillas</span>
+        </label>
+        <label class="item-checkbox">
+          <input type="checkbox" value="Pizarra">
+          <span>Pizarra</span>
+        </label>
+        <label class="item-checkbox">
+          <input type="checkbox" value="Conexiones eléctricas">
+          <span>Conexiones eléctricas</span>
+        </label>
+        <label class="item-checkbox">
+          <input type="checkbox" value="Área silenciosa">
+          <span>Área silenciosa</span>
+        </label>
+        <label class="item-checkbox">
+          <input type="checkbox" value="Buena iluminación">
+          <span>Buena iluminación</span>
+        </label>
+        <label class="item-checkbox">
+          <input type="checkbox" value="Acceso a internet">
+          <span>Acceso a internet</span>
+        </label>
+        <label class="item-checkbox">
+          <input type="checkbox" value="Ventilación">
+          <span>Ventilación</span>
+        </label>
+        <label class="item-checkbox">
+          <input type="checkbox" value="Área al aire libre">
+          <span>Área al aire libre</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Disponibilidad -->
+    <section class="bloque-filtro">
+      <h2 class="etiqueta-seccion">Disponibilidad</h2>
+      <div id="tarjeta-disponibilidad" class="tarjeta-disponibilidad">
+        <div id="toggle-disponibilidad-texto" class="disponibilidad-izq">
+          <span class="radio-indicador" aria-hidden="true"></span>
+          <span>Selecciona un nivel para explorar sus espacios</span>
+        </div>
+        <button
+          type="button"
+          id="switch-disponibilidad"
+          class="switch-disponibilidad"
+          role="switch"
+          aria-checked="false"
+          aria-label="Filtrar solo espacios disponibles"
+        ></button>
+      </div>
+    </section>
+
+    <!-- Filtros seleccionados -->
+    <section class="bloque-filtro">
+      <h2 class="etiqueta-seccion">Filtros seleccionados</h2>
+      <div id="lista-chips" class="lista-chips" aria-live="polite"></div>
+    </section>
+
+    <!-- Acciones inferiores -->
+    <section class="acciones-inferiores">
+      <button type="button" id="btn-limpiar-filtros" class="btn-limpiar">Limpiar filtros</button>
+      <button type="button" id="btn-ver-espacios" class="btn-ver-espacios">Ver espacios</button>
+    </section>
+
+  </main>
+
+  <script>
+    const CLAVE_FILTROS = 'ucaSpaceFiltros';
+    const RUTA_RESULTADOS = 'resultados-espacios.html';
+
+    const btnRegresar = document.getElementById('btn-regresar');
+    const selectEdificio = document.getElementById('select-edificio');
+    const botonesCapacidad = Array.from(document.querySelectorAll('.btn-capacidad'));
+    const checkboxes = Array.from(document.querySelectorAll('#grid-caracteristicas input[type="checkbox"]'));
+    const tarjetaDisponibilidad = document.getElementById('tarjeta-disponibilidad');
+    const toggleDisponibilidadTexto = document.getElementById('toggle-disponibilidad-texto');
+    const switchDisponibilidad = document.getElementById('switch-disponibilidad');
+    const listaChips = document.getElementById('lista-chips');
+    const btnLimpiarFiltros = document.getElementById('btn-limpiar-filtros');
+    const btnVerEspacios = document.getElementById('btn-ver-espacios');
+
+    const estado = {
+      edificio: 'Todos los edificios',
+      capacidad: '1 persona',
+      caracteristicas: [],
+      soloDisponibles: false
+    };
+
+    function sincronizarUI() {
+      selectEdificio.value = estado.edificio;
+
+      botonesCapacidad.forEach((btn) => {
+        btn.classList.toggle('activa', btn.dataset.capacidad === estado.capacidad);
+      });
+
+      checkboxes.forEach((chk) => {
+        chk.checked = estado.caracteristicas.includes(chk.value);
+      });
+
+      tarjetaDisponibilidad.classList.toggle('activa', estado.soloDisponibles);
+      switchDisponibilidad.setAttribute('aria-checked', String(estado.soloDisponibles));
+
+      renderChips();
+    }
+
+    function renderChips() {
+      listaChips.innerHTML = '';
+      const chips = [];
+
+      if (estado.edificio && estado.edificio !== 'Todos los edificios') {
+        chips.push({
+          texto: estado.edificio,
+          quitar: () => {
+            estado.edificio = 'Todos los edificios';
+            sincronizarUI();
+          }
+        });
+      }
+
+      if (estado.capacidad) {
+        chips.push({
+          texto: estado.capacidad,
+          quitar: () => {
+            estado.capacidad = null;
+            sincronizarUI();
+          }
+        });
+      }
+
+      estado.caracteristicas.forEach((item) => {
+        chips.push({
+          texto: item,
+          quitar: () => {
+            estado.caracteristicas = estado.caracteristicas.filter((c) => c !== item);
+            sincronizarUI();
+          }
+        });
+      });
+
+      if (estado.soloDisponibles) {
+        chips.push({
+          texto: 'Solo disponibles',
+          quitar: () => {
+            estado.soloDisponibles = false;
+            sincronizarUI();
+          }
+        });
+      }
+
+      if (chips.length === 0) {
+        const vacio = document.createElement('span');
+        vacio.className = 'texto-sin-chips';
+        vacio.textContent = 'Sin filtros adicionales activos.';
+        listaChips.appendChild(vacio);
+        return;
+      }
+
+      chips.forEach((chip) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chip-filtro';
+        btn.setAttribute('aria-label', `Quitar filtro ${chip.texto}`);
+        btn.innerHTML = `
+          <span>${chip.texto}</span>
+          <span class="chip-quitar" aria-hidden="true">×</span>
+        `;
+        btn.addEventListener('click', chip.quitar);
+        listaChips.appendChild(btn);
+      });
+    }
+
+    function alternarDisponibilidad() {
+      estado.soloDisponibles = !estado.soloDisponibles;
+      sincronizarUI();
+    }
+
+    selectEdificio.addEventListener('change', () => {
+      estado.edificio = selectEdificio.value;
+      renderChips();
+    });
+
+    botonesCapacidad.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const seleccionada = btn.dataset.capacidad;
+        estado.capacidad = estado.capacidad === seleccionada ? null : seleccionada;
+        sincronizarUI();
+      });
+    });
+
+    checkboxes.forEach((chk) => {
+      chk.addEventListener('change', () => {
+        if (chk.checked) {
+          if (!estado.caracteristicas.includes(chk.value)) {
+            estado.caracteristicas.push(chk.value);
+          }
+        } else {
+          estado.caracteristicas = estado.caracteristicas.filter((c) => c !== chk.value);
+        }
+        renderChips();
+      });
+    });
+
+    toggleDisponibilidadTexto.addEventListener('click', alternarDisponibilidad);
+    switchDisponibilidad.addEventListener('click', alternarDisponibilidad);
+
+    btnLimpiarFiltros.addEventListener('click', () => {
+      estado.edificio = 'Todos los edificios';
+      estado.capacidad = null;
+      estado.caracteristicas = [];
+      estado.soloDisponibles = false;
+      sessionStorage.removeItem(CLAVE_FILTROS);
+      sincronizarUI();
+    });
+
+    btnVerEspacios.addEventListener('click', () => {
+      sessionStorage.setItem(CLAVE_FILTROS, JSON.stringify(estado));
+      window.location.href = RUTA_RESULTADOS;
+    });
+
+    btnRegresar.addEventListener('click', () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = RUTA_RESULTADOS;
+      }
+    });
+
+    // Cargar filtros previos si existían
+    const guardados = sessionStorage.getItem(CLAVE_FILTROS);
+    if (guardados) {
+      try {
+        const parsed = JSON.parse(guardados);
+        if (parsed.edificio) estado.edificio = parsed.edificio;
+        if ('capacidad' in parsed) estado.capacidad = parsed.capacidad;
+        if (Array.isArray(parsed.caracteristicas)) estado.caracteristicas = parsed.caracteristicas;
+        if (typeof parsed.soloDisponibles === 'boolean') estado.soloDisponibles = parsed.soloDisponibles;
+      } catch (e) {}
+    }
+
+    sincronizarUI();
+  </script>
+</body>
+</html>
