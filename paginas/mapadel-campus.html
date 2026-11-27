@@ -4,9 +4,116 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mapa del campus - UCA Space</title>
-  <link rel="stylesheet" href="../css/mapa.css">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; width: 100%; }
+
+    body {
+      min-height: 100vh;
+      font-family: "Inter", system-ui, sans-serif;
+      color: #0f2a5c;
+      background: linear-gradient(180deg, #f4f6fd 0%, #e9ecf8 60%, #c9d9fc 100%);
+    }
+
+    .pantalla {
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 20px 16px 110px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cabecera { display: flex; align-items: center; gap: 16px; }
+    .cabecera h1 { margin: 0; font-size: 1.05rem; font-weight: 700; }
+
+    .filtros { display: flex; gap: 10px; flex-wrap: wrap; }
+    .filtro {
+      padding: 8px 16px;
+      background: #fff;
+      border: 1.5px solid #0f2a5c;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: #0f2a5c;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .filtro.activo { background: #0f2a5c; color: #fff; }
+
+    .leyenda { display: flex; gap: 16px; margin: 0; padding: 0; list-style: none; font-size: 0.75rem; }
+    .leyenda li { display: flex; align-items: center; gap: 6px; }
+    .punto { width: 12px; height: 12px; border-radius: 50%; }
+    .punto.libre { background: #2e7d5b; }
+    .punto.ocupada { background: #c0392b; }
+    .punto.reporte { background: #fff; border: 2px solid #f2b705; }
+
+    .mapa { position: relative; margin: 0 -16px; overflow: hidden; background: #6fd04a; }
+    .mapa img { display: block; width: 100%; height: 400px; object-fit: cover; transition: transform 0.2s; }
+    .zoom { position: absolute; right: 12px; bottom: 12px; display: flex; flex-direction: column; gap: 4px; }
+    .zoom button {
+      width: 34px; height: 34px;
+      background: #fff;
+      border: 1px solid #ccd5ea;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      color: #0f2a5c;
+      cursor: pointer;
+    }
+
+    .ubicacion {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: #fff;
+      border: 1.5px solid #0f2a5c;
+      border-radius: 10px;
+      color: #0f2a5c;
+      text-decoration: none;
+    }
+    .ubicacion h2 { margin: 0 0 2px; font-size: 0.9rem; font-weight: 700; }
+    .ubicacion p { margin: 0; font-size: 0.75rem; }
+    .ubicacion .flecha { margin-left: auto; }
+
+    .menu {
+      position: fixed;
+      bottom: 16px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: calc(100% - 32px);
+      max-width: 398px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 8px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 16px rgba(15, 42, 92, 0.18);
+    }
+    .menu a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 8px 4px;
+      border-radius: 18px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #0f2a5c;
+      text-decoration: none;
+    }
+    .menu a.activo { background: #0f2a5c; color: #fff; }
+    .menu img { width: 24px; height: 24px; }
+    .menu a.activo img { filter: brightness(0) invert(1); }
+  </style>
 </head>
-<body class="mapa-pagina">
+<body>
   <main class="pantalla">
 
     <header class="cabecera">
@@ -37,7 +144,7 @@
     </div>
 
     <a class="ubicacion" href="como-llegar.html">
-      <img src="../img/icono-ubicacion-activa.png" alt="" width="28" height="28">
+      <span aria-hidden="true">🧭</span>
       <div>
         <h2>Tu ubicación está activa</h2>
         <p>Ubicación aproximada dentro del campus</p>
@@ -53,6 +160,20 @@
     </nav>
 
   </main>
-  <script src="../js/mapa.js"></script>
+
+  <script>
+    document.querySelectorAll("button.filtro").forEach((boton) => {
+      boton.addEventListener("click", () => boton.classList.toggle("activo"));
+    });
+
+    const imagenMapa = document.getElementById("imagen-mapa");
+    let escala = 1;
+    function aplicarZoom(cambio) {
+      escala = Math.min(2, Math.max(1, escala + cambio));
+      imagenMapa.style.transform = `scale(${escala})`;
+    }
+    document.getElementById("acercar").addEventListener("click", () => aplicarZoom(0.25));
+    document.getElementById("alejar").addEventListener("click", () => aplicarZoom(-0.25));
+  </script>
 </body>
 </html>
