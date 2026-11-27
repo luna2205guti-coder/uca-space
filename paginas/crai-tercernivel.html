@@ -120,10 +120,11 @@
     .contenedor-plano {
       width: 100%;
       max-width: 310px;
-      min-height: 220px;
+      min-height: 240px;
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
     }
 
     .imagen-plano-biblioteca {
@@ -131,6 +132,23 @@
       height: auto;
       max-height: 410px;
       object-fit: contain;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .respaldo-plano {
+      display: none;
+      width: 100%;
+      padding: 20px 16px;
+      border: 1.5px dashed #2b4c7e;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.72);
+      text-align: center;
+      font-size: 12.5px;
+      color: #3a4d70;
+    }
+
+    .respaldo-plano.visible {
       display: block;
     }
 
@@ -218,11 +236,13 @@
         <img
           id="img-plano-biblioteca"
           src="../img/mapa-tercernivel.png"
-          data-fallbacks='["img/mapa-tercernivel.png","./mapa-tercernivel.png"]'
           alt="Plano del Nivel 3 de la Biblioteca CRAI"
           class="imagen-plano-biblioteca"
-          onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } else { img.style.display = 'none'; } })(this);"
         >
+        <div id="respaldo-plano" class="respaldo-plano">
+          <strong>No se encontró <code>mapa-tercernivel.png</code></strong><br>
+          Verifica que esté en <code>img/mapa-tercernivel.png</code> y que el archivo HTML esté guardado y subido.
+        </div>
       </section>
 
       <div class="leyenda-plano" aria-label="Leyenda del plano">
@@ -263,22 +283,37 @@
           tituloPlano: 'Plano nivel 1',
           tituloTarjeta: 'Nivel 1 - Biblioteca UCA',
           descripcion: 'Selecciona un nivel para explorar sus espacios',
-          imgSrc: '../img/mapa-primernivel.png',
-          fallbacks: ['img/mapa-primernivel.png', './mapa-primernivel.png']
+          rutas: [
+            '../img/mapa-primernivel.png',
+            'img/mapa-primernivel.png',
+            './mapa-primernivel.png',
+            '../img/mapa-tercernivel.png',
+            'img/mapa-tercernivel.png'
+          ]
         },
         2: {
           tituloPlano: 'Plano nivel 2',
           tituloTarjeta: 'Nivel 2 - Biblioteca UCA',
           descripcion: 'Selecciona un nivel para explorar sus espacios',
-          imgSrc: '../img/mapa-segundonivel.png',
-          fallbacks: ['img/mapa-segundonivel.png', './mapa-segundonivel.png']
+          rutas: [
+            '../img/mapa-segundonivel.png',
+            'img/mapa-segundonivel.png',
+            './mapa-segundonivel.png',
+            '../img/mapa-tercernivel.png',
+            'img/mapa-tercernivel.png'
+          ]
         },
         3: {
           tituloPlano: 'Plano nivel 3',
           tituloTarjeta: 'Nivel 3 - Biblioteca UCA',
           descripcion: 'Selecciona un nivel para explorar sus espacios',
-          imgSrc: '../img/mapa-tercernivel.png',
-          fallbacks: ['img/mapa-tercernivel.png', './mapa-tercernivel.png']
+          rutas: [
+            '../img/mapa-tercernivel.png',
+            'img/mapa-tercernivel.png',
+            './mapa-tercernivel.png',
+            '../img/Mapa-tercernivel.png',
+            'img/Mapa-tercernivel.png'
+          ]
         }
       };
 
@@ -287,6 +322,26 @@
       const tituloTarjetaEl = document.getElementById('titulo-tarjeta-nivel');
       const descripcionTarjetaEl = document.getElementById('descripcion-tarjeta-nivel');
       const imgPlanoEl = document.getElementById('img-plano-biblioteca');
+      const respaldoPlanoEl = document.getElementById('respaldo-plano');
+
+      function cargarImagenConRutas(rutas) {
+        if (!imgPlanoEl) return;
+        let idx = 0;
+        imgPlanoEl.style.display = 'block';
+        if (respaldoPlanoEl) respaldoPlanoEl.classList.remove('visible');
+
+        imgPlanoEl.onerror = () => {
+          idx += 1;
+          if (idx < rutas.length) {
+            imgPlanoEl.src = rutas[idx];
+          } else {
+            imgPlanoEl.style.display = 'none';
+            if (respaldoPlanoEl) respaldoPlanoEl.classList.add('visible');
+          }
+        };
+
+        imgPlanoEl.src = rutas[0];
+      }
 
       function seleccionarNivel(nivelNum) {
         const info = datosNiveles[nivelNum] || datosNiveles[3];
@@ -301,13 +356,8 @@
         if (tituloTarjetaEl) tituloTarjetaEl.textContent = info.tituloTarjeta;
         if (descripcionTarjetaEl) descripcionTarjetaEl.textContent = info.descripcion;
 
-        if (imgPlanoEl) {
-          imgPlanoEl.style.display = 'block';
-          imgPlanoEl.dataset.idx = '0';
-          imgPlanoEl.dataset.fallbacks = JSON.stringify(info.fallbacks);
-          imgPlanoEl.alt = `${info.tituloPlano} de la Biblioteca CRAI`;
-          imgPlanoEl.src = info.imgSrc;
-        }
+        imgPlanoEl.alt = `${info.tituloPlano} de la Biblioteca CRAI`;
+        cargarImagenConRutas(info.rutas);
       }
 
       botonesNivel.forEach((btn) => {
