@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca CRAI - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/biblioteca-crai.css">
+</head>
+<body>
+  <div class="pantalla-biblioteca">
+    <!-- Encabezado -->
+    <header class="encabezado-biblioteca">
+      <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h1 class="titulo-biblioteca">Biblioteca CRAI</h1>
+    </header>
+
+    <main class="contenido-biblioteca">
+      <p class="subtitulo-biblioteca">Biblioteca P. Florentino Idoate, S.J.</p>
+
+      <!-- Selector de niveles -->
+      <div class="selector-niveles" role="tablist" aria-label="Niveles de la biblioteca">
+        <button type="button" class="btn-nivel" data-nivel="1" role="tab" aria-selected="false">Nivel 1</button>
+        <button type="button" class="btn-nivel" data-nivel="2" role="tab" aria-selected="false">Nivel 2</button>
+        <button type="button" class="btn-nivel activo" data-nivel="3" role="tab" aria-selected="true">Nivel 3</button>
+      </div>
+
+      <!-- Título del plano y contenedor de imagen -->
+      <h2 id="titulo-plano-nivel" class="titulo-plano-nivel">Plano nivel 3</h2>
+
+      <section class="contenedor-plano" aria-label="Plano de la biblioteca">
+        <img
+          id="img-plano-biblioteca"
+          src="../img/plano-biblioteca-nivel-3.png"
+          data-fallbacks='["./plano-biblioteca-nivel-3.png","../imagenes/plano-biblioteca-nivel-3.png","../assets/plano-biblioteca-nivel-3.png"]'
+          alt="Plano del Nivel 3 de la Biblioteca CRAI"
+          class="imagen-plano-biblioteca"
+          onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } })(this);"
+        >
+      </section>
+
+      <!-- Leyenda -->
+      <div class="leyenda-plano" aria-label="Leyenda del plano">
+        <span class="item-leyenda-plano">
+          <span class="punto-leyenda-plano punto-servicios"></span>
+          <span>Servicios</span>
+        </span>
+        <span class="item-leyenda-plano">
+          <span class="cuadro-leyenda-plano cuadro-areas"></span>
+          <span>Áreas y salas</span>
+        </span>
+      </div>
+
+      <!-- Tarjeta informativa inferior -->
+      <section class="tarjeta-info-nivel" aria-label="Información del nivel seleccionado">
+        <h3 id="titulo-tarjeta-nivel" class="titulo-tarjeta-nivel">Nivel 3 - Biblioteca UCA</h3>
+        <p id="descripcion-tarjeta-nivel" class="descripcion-tarjeta-nivel">
+          Selecciona un nivel para explorar sus espacios
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/biblioteca-crai.js"></script>
+</body>
+</html>

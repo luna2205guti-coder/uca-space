@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100dvh;
+  background: linear-gradient(180deg, #d7def5 0%, #dee4fa 52%, #d4dbf7 100%);
+  display: flex;
+  justify-content: center;
+  font-family: inherit;
+  color: #162e57;
+}
+
+.pantalla-biblioteca {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  background: linear-gradient(180deg, #f6f8fe 0%, #eef2fc 58%, #cfdcf8 100%);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 32px;
+}
+
+/* Encabezado */
+.encabezado-biblioteca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px 12px;
+}
+
+.btn-regresar {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: #132954;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.15s ease, transform 0.12s ease;
+}
+
+.btn-regresar:active {
+  background: rgba(13, 42, 92, 0.08);
+  transform: scale(0.95);
+}
+
+.titulo-biblioteca {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: #102652;
+  letter-spacing: -0.015em;
+}
+
+/* Contenido principal */
+.contenido-biblioteca {
+  padding: 6px 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.subtitulo-biblioteca {
+  width: 100%;
+  margin: 4px 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #566785;
+  text-align: left;
+}
+
+/* Selector de niveles */
+.selector-niveles {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.btn-nivel {
+  border: 1.5px solid #2b4c7e;
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: #f5f7fd;
+  color: #2b4c7e;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+
+.btn-nivel:active {
+  transform: scale(0.97);
+}
+
+.btn-nivel.activo {
+  background: #142b52;
+  border-color: #142b52;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Título del plano e imagen */
+.titulo-plano-nivel {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #132852;
+  text-align: center;
+}
+
+.contenedor-plano {
+  width: 100%;
+  max-width: 310px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagen-plano-biblioteca {
+  width: 100%;
+  height: auto;
+  max-height: 410px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Leyenda */
+.leyenda-plano {
+  margin-top: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  font-size: 12.5px;
+  color: #4f5f7d;
+}
+
+.item-leyenda-plano {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.punto-leyenda-plano {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #23262d;
+  display: inline-block;
+}
+
+.cuadro-leyenda-plano {
+  width: 13px;
+  height: 12px;
+  border-radius: 2px;
+  background: #9ab3e8;
+  border: 1px solid #455f94;
+  display: inline-block;
+}
+
+/* Tarjeta inferior */
+.tarjeta-info-nivel {
+  width: 100%;
+  background: #ffffff;
+  border: 1.5px solid #2b4c7e;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 12px rgba(16, 38, 82, 0.06);
+}
+
+.titulo-tarjeta-nivel {
+  margin: 0 0 4px;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #10254f;
+}
+
+.descripcion-tarjeta-nivel {
+  margin: 0;
+  font-size: 12.5px;
+  color: #5b6b87;
+  line-height: 1.38;
+}
