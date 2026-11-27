@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa del campus - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100dvh;
+      background: linear-gradient(180deg, #d7def5 0%, #dee4fa 52%, #d4dbf7 100%);
+      display: flex;
+      justify-content: center;
+      font-family: inherit;
+      color: #162e57;
+    }
+
+    .pantalla-mapa {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      background: linear-gradient(180deg, #f4f6fd 0%, #eef2fc 42%, #dce3fb 100%);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding-bottom: 92px;
+      overflow-x: hidden;
+    }
+
+    .encabezado-mapa {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 18px 10px;
+      background: #f5f7fe;
+    }
+
+    .btn-regresar {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: #0d2a5c;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-regresar:active {
+      background: rgba(13, 42, 92, 0.08);
+    }
+
+    .titulo-mapa {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: #0d2a5c;
+      letter-spacing: -0.01em;
+    }
+
+    .barra-controles {
+      background: #f5f7fe;
+      padding: 4px 18px 10px;
+    }
+
+    .chips-zonas {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scrollbar-width: none;
+    }
+
+    .chips-zonas::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip-zona {
+      border: 1px solid #d7def2;
+      background: #ffffff;
+      color: #1d2d4a;
+      border-radius: 999px;
+      padding: 7px 15px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip-zona.activa {
+      background: #0d2a5c;
+      border-color: #0d2a5c;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .leyenda-estados {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: #5b6880;
+    }
+
+    .item-leyenda {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .punto-estado {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .punto-libre {
+      background: #0d7a4a;
+    }
+
+    .punto-ocupada {
+      background: #b8293d;
+    }
+
+    .punto-reporte {
+      background: #ffffff;
+      border: 2.5px solid #f2b705;
+    }
+
+    .lienzo-mapa {
+      position: relative;
+      width: 100%;
+      height: 455px;
+      background: #77d429;
+      overflow: hidden;
+      border-top: 1px solid #e3e8f6;
+      border-bottom: 1px solid #dfe5f5;
+    }
+
+    .mapa-escena {
+      width: 100%;
+      height: 100%;
+      transform-origin: center center;
+      transition: transform 0.22s ease;
+    }
+
+    .espacio-clic {
+      cursor: pointer;
+      transition: opacity 0.15s ease, filter 0.15s ease;
+    }
+
+    .espacio-clic:hover {
+      filter: brightness(1.06);
+    }
+
+    .espacio-seleccionado {
+      stroke: #0d2a5c !important;
+      stroke-width: 3 !important;
+    }
+
+    .controles-zoom {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border: 1px solid #c9d1e3;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(13, 42, 92, 0.12);
+      z-index: 5;
+    }
+
+    .btn-zoom {
+      width: 34px;
+      height: 34px;
+      border: none;
+      background: #ffffff;
+      color: #4a5568;
+      font-size: 20px;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .btn-zoom + .btn-zoom {
+      border-top: 1px solid #d5dce9;
+    }
+
+    .btn-zoom:active {
+      background: #edf1fa;
+    }
+
+    /* Tarjeta inferior de ubicación */
+    .seccion-ubicacion {
+      padding: 18px 18px 8px;
+    }
+
+    .tarjeta-ubicacion {
+      width: 100%;
+      background: #f4f6fe;
+      border: 1px solid #b5c3e0;
+      border-radius: 16px;
+      padding: 15px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(13, 42, 92, 0.05);
+    }
+
+    .tarjeta-ubicacion-izq {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .ubicacion-titulo {
+      margin: 0;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #162e57;
+    }
+
+    .ubicacion-sub {
+      margin: 3px 0 0;
+      font-size: 12.5px;
+      color: #6b768c;
+    }
+
+    /* Panel flotante de detalle de espacio */
+    .ficha-espacio {
+      position: fixed;
+      left: 50%;
+      bottom: 84px;
+      transform: translate(-50%, 24px);
+      width: calc(100% - 32px);
+      max-width: 398px;
+      background: #ffffff;
+      border: 1px solid #c7d3ec;
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 12px 28px rgba(13, 42, 92, 0.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.22s ease;
+      z-index: 20;
+    }
+
+    .ficha-espacio.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, 0);
+    }
+
+    .ficha-cabecera {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .ficha-nombre {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+      color: #0d2a5c;
+    }
+
+    .insignia-estado {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+
+    .estado-libre {
+      background: #e6f5ee;
+      color: #0d7a4a;
+    }
+
+    .estado-ocupada {
+      background: #fdebec;
+      color: #b8293d;
+    }
+
+    .estado-reporte {
+      background: #fff8e1;
+      color: #9a6b00;
+    }
+
+    .ficha-descripcion {
+      margin: 0 0 14px;
+      font-size: 13px;
+      color: #52607a;
+      line-height: 1.4;
+    }
+
+    .ficha-acciones {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-ficha-primario {
+      flex: 1;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      background: #0d2a5c;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-ficha-secundario {
+      border: 1px solid #cfd8eb;
+      border-radius: 12px;
+      padding: 10px 14px;
+      background: #f5f7fe;
+      color: #0d2a5c;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Barra inferior de navegación */
+    .barra-inferior {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 28px);
+      max-width: 402px;
+      background: #f7f9ff;
+      border-radius: 26px;
+      padding: 7px 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 8px 24px rgba(13, 42, 92, 0.14);
+      z-index: 15;
+    }
+
+    .nav-item {
+      border: none;
+      background: transparent;
+      color: #2f6be0;
+      border-radius: 22px;
+      padding: 8px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .nav-item.activo {
+      background: linear-gradient(180deg, #1b3f82 0%, #0d2a5c 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(13, 42, 92, 0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="pantalla-mapa">
+    <header class="encabezado-mapa">
+      <button type="button" id="btn-volver-mapa" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h1 class="titulo-mapa">Mapa del campus</h1>
+    </header>
+
+    <div class="barra-controles">
+      <div class="chips-zonas" role="tablist" aria-label="Zonas del campus">
+        <button type="button" class="chip-zona" data-zona="biblioteca">Biblioteca</button>
+        <button type="button" class="chip-zona" data-zona="cafeteria">Cafetería</button>
+        <button type="button" class="chip-zona" data-zona="bosque">Bosque</button>
+      </div>
+
+      <div class="leyenda-estados">
+        <span class="item-leyenda"><span class="punto-estado punto-libre"></span>Libre</span>
+        <span class="item-leyenda"><span class="punto-estado punto-ocupada"></span>Ocupada</span>
+        <span class="item-leyenda"><span class="punto-estado punto-reporte"></span>Con reporte</span>
+      </div>
+    </div>
+
+    <section class="lienzo-mapa" aria-label="Plano interactivo del campus">
+      <svg id="mapa-escena" class="mapa-escena" viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="460" fill="#77d429" />
+        <polygon points="0,0 135,0 0,210" fill="#eef2f8" />
+        <polygon points="115,0 230,0 60,245 0,200" fill="#c7ced6" />
+        <path d="M210,0 L110,165 L145,190 L255,0 Z" fill="#b9c2cc" />
+        <polygon points="0,195 122,275 85,340 0,285" fill="#77d429" />
+        <path d="M0,335 Q120,415 260,405 L400,395 L400,425 L250,432 Q105,442 0,365 Z" fill="#b7c0ca" />
+        <rect x="235" y="175" width="90" height="32" rx="4" fill="#c8cfd8" />
+
+        <g fill="#2e7d32">
+          <circle cx="156" cy="88" r="21" />
+          <circle cx="72" cy="96" r="14" />
+          <circle cx="96" cy="108" r="9" />
+          <circle cx="152" cy="132" r="11" />
+          <circle cx="235" cy="84" r="15" />
+          <circle cx="292" cy="52" r="12" />
+          <circle cx="332" cy="50" r="11" />
+          <circle cx="368" cy="52" r="12" />
+          <circle cx="282" cy="128" r="13" />
+          <circle cx="384" cy="98" r="18" />
+          <circle cx="215" cy="155" r="12" />
+          <circle cx="176" cy="178" r="16" />
+          <circle cx="238" cy="212" r="12" />
+          <circle cx="328" cy="222" r="19" />
+          <circle cx="88" cy="236" r="15" />
+          <circle cx="132" cy="242" r="11" />
+          <circle cx="168" cy="272" r="18" />
+          <circle cx="195" cy="246" r="13" />
+          <circle cx="92" cy="296" r="15" />
+          <circle cx="156" cy="316" r="14" />
+          <circle cx="204" cy="318" r="17" />
+          <circle cx="172" cy="368" r="20" />
+          <circle cx="222" cy="348" r="14" />
+          <circle cx="318" cy="336" r="15" />
+          <circle cx="378" cy="328" r="14" />
+          <circle cx="52" cy="368" r="13" />
+          <circle cx="94" cy="382" r="15" />
+          <circle cx="252" cy="436" r="14" />
+          <circle cx="305" cy="442" r="13" />
+        </g>
+
+        <g stroke="#1f2933" stroke-width="1.5" stroke-linejoin="round">
+          <path
+            id="zona-biblioteca"
+            class="espacio-clic"
+            data-espacio="biblioteca"
+            d="M292,102 L348,102 L344,125 L354,154 L280,154 L288,125 Z"
+            fill="#ff6a00"
+          />
+
+          <polygon id="zona-cafeteria" class="espacio-clic" data-espacio="cafeteria" points="268,62 296,65 294,82 264,78" fill="#ff6a00" />
+          <polygon class="espacio-clic" data-espacio="cafeteria" points="322,64 352,64 348,82 320,80" fill="#ff6a00" />
+          <polygon class="espacio-clic" data-espacio="cafeteria" points="232,96 260,104 254,122 228,112" fill="#ff6a00" />
+          <polygon class="espacio-clic" data-espacio="cafeteria" points="192,126 220,134 214,152 188,142" fill="#ff6a00" />
+
+          <rect id="zona-reporte" class="espacio-clic" data-espacio="reporte" x="334" y="142" width="52" height="32" rx="3" fill="#f7c815" />
+
+          <rect class="espacio-clic" data-espacio="aulas-centrales" x="206" y="158" width="68" height="18" rx="2" fill="#eab676" />
+          <polygon class="espacio-clic" data-espacio="aulas-centrales" points="216,184 274,184 274,202 238,202 238,214 216,214" fill="#f0be99" />
+          <polygon class="espacio-clic" data-espacio="aulas-centrales" points="178,218 236,218 236,236 200,236 200,248 178,248" fill="#f0be99" />
+          <polygon class="espacio-clic" data-espacio="aulas-este" points="334,182 378,182 378,204 388,204 388,236 334,236" fill="#f2a988" />
+          <polygon class="espacio-clic" data-espacio="aulas-este" points="256,258 342,238 386,238 386,262 346,262 264,282" fill="#eab676" />
+
+          <ellipse id="zona-bosque" class="espacio-clic" data-espacio="bosque" cx="144" cy="192" rx="11" ry="8" fill="#e6b06c" />
+          <ellipse class="espacio-clic" data-espacio="bosque" cx="166" cy="192" rx="11" ry="8" fill="#e6b06c" />
+          <ellipse class="espacio-clic" data-espacio="bosque" cx="188" cy="192" rx="11" ry="8" fill="#e6b06c" />
+          <ellipse class="espacio-clic" data-espacio="bosque" cx="104" cy="224" rx="11" ry="8" fill="#e6b06c" />
+          <ellipse class="espacio-clic" data-espacio="bosque" cx="126" cy="224" rx="11" ry="8" fill="#e6b06c" />
+          <ellipse class="espacio-clic" data-espacio="bosque" cx="148" cy="224" rx="11" ry="8" fill="#e6b06c" />
+
+          <rect class="espacio-clic" data-espacio="edificios-sur" x="56" y="294" width="64" height="54" fill="#f2a988" />
+          <polygon class="espacio-clic" data-espacio="edificios-sur" points="234,296 382,292 382,324 342,324 342,334 234,334" fill="#ef9c76" />
+          <polygon class="espacio-clic" data-espacio="edificios-sur" points="196,334 218,322 228,338 248,328 258,342 232,358 242,374 224,382 214,364 192,374 184,358" fill="#ef9c76" />
+          <polygon class="espacio-clic" data-espacio="edificios-sur" points="274,344 294,336 302,350 322,340 330,354 308,368 318,382 300,388 290,372 270,380 264,364" fill="#ef9c76" />
+          <rect class="espacio-clic" data-espacio="edificios-sur" x="302" y="424" width="84" height="36" fill="#ef9c76" />
+        </g>
+      </svg>
+
+      <div class="controles-zoom" aria-label="Controles de zoom">
+        <button type="button" id="btn-zoom-mas" class="btn-zoom" aria-label="Acercar mapa">+</button>
+        <button type="button" id="btn-zoom-menos" class="btn-zoom" aria-label="Alejar mapa">−</button>
+      </div>
+    </section>
+
+    <section class="seccion-ubicacion">
+      <button type="button" id="btn-ubicacion" class="tarjeta-ubicacion">
+        <div class="tarjeta-ubicacion-izq">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1d68e8" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          </svg>
+          <div>
+            <p class="ubicacion-titulo">Tu ubicación está activa</p>
+            <p id="texto-ubicacion-sub" class="ubicacion-sub">Ubicación aproximada dentro del campus</p>
+          </div>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#162e57" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </section>
+
+    <!-- Ficha flotante al tocar un espacio -->
+    <aside id="ficha-espacio" class="ficha-espacio" aria-live="polite">
+      <div class="ficha-cabecera">
+        <h2 id="ficha-nombre" class="ficha-nombre">Zona del campus</h2>
+        <span id="ficha-estado" class="insignia-estado estado-libre">Libre</span>
+      </div>
+      <p id="ficha-descripcion" class="ficha-descripcion"></p>
+      <div class="ficha-acciones">
+        <button type="button" id="btn-ficha-ver" class="btn-ficha-primario">Ver espacio</button>
+        <button type="button" id="btn-ficha-cerrar" class="btn-ficha-secundario">Cerrar</button>
+      </div>
+    </aside>
+
+    <nav class="barra-inferior" aria-label="Navegación principal">
+      <button type="button" class="nav-item" data-destino="bienvenida.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"></path>
+        </svg>
+        <span>Inicio</span>
+      </button>
+
+      <button type="button" class="nav-item activo" data-destino="mapa.html" aria-current="page">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+          <line x1="8" y1="2" x2="8" y2="18"></line>
+          <line x1="16" y1="6" x2="16" y2="22"></line>
+        </svg>
+        <span>Mapa</span>
+      </button>
+
+      <button type="button" class="nav-item" data-destino="guardados.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Guardados</span>
+      </button>
+
+      <button type="button" class="nav-item" data-destino="perfil.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Perfil</span>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    const RUTA_DETALLE_ESPACIO = 'resultados.html';
+    const origenAnterior = sessionStorage.getItem('uca_space_origen_mapa') || 'actividades.html';
+
+    document.getElementById('btn-volver-mapa').addEventListener('click', () => {
+      window.location.href = origenAnterior;
+    });
+
+    const datosEspacios = {
+      biblioteca: {
+        nombre: 'Biblioteca',
+        estado: 'Libre',
+        claseEstado: 'estado-libre',
+        descripcion: 'Mesas de estudio silencioso y salas grupales con buena disponibilidad.',
+        destino: RUTA_DETALLE_ESPACIO
+      },
+      cafeteria: {
+        nombre: 'Cafetería',
+        estado: 'Ocupada',
+        claseEstado: 'estado-ocupada',
+        descripcion: 'Alta afluencia en horas pico; mesas cercanas en áreas laterales.',
+        destino: RUTA_DETALLE_ESPACIO
+      },
+      bosque: {
+        nombre: 'Bosque',
+        estado: 'Libre',
+        claseEstado: 'estado-libre',
+        descripcion: 'Mesas al aire libre y sombra natural para descansar o estudiar.',
+        destino: RUTA_DETALLE_ESPACIO
+      },
+      reporte: {
+        nombre: 'Área con reporte',
+        estado: 'Con reporte',
+        claseEstado: 'estado-reporte',
+        descripcion: 'Reporte activo en esta zona (iluminación o mantenimiento en revisión).',
+        destino: RUTA_DETALLE_ESPACIO
+      },
+      'aulas-centrales': {
+        nombre: 'Aulas y áreas centrales',
+        estado: 'Libre',
+        claseEstado: 'estado-libre',
+        descripcion: 'Pasillos y espacios cercanos con acceso rápido a zonas comunes.',
+        destino: RUTA_DETALLE_ESPACIO
+      },
+      'aulas-este': {
+        nombre: 'Edificios sector este',
+        estado: 'Ocupada',
+        claseEstado: 'estado-ocupada',
+        descripcion: 'Zona académica con actividad de clases en curso.',
+        destino: RUTA_DETALLE_ESPACIO
+      },
+      'edificios-sur': {
+        nombre: 'Edificios sector sur',
+        estado: 'Libre',
+        claseEstado: 'estado-libre',
+        descripcion: 'Espacios disponibles en los alrededores del sector sur.',
+        destino: RUTA_DETALLE_ESPACIO
+      }
+    };
+
+    let espacioActualKey = null;
+    const fichaEl = document.getElementById('ficha-espacio');
+    const fichaNombre = document.getElementById('ficha-nombre');
+    const fichaEstado = document.getElementById('ficha-estado');
+    const fichaDescripcion = document.getElementById('ficha-descripcion');
+    const btnFichaVer = document.getElementById('btn-ficha-ver');
+    const btnFichaCerrar = document.getElementById('btn-ficha-cerrar');
+
+    function abrirFichaEspacio(key) {
+      const info = datosEspacios[key];
+      if (!info) return;
+
+      espacioActualKey = key;
+      document.querySelectorAll('.espacio-clic').forEach((el) => {
+        el.classList.toggle('espacio-seleccionado', el.dataset.espacio === key);
+      });
+
+      fichaNombre.textContent = info.nombre;
+      fichaEstado.textContent = info.estado;
+      fichaEstado.className = `insignia-estado ${info.claseEstado}`;
+      fichaDescripcion.textContent = info.descripcion;
+      fichaEl.classList.add('visible');
+    }
+
+    function cerrarFichaEspacio() {
+      espacioActualKey = null;
+      document.querySelectorAll('.espacio-clic').forEach((el) => {
+        el.classList.remove('espacio-seleccionado');
+      });
+      fichaEl.classList.remove('visible');
+    }
+
+    document.querySelectorAll('.espacio-clic').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        abrirFichaEspacio(el.dataset.espacio);
+      });
+    });
+
+    btnFichaCerrar.addEventListener('click', cerrarFichaEspacio);
+
+    btnFichaVer.addEventListener('click', () => {
+      if (!espacioActualKey) return;
+      const info = datosEspacios[espacioActualKey];
+      sessionStorage.setItem('uca_space_origen', 'mapa.html');
+      sessionStorage.setItem('uca_space_espacio_seleccionado', JSON.stringify({
+        id: espacioActualKey,
+        nombre: info.nombre,
+        estado: info.estado
+      }));
+      window.location.href = info.destino;
+    });
+
+    // Zoom
+    let escalaMapa = 1;
+    const mapaEscena = document.getElementById('mapa-escena');
+
+    function actualizarZoom(delta) {
+      escalaMapa = Math.min(1.6, Math.max(1, Number((escalaMapa + delta).toFixed(2))));
+      mapaEscena.style.transform = `scale(${escalaMapa})`;
+    }
+
+    document.getElementById('btn-zoom-mas').addEventListener('click', () => actualizarZoom(0.2));
+    document.getElementById('btn-zoom-menos').addEventListener('click', () => actualizarZoom(-0.2));
+
+    // Chips superiores
+    const chips = document.querySelectorAll('.chip-zona');
+    const subUbicacion = document.getElementById('texto-ubicacion-sub');
+
+    const vistasZona = {
+      biblioteca: { escala: 1.3, texto: 'Enfocando Biblioteca · Zonas de estudio disponibles' },
+      cafeteria: { escala: 1.3, texto: 'Enfocando Cafetería · Mesas y áreas cercanas' },
+      bosque: { escala: 1.25, texto: 'Enfocando Bosque · Áreas verdes y mesas al aire libre' }
+    };
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const key = chip.dataset.zona;
+        const yaActiva = chip.classList.contains('activa');
+        chips.forEach((c) => c.classList.remove('activa'));
+
+        if (yaActiva) {
+          escalaMapa = 1;
+          mapaEscena.style.transform = 'scale(1)';
+          subUbicacion.textContent = 'Ubicación aproximada dentro del campus';
+          cerrarFichaEspacio();
+          return;
+        }
+
+        chip.classList.add('activa');
+        const config = vistasZona[key];
+        if (config) {
+          escalaMapa = config.escala;
+          mapaEscena.style.transform = `scale(${escalaMapa})`;
+          subUbicacion.textContent = config.texto;
+        }
+        abrirFichaEspacio(key);
+      });
+    });
+
+    document.getElementById('btn-ubicacion').addEventListener('click', () => {
+      escalaMapa = 1.15;
+      mapaEscena.style.transform = `scale(${escalaMapa})`;
+      subUbicacion.textContent = 'Ubicación actualizada · Campus UCA';
+    });
+
+    document.querySelectorAll('.barra-inferior .nav-item').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const destino = btn.dataset.destino;
+        if (destino && destino !== 'mapa.html') {
+          sessionStorage.setItem('uca_space_origen', 'mapa.html');
+          window.location.href = destino;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
