@@ -29,19 +29,18 @@
       <h2 id="titulo-plano-nivel" class="titulo-plano-nivel">Plano nivel 2</h2>
 
       <section class="mapa-niveldos" aria-label="Plano de la biblioteca">
-  <img
-    id="img-plano-biblioteca"
-    src="../img/mapa-niveldos.png"
-    data-fallbacks='["img/mapa-niveldos.png","./mapa-niveldos.png","../../img/mapa-niveldos.png","mapa-niveldos.png"]'
-    alt="Plano del Nivel 2 de la Biblioteca CRAI"
-    class="imagen-plano-biblioteca"
-    onload="this.style.display='block';"
-    onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } else { img.style.display='none'; var msg = document.getElementById('err-img-mapa'); if(msg){ msg.style.display='block'; } } })(this);"
-  >
-  <p id="err-img-mapa" style="display:none; font-size:12px; color:#566785; text-align:center; margin:0;">
-    Verifica que <strong>mapa-niveldos.png</strong> esté en <code>img/</code> con ese nombre exacto.
-  </p>
-</section>
+        <img
+          id="img-plano-biblioteca"
+          src="../img/mapa-niveldos.png"
+          data-fallbacks='["img/mapa-niveldos.png","./mapa-niveldos.png","../../img/mapa-niveldos.png","mapa-niveldos.png"]'
+          alt="Plano del Nivel 2 de la Biblioteca CRAI"
+          class="imagen-plano-biblioteca"
+          onload="this.style.display='block'; document.getElementById('estado-mapa').style.display='none';"
+          onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } else { img.style.display='none'; var aviso = document.getElementById('estado-mapa'); if(aviso){ aviso.style.display='flex'; aviso.textContent='No se encontró mapa-niveldos.png en img/. Guarda la imagen completa con ese nombre en img/.'; } } })(this);"
+        >
+        <div id="estado-mapa" style="display:none; width:100%; min-height:220px; border:1.5px dashed #2b4c7e; border-radius:12px; padding:16px; text-align:center; align-items:center; justify-content:center; font-size:12.5px; color:#566785; background:rgba(255,255,255,0.7);"></div>
+      </section>
+
       <div class="leyenda-plano" aria-label="Leyenda del plano">
         <span class="item-leyenda-plano">
           <span class="punto-leyenda-plano punto-servicios"></span>
