@@ -148,14 +148,18 @@
     }
 
     .tarjeta-espacio-item {
+      width: 100%;
+      border: none;
       background: #ffffff;
       border-radius: 18px;
       padding: 16px 18px;
       box-shadow: 0 6px 18px rgba(15, 42, 92, 0.06);
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+      font-family: inherit;
       cursor: pointer;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
@@ -163,6 +167,13 @@
     .tarjeta-espacio-item:hover {
       transform: translateY(-1px);
       box-shadow: 0 10px 22px rgba(15, 42, 92, 0.09);
+    }
+
+    .info-espacio {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
     }
 
     .codigo-mesa {
@@ -194,6 +205,19 @@
       font-size: 13px;
     }
 
+    .indicador-ver-fotos {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #364B7A;
+      font-size: 12px;
+      font-weight: 600;
+      background: #f1f5fd;
+      padding: 7px 11px;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
     .mensaje-vacio {
       background: rgba(255, 255, 255, 0.75);
       border-radius: 16px;
@@ -201,6 +225,140 @@
       text-align: center;
       color: #475569;
       font-size: 14px;
+    }
+
+    /* Modal de imágenes del espacio seleccionado */
+    .detalle-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 22, 48, 0.84);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 999;
+    }
+
+    .detalle-modal.activa {
+      display: flex;
+    }
+
+    .detalle-caja {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .detalle-cabecera {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .detalle-titulo-grupo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .detalle-codigo {
+      margin: 0;
+      color: #0f2a5c;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .btn-cerrar-detalle {
+      border: none;
+      background: #e2e8f0;
+      color: #0f2a5c;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .detalle-subtitulo {
+      margin: -4px 0 0 0;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .visor-espacio {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0f2a5c;
+    }
+
+    .visor-espacio img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .barra-contador-foto {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: #364B7A;
+    }
+
+    .controles-foto {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-foto-nav {
+      flex: 1;
+      border: none;
+      border-radius: 12px;
+      padding: 11px;
+      background: #0f2a5c;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-foto-nav:hover {
+      background: #364B7A;
+    }
+
+    .tira-miniaturas {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .miniatura-espacio {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+      opacity: 0.55;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .miniatura-espacio.activa {
+      opacity: 1;
+      border-color: #0f2a5c;
     }
   </style>
 </head>
@@ -243,26 +401,118 @@
 
   </main>
 
+  <!-- Modal con las imágenes del espacio seleccionado -->
+  <div id="detalle-modal" class="detalle-modal" role="dialog" aria-modal="true" aria-labelledby="detalle-codigo">
+    <div class="detalle-caja">
+      <div class="detalle-cabecera">
+        <div class="detalle-titulo-grupo">
+          <h2 id="detalle-codigo" class="detalle-codigo">M5</h2>
+          <span id="detalle-estado" class="badge-estado">Libre</span>
+        </div>
+        <button type="button" id="btn-cerrar-detalle" class="btn-cerrar-detalle" aria-label="Cerrar vista de imágenes">✕</button>
+      </div>
+
+      <p id="detalle-subtitulo" class="detalle-subtitulo">Bosque · 130 m</p>
+
+      <div class="visor-espacio">
+        <img id="detalle-foto-activa" src="" alt="">
+      </div>
+
+      <div class="barra-contador-foto">
+        <span>Fotos del espacio</span>
+        <span id="detalle-contador-foto">1 / 3</span>
+      </div>
+
+      <div class="controles-foto">
+        <button type="button" id="btn-foto-anterior" class="btn-foto-nav">← Anterior</button>
+        <button type="button" id="btn-foto-siguiente" class="btn-foto-nav">Siguiente →</button>
+      </div>
+
+      <div id="detalle-miniaturas" class="tira-miniaturas"></div>
+    </div>
+  </div>
+
   <script>
-    // Lista base (puedes ampliar hasta completar los 22 espacios cuando gustes)
+    // Cada espacio tiene su propio arreglo de fotos en ../img/ (cambia las rutas por tus archivos reales)
     const espaciosBase = [
-      { codigo: 'M5', estado: 'Libre', zona: 'Bosque', distancia: 130 },
-      { codigo: 'M6', estado: 'Libre', zona: 'Bosque', distancia: 140 },
-      { codigo: 'M1', estado: 'Libre', zona: 'Bosque', distancia: 145 },
-      { codigo: 'M7', estado: 'Libre', zona: 'Bosque', distancia: 151 },
-      { codigo: 'B5', estado: 'Libre', zona: 'Biblioteca', distancia: 152 },
-      { codigo: 'M2', estado: 'Libre', zona: 'Bosque', distancia: 154 },
-      { codigo: 'CR1', estado: 'Libre', zona: 'CRAI', distancia: 95 },
-      { codigo: 'CR2', estado: 'Libre', zona: 'CRAI', distancia: 110 },
-      { codigo: 'CF1', estado: 'Libre', zona: 'Cafetería', distancia: 85 },
-      { codigo: 'CF2', estado: 'Libre', zona: 'Cafetería', distancia: 105 }
+      {
+        codigo: 'M5',
+        estado: 'Libre',
+        zona: 'Bosque',
+        distancia: 130,
+        fotos: ['../img/m5-1.jpg', '../img/m5-2.jpg', '../img/m5-3.jpg']
+      },
+      {
+        codigo: 'M6',
+        estado: 'Libre',
+        zona: 'Bosque',
+        distancia: 140,
+        fotos: ['../img/m6-1.jpg', '../img/m6-2.jpg', '../img/m6-3.jpg']
+      },
+      {
+        codigo: 'M1',
+        estado: 'Libre',
+        zona: 'Bosque',
+        distancia: 145,
+        fotos: ['../img/m1-1.jpg', '../img/m1-2.jpg', '../img/m1-3.jpg']
+      },
+      {
+        codigo: 'M7',
+        estado: 'Libre',
+        zona: 'Bosque',
+        distancia: 151,
+        fotos: ['../img/m7-1.jpg', '../img/m7-2.jpg', '../img/m7-3.jpg']
+      },
+      {
+        codigo: 'B5',
+        estado: 'Libre',
+        zona: 'Biblioteca',
+        distancia: 152,
+        fotos: ['../img/b5-1.jpg', '../img/b5-2.jpg', '../img/b5-3.jpg']
+      },
+      {
+        codigo: 'M2',
+        estado: 'Libre',
+        zona: 'Bosque',
+        distancia: 154,
+        fotos: ['../img/m2-1.jpg', '../img/m2-2.jpg', '../img/m2-3.jpg']
+      },
+      {
+        codigo: 'CR1',
+        estado: 'Libre',
+        zona: 'CRAI',
+        distancia: 95,
+        fotos: ['../img/cr1-1.jpg', '../img/cr1-2.jpg']
+      },
+      {
+        codigo: 'CR2',
+        estado: 'Libre',
+        zona: 'CRAI',
+        distancia: 110,
+        fotos: ['../img/cr2-1.jpg', '../img/cr2-2.jpg']
+      },
+      {
+        codigo: 'CF1',
+        estado: 'Libre',
+        zona: 'Cafetería',
+        distancia: 85,
+        fotos: ['../img/cf1-1.jpg', '../img/cf1-2.jpg']
+      },
+      {
+        codigo: 'CF2',
+        estado: 'Libre',
+        zona: 'Cafetería',
+        distancia: 105,
+        fotos: ['../img/cf2-1.jpg', '../img/cf2-2.jpg']
+      }
     ];
 
-    // Mantiene el conteo inicial de 22 espacios cuando no hay filtros activos
     const TOTAL_INICIAL = 22;
 
     let zonaActiva = null;
     let filtroEstado = 'todos';
+    let espacioSeleccionado = null;
+    let indiceFotoActual = 0;
 
     const listaEl = document.getElementById('lista-espacios');
     const contadorEl = document.getElementById('contador-espacios');
@@ -271,10 +521,64 @@
     const btnRegresar = document.getElementById('btn-regresar');
     const btnMapa = document.getElementById('btn-ir-mapa');
 
+    // Elementos del modal de fotos
+    const detalleModal = document.getElementById('detalle-modal');
+    const btnCerrarDetalle = document.getElementById('btn-cerrar-detalle');
+    const detalleCodigoEl = document.getElementById('detalle-codigo');
+    const detalleEstadoEl = document.getElementById('detalle-estado');
+    const detalleSubtituloEl = document.getElementById('detalle-subtitulo');
+    const detalleFotoActivaEl = document.getElementById('detalle-foto-activa');
+    const detalleContadorFotoEl = document.getElementById('detalle-contador-foto');
+    const detalleMiniaturasEl = document.getElementById('detalle-miniaturas');
+    const btnFotoAnterior = document.getElementById('btn-foto-anterior');
+    const btnFotoSiguiente = document.getElementById('btn-foto-siguiente');
+
     const RUTAS_RESULTADOS = {
       volver: 'inicio.html',
       mapa: null
     };
+
+    function actualizarFotoDetalle() {
+      if (!espacioSeleccionado || !espacioSeleccionado.fotos.length) return;
+      const total = espacioSeleccionado.fotos.length;
+      detalleFotoActivaEl.src = espacioSeleccionado.fotos[indiceFotoActual];
+      detalleFotoActivaEl.alt = '';
+      detalleContadorFotoEl.textContent = `${indiceFotoActual + 1} / ${total}`;
+
+      const thumbs = detalleMiniaturasEl.querySelectorAll('.miniatura-espacio');
+      thumbs.forEach((thumb, idx) => {
+        thumb.classList.toggle('activa', idx === indiceFotoActual);
+        if (idx === indiceFotoActual) {
+          thumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    }
+
+    function abrirDetalleEspacio(espacio) {
+      espacioSeleccionado = espacio;
+      indiceFotoActual = 0;
+
+      detalleCodigoEl.textContent = espacio.codigo;
+      detalleEstadoEl.textContent = espacio.estado;
+      detalleEstadoEl.className = 'badge-estado' + (espacio.estado !== 'Libre' ? ' ocupado' : '');
+      detalleSubtituloEl.textContent = `${espacio.zona} · ${espacio.distancia} m`;
+
+      detalleMiniaturasEl.innerHTML = '';
+      espacio.fotos.forEach((ruta, idx) => {
+        const thumb = document.createElement('img');
+        thumb.src = ruta;
+        thumb.alt = '';
+        thumb.className = 'miniatura-espacio' + (idx === 0 ? ' activa' : '');
+        thumb.addEventListener('click', () => {
+          indiceFotoActual = idx;
+          actualizarFotoDetalle();
+        });
+        detalleMiniaturasEl.appendChild(thumb);
+      });
+
+      actualizarFotoDetalle();
+      detalleModal.classList.add('activa');
+    }
 
     function renderEspacios() {
       const filtrados = espaciosBase.filter((item) => {
@@ -302,16 +606,48 @@
       }
 
       filtrados.forEach((espacio) => {
-        const card = document.createElement('article');
+        const card = document.createElement('button');
+        card.type = 'button';
         card.className = 'tarjeta-espacio-item';
+        card.setAttribute('aria-label', `Ver imágenes de ${espacio.codigo} en ${espacio.zona}`);
         card.innerHTML = `
-          <h2 class="codigo-mesa">${espacio.codigo}</h2>
-          <span class="badge-estado ${espacio.estado !== 'Libre' ? 'ocupado' : ''}">${espacio.estado}</span>
-          <p class="meta-espacio">${espacio.zona} · ${espacio.distancia} m</p>
+          <div class="info-espacio">
+            <h2 class="codigo-mesa">${espacio.codigo}</h2>
+            <span class="badge-estado ${espacio.estado !== 'Libre' ? 'ocupado' : ''}">${espacio.estado}</span>
+            <p class="meta-espacio">${espacio.zona} · ${espacio.distancia} m</p>
+          </div>
+          <span class="indicador-ver-fotos">
+            Ver fotos (${espacio.fotos.length})
+          </span>
         `;
+        card.addEventListener('click', () => abrirDetalleEspacio(espacio));
         listaEl.appendChild(card);
       });
     }
+
+    btnCerrarDetalle.addEventListener('click', () => {
+      detalleModal.classList.remove('activa');
+    });
+
+    detalleModal.addEventListener('click', (e) => {
+      if (e.target === detalleModal) {
+        detalleModal.classList.remove('activa');
+      }
+    });
+
+    btnFotoAnterior.addEventListener('click', () => {
+      if (!espacioSeleccionado) return;
+      const total = espacioSeleccionado.fotos.length;
+      indiceFotoActual = (indiceFotoActual - 1 + total) % total;
+      actualizarFotoDetalle();
+    });
+
+    btnFotoSiguiente.addEventListener('click', () => {
+      if (!espacioSeleccionado) return;
+      const total = espacioSeleccionado.fotos.length;
+      indiceFotoActual = (indiceFotoActual + 1) % total;
+      actualizarFotoDetalle();
+    });
 
     pillsZona.forEach((pill) => {
       pill.addEventListener('click', () => {
