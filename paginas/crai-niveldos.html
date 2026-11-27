@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca CRAI - Nivel 2 | UCA Space</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100dvh;
+      background: linear-gradient(180deg, #d7def5 0%, #dee4fa 52%, #d4dbf7 100%);
+      display: flex;
+      justify-content: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #162e57;
+    }
+
+    .pantalla-biblioteca {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100dvh;
+      background: linear-gradient(180deg, #f6f8fe 0%, #eef2fc 58%, #cfdcf8 100%);
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 32px;
+    }
+
+    .encabezado-biblioteca {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 16px 12px;
+    }
+
+    .btn-regresar {
+      width: 34px;
+      height: 34px;
+      border: none;
+      background: transparent;
+      color: #132954;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-regresar:active {
+      background: rgba(13, 42, 92, 0.08);
+      transform: scale(0.95);
+    }
+
+    .titulo-biblioteca {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 800;
+      color: #102652;
+      letter-spacing: -0.015em;
+    }
+
+    .contenido-biblioteca {
+      padding: 6px 20px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .subtitulo-biblioteca {
+      width: 100%;
+      margin: 4px 0 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #566785;
+      text-align: left;
+    }
+
+    .selector-niveles {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .btn-nivel {
+      border: 1.5px solid #2b4c7e;
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: #f5f7fd;
+      color: #2b4c7e;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-nivel.activo {
+      background: #142b52;
+      border-color: #142b52;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .titulo-plano-nivel {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #132852;
+      text-align: center;
+    }
+
+    .contenedor-plano {
+      width: 100%;
+      max-width: 310px;
+      min-height: 240px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .plano-vectorial-crai {
+      width: 100%;
+      max-width: 310px;
+      aspect-ratio: 320 / 470;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .plano-vectorial-crai svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .imagen-plano-biblioteca {
+      width: 100%;
+      height: auto;
+      max-height: 410px;
+      object-fit: contain;
+      display: none;
+      border-radius: 8px;
+    }
+
+    .leyenda-plano {
+      margin-top: 14px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      font-size: 12.5px;
+      color: #4f5f7d;
+    }
+
+    .item-leyenda-plano {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .punto-leyenda-plano {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #23262d;
+      display: inline-block;
+    }
+
+    .cuadro-leyenda-plano {
+      width: 13px;
+      height: 12px;
+      border-radius: 2px;
+      background: #9ab3e8;
+      border: 1px solid #455f94;
+      display: inline-block;
+    }
+
+    .tarjeta-info-nivel {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #2b4c7e;
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: 0 4px 12px rgba(16, 38, 82, 0.06);
+    }
+
+    .titulo-tarjeta-nivel {
+      margin: 0 0 4px;
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #10254f;
+    }
+
+    .descripcion-tarjeta-nivel {
+      margin: 0;
+      font-size: 12.5px;
+      color: #5b6b87;
+      line-height: 1.38;
+    }
+  </style>
+</head>
+<body>
+  <div class="pantalla-biblioteca">
+    <header class="encabezado-biblioteca">
+      <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h1 class="titulo-biblioteca">Biblioteca CRAI</h1>
+    </header>
+
+    <main class="contenido-biblioteca">
+      <p class="subtitulo-biblioteca">Biblioteca P. Florentino Idoate, S.J.</p>
+
+      <div class="selector-niveles" role="tablist" aria-label="Niveles de la biblioteca">
+        <button type="button" class="btn-nivel" data-nivel="1" role="tab" aria-selected="false">Nivel 1</button>
+        <button type="button" class="btn-nivel activo" data-nivel="2" role="tab" aria-selected="true">Nivel 2</button>
+        <button type="button" class="btn-nivel" data-nivel="3" role="tab" aria-selected="false">Nivel 3</button>
+      </div>
+
+      <h2 id="titulo-plano-nivel" class="titulo-plano-nivel">Plano nivel 2</h2>
+
+      <section class="contenedor-plano" aria-label="Plano de la biblioteca">
+        <!-- Plano vectorial del Nivel 2 -->
+        <div id="plano-nivel-2" class="plano-vectorial-crai" role="img" aria-label="Plano esquemático del Nivel 2 de la Biblioteca CRAI">
+          <svg viewBox="0 0 320 470" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <polygon
+              points="42,8 278,8 308,38 308,348 242,438 78,438 12,348 12,38"
+              fill="#f7f9ff"
+              stroke="#17325e"
+              stroke-width="3"
+              stroke-linejoin="round"
+            />
+            <polygon
+              points="48,15 272,15 300,43 300,344 237,430 83,430 20,344 20,43"
+              fill="none"
+              stroke="#17325e"
+              stroke-width="1.2"
+              stroke-linejoin="round"
+            />
+
+            <rect x="64" y="22" width="76" height="6" rx="2" fill="#d3d6dd" stroke="#232c3d" stroke-width="1" />
+            <rect x="180" y="22" width="76" height="6" rx="2" fill="#d3d6dd" stroke="#232c3d" stroke-width="1" />
+
+            <g fill="#7c8db2" stroke="#17325e" stroke-width="1.5">
+              <rect x="34" y="36" width="38" height="44" />
+              <rect x="75" y="36" width="38" height="44" />
+              <rect x="116" y="36" width="38" height="44" />
+            </g>
+            <g fill="#64779e" stroke="#17325e" stroke-width="1.2">
+              <rect x="41" y="42" width="24" height="10" />
+              <rect x="82" y="42" width="24" height="10" />
+              <rect x="123" y="42" width="24" height="10" />
+            </g>
+
+            <rect x="136" y="32" width="48" height="48" fill="#ffffff" stroke="#17325e" stroke-width="1.5" />
+            <g stroke="#284370" stroke-width="1.6" stroke-linecap="round">
+              <line x1="145" y1="43" x2="175" y2="43" />
+              <line x1="145" y1="50" x2="175" y2="50" />
+              <line x1="145" y1="57" x2="175" y2="57" />
+              <line x1="145" y1="64" x2="175" y2="64" />
+              <line x1="145" y1="71" x2="168" y2="71" />
+            </g>
+
+            <g fill="#7c8db2" stroke="#17325e" stroke-width="1.5">
+              <rect x="166" y="36" width="38" height="44" />
+              <rect x="207" y="36" width="38" height="44" />
+              <rect x="248" y="36" width="38" height="44" />
+            </g>
+            <g fill="#64779e" stroke="#17325e" stroke-width="1.2">
+              <rect x="173" y="42" width="24" height="10" />
+              <rect x="214" y="42" width="24" height="10" />
+              <rect x="255" y="42" width="24" height="10" />
+            </g>
+
+            <rect x="134" y="88" width="52" height="44" fill="#ffffff" stroke="#17325e" stroke-width="1.5" />
+            <circle cx="160" cy="110" r="18" fill="#132b54" />
+            <g stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+              <line x1="154" y1="101" x2="154" y2="119" />
+              <polyline points="149,106 154,101 159,106" />
+              <line x1="166" y1="101" x2="166" y2="119" />
+              <polyline points="161,114 166,119 171,114" />
+            </g>
+
+            <rect x="133" y="140" width="54" height="178" fill="#ffffff" stroke="#17325e" stroke-width="1.6" />
+            <rect x="140" y="148" width="40" height="44" fill="#ffffff" stroke="#17325e" stroke-width="1.4" />
+            <polygon
+              points="147,168 172,158 163,182 159,172"
+              fill="none"
+              stroke="#17325e"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+            <rect x="140" y="200" width="40" height="110" fill="#ffffff" stroke="#17325e" stroke-width="1.4" />
+            <g stroke="#284370" stroke-width="1.6" stroke-linecap="round">
+              <line x1="146" y1="210" x2="174" y2="210" />
+              <line x1="146" y1="219" x2="174" y2="219" />
+              <line x1="146" y1="228" x2="174" y2="228" />
+              <line x1="146" y1="237" x2="174" y2="237" />
+              <line x1="146" y1="246" x2="174" y2="246" />
+              <line x1="146" y1="255" x2="174" y2="255" />
+              <line x1="146" y1="264" x2="174" y2="264" />
+              <line x1="146" y1="273" x2="174" y2="273" />
+            </g>
+            <circle cx="160" cy="295" r="10" fill="#23262d" />
+            <polyline
+              points="154,299 158,299 158,295 162,295 162,291 166,291"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+            <rect x="34" y="144" width="90" height="164" fill="#a8c1f0" stroke="#17325e" stroke-width="1.6" />
+            <polygon points="34,144 43,153 43,299 34,308" fill="#7fa2e6" stroke="#17325e" stroke-width="1.2" />
+            <polygon points="124,144 115,153 115,299 124,308" fill="#7fa2e6" stroke="#17325e" stroke-width="1.2" />
+            <g id="mesas-izquierda" fill="#b7ccf4" stroke="#2c497a" stroke-width="1.1"></g>
+
+            <rect x="196" y="144" width="90" height="164" fill="#a8c1f0" stroke="#17325e" stroke-width="1.6" />
+            <polygon points="196,144 205,153 205,299 196,308" fill="#7fa2e6" stroke="#17325e" stroke-width="1.2" />
+            <polygon points="286,144 277,153 277,299 286,308" fill="#7fa2e6" stroke="#17325e" stroke-width="1.2" />
+            <g id="mesas-derecha" fill="#b7ccf4" stroke="#2c497a" stroke-width="1.1"></g>
+
+            <rect x="34" y="313" width="90" height="6" rx="2" fill="#d3d6dd" stroke="#232c3d" stroke-width="1" />
+            <rect x="196" y="313" width="90" height="6" rx="2" fill="#d3d6dd" stroke="#232c3d" stroke-width="1" />
+
+            <rect x="34" y="325" width="96" height="84" fill="#ffffff" stroke="#17325e" stroke-width="1.5" />
+            <g fill="#f7f9ff" stroke="#17325e" stroke-width="1.3">
+              <rect x="44" y="335" width="32" height="28" />
+              <rect x="88" y="335" width="32" height="28" />
+              <rect x="44" y="371" width="32" height="28" />
+              <rect x="88" y="371" width="32" height="28" />
+            </g>
+
+            <rect x="190" y="325" width="96" height="84" fill="#ffffff" stroke="#17325e" stroke-width="1.5" />
+            <g fill="#f7f9ff" stroke="#17325e" stroke-width="1.3">
+              <rect x="200" y="335" width="32" height="28" />
+              <rect x="244" y="335" width="32" height="28" />
+              <rect x="200" y="371" width="32" height="28" />
+              <rect x="244" y="371" width="32" height="28" />
+            </g>
+
+            <rect x="115" y="322" width="90" height="82" fill="#e9eefb" stroke="#17325e" stroke-width="1.8" />
+            <g stroke="#2c497a" stroke-width="1.5" stroke-linecap="round">
+              <line x1="124" y1="332" x2="196" y2="332" />
+              <line x1="124" y1="341" x2="196" y2="341" />
+              <line x1="124" y1="350" x2="196" y2="350" />
+              <line x1="124" y1="359" x2="196" y2="359" />
+              <line x1="124" y1="368" x2="196" y2="368" />
+              <line x1="124" y1="377" x2="196" y2="377" />
+              <line x1="124" y1="386" x2="196" y2="386" />
+              <line x1="124" y1="395" x2="196" y2="395" />
+            </g>
+
+            <g stroke="#23262d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+              <line x1="135" y1="448" x2="135" y2="424" />
+              <polyline points="129,430 135,424 141,430" />
+            </g>
+            <text x="158" y="445" font-size="10" fill="#4f5f7d" font-family="system-ui, sans-serif">Acceso</text>
+          </svg>
+        </div>
+
+        <!-- Imagen alternativa para cuando se seleccione Nivel 3 -->
+        <img
+          id="img-plano-nivel"
+          src="../img/mapa-tercernivel.png"
+          alt="Plano del nivel seleccionado"
+          class="imagen-plano-biblioteca"
+        >
+      </section>
+
+      <div class="leyenda-plano" aria-label="Leyenda del plano">
+        <span class="item-leyenda-plano">
+          <span class="punto-leyenda-plano punto-servicios"></span>
+          <span>Servicios</span>
+        </span>
+        <span class="item-leyenda-plano">
+          <span class="cuadro-leyenda-plano cuadro-areas"></span>
+          <span>Áreas y salas</span>
+        </span>
+      </div>
+
+      <section class="tarjeta-info-nivel" aria-label="Información del nivel seleccionado">
+        <h3 id="titulo-tarjeta-nivel" class="titulo-tarjeta-nivel">Nivel 2 - Biblioteca UCA</h3>
+        <p id="descripcion-tarjeta-nivel" class="descripcion-tarjeta-nivel">
+          Selecciona un nivel para explorar sus espacios
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const svgNS = 'http://www.w3.org/2000/svg';
+
+      function poblarMesas(grupoId, xInicial, yInicial) {
+        const grupo = document.getElementById(grupoId);
+        if (!grupo) return;
+        grupo.innerHTML = '';
+
+        const columnas = 3;
+        const filas = 6;
+        const separacionX = 21;
+        const separacionY = 23;
+        const tamano = 12;
+
+        for (let f = 0; f < filas; f++) {
+          for (let c = 0; c < columnas; c++) {
+            const rect = document.createElementNS(svgNS, 'rect');
+            rect.setAttribute('x', String(xInicial + c * separacionX));
+            rect.setAttribute('y', String(yInicial + f * separacionY));
+            rect.setAttribute('width', String(tamano));
+            rect.setAttribute('height', String(tamano));
+            rect.setAttribute('rx', '1.5');
+            grupo.appendChild(rect);
+          }
+        }
+      }
+
+      poblarMesas('mesas-izquierda', 50, 158);
+      poblarMesas('mesas-derecha', 212, 158);
+
+      const btnRegresar = document.getElementById('btn-regresar');
+      if (btnRegresar) {
+        btnRegresar.addEventListener('click', () => {
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.href = 'bienvenido.html';
+          }
+        });
+      }
+
+      const configNiveles = {
+        1: {
+          tituloPlano: 'Plano nivel 1',
+          tituloTarjeta: 'Nivel 1 - Biblioteca UCA',
+          descripcion: 'Selecciona un nivel para explorar sus espacios',
+          usarVectorNivel2: false,
+          imgSrc: '../img/mapa-primernivel.png'
+        },
+        2: {
+          tituloPlano: 'Plano nivel 2',
+          tituloTarjeta: 'Nivel 2 - Biblioteca UCA',
+          descripcion: 'Selecciona un nivel para explorar sus espacios',
+          usarVectorNivel2: true,
+          imgSrc: ''
+        },
+        3: {
+          tituloPlano: 'Plano nivel 3',
+          tituloTarjeta: 'Nivel 3 - Biblioteca UCA',
+          descripcion: 'Selecciona un nivel para explorar sus espacios',
+          usarVectorNivel2: false,
+          imgSrc: '../img/mapa-tercernivel.png'
+        }
+      };
+
+      const botonesNivel = Array.from(document.querySelectorAll('.btn-nivel'));
+      const tituloPlanoEl = document.getElementById('titulo-plano-nivel');
+      const tituloTarjetaEl = document.getElementById('titulo-tarjeta-nivel');
+      const descripcionTarjetaEl = document.getElementById('descripcion-tarjeta-nivel');
+      const planoVectorEl = document.getElementById('plano-nivel-2');
+      const imgNivelEl = document.getElementById('img-plano-nivel');
+
+      function actualizarNivel(nivelNum) {
+        const cfg = configNiveles[nivelNum] || configNiveles[2];
+
+        botonesNivel.forEach((btn) => {
+          const activo = Number(btn.dataset.nivel) === Number(nivelNum);
+          btn.classList.toggle('activo', activo);
+          btn.setAttribute('aria-selected', String(activo));
+        });
+
+        if (tituloPlanoEl) tituloPlanoEl.textContent = cfg.tituloPlano;
+        if (tituloTarjetaEl) tituloTarjetaEl.textContent = cfg.tituloTarjeta;
+        if (descripcionTarjetaEl) descripcionTarjetaEl.textContent = cfg.descripcion;
+
+        if (cfg.usarVectorNivel2) {
+          if (planoVectorEl) planoVectorEl.style.display = 'flex';
+          if (imgNivelEl) imgNivelEl.style.display = 'none';
+        } else {
+          if (planoVectorEl) planoVectorEl.style.display = 'none';
+          if (imgNivelEl) {
+            imgNivelEl.style.display = 'block';
+            imgNivelEl.alt = `${cfg.tituloPlano} de la Biblioteca CRAI`;
+            imgNivelEl.src = cfg.imgSrc;
+          }
+        }
+      }
+
+      botonesNivel.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          actualizarNivel(Number(btn.dataset.nivel));
+        });
+      });
+
+      actualizarNivel(2);
+    });
+  </script>
+</body>
+</html>
