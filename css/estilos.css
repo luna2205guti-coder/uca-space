@@ -806,3 +806,58 @@ body.splash {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+/* ==========================================
+   Pantalla: Tu campus, más cerca
+   ========================================== */
+.tucampus {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  font-family: "Inter", system-ui, sans-serif;
+  background: linear-gradient(
+    180deg,
+    #cbdafc 0%,
+    #d2dcf8 40%,
+    #d8dcf0 62%,
+    #e3ddfd 88%,
+    #c9d9fc 100%
+  );
+}
+
+.tucampus__contenido {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tucampus__logo {
+  display: block;
+  width: 104px;
+  height: auto;
+  margin-bottom: 40px;
+}
+
+.tucampus__titulo {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #0f2a5c;
+}
+.tucampus__titulo span { color: #3077e8; }
+
+.tucampus__lema {
+  margin: 24px 0 0;
+  font-size: 0.875rem;
+  color: #0f2a5c;
+}
