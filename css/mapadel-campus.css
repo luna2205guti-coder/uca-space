@@ -113,3 +113,22 @@
 .menu a.activo { background: #0f2a5c; color: #fff; }
 .menu img { width: 24px; height: 24px; }
 .menu a.activo img { filter: brightness(0) invert(1); }
+
+/* ===== Ajuste: centrado de la pantalla ===== */
+html {
+  width: 100%;
+}
+
+body.mapa-pagina {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0;
+}
+
+.mapa-pagina .pantalla {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+}
