@@ -65,6 +65,7 @@ body {
 .contenedor-mapa {
   position: relative;
   width: 100%;
+  max-width: 100%;
   overflow: hidden;
   background: #8ee33e;
 }
@@ -121,7 +122,8 @@ body {
 .badge-mesa-libre {
   position: absolute;
   top: 19%;
-  left: 58%;
+  right: 12px;
+  left: auto;
   background: #ffffff;
   border: 1.5px solid #187a3b;
   color: #152c55;

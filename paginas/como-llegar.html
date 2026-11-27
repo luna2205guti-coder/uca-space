@@ -20,13 +20,15 @@
     </header>
 
     <main class="contenido-ruta">
-      <!-- mapa-comollegar.png -->
-      <section class="mapa-comollegar" aria-label="Mapa de ruta en el campus">
+      <!-- Mapa con imagen mapa-comollegar.png -->
+      <section class="contenedor-mapa" aria-label="Mapa de ruta en el campus">
         <img
           id="img-mapa-campus"
-          src="../imagenes/mapa-comollegar.png"
+          src="../img/mapa-comollegar.png"
+          data-fallbacks='["./mapa-comollegar.png","../imagenes/mapa-comollegar.png","../assets/mapa-comollegar.png","../mapa-comollegar.png"]'
           alt="Mapa de ruta en el campus desde Tú hasta Mesa B5 Libre en la Biblioteca"
           class="imagen-mapa-campus"
+          onerror="(function(img){ var list = JSON.parse(img.dataset.fallbacks||'[]'); var i = Number(img.dataset.idx||0); if(i < list.length){ img.dataset.idx = i+1; img.src = list[i]; } })(this);"
         >
 
         <!-- Puntos interactivos sobre la imagen -->
