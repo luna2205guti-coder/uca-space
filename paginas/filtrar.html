@@ -23,11 +23,11 @@
       width: 100%;
       max-width: 430px;
       min-height: 100vh;
-      padding: 20px 18px 32px;
-      background: linear-gradient(165deg, #f3f5fc 0%, #e6ecf9 55%, #d6e0f8 100%);
+      padding: 20px 18px 28px;
+      background: linear-gradient(180deg, #f3f5fc 0%, #e7ecf9 62%, #d4dff7 100%);
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     /* Cabecera */
@@ -35,16 +35,15 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding-top: 2px;
     }
 
     .btn-regresar {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border: none;
       border-radius: 10px;
       background: transparent;
-      color: #0f2a5c;
+      color: #0e2959;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -53,50 +52,49 @@
     }
 
     .btn-regresar:hover {
-      background: rgba(15, 42, 92, 0.08);
+      background: rgba(14, 41, 89, 0.08);
     }
 
     .titulo-filtrar {
       margin: 0;
-      color: #0f2a5c;
-      font-size: 20px;
+      color: #0e2959;
+      font-size: 19px;
       font-weight: 700;
       line-height: 1.2;
     }
 
-    /* Imagen superior */
-    .banner-espacio {
+    /* Foto superior igual a la captura */
+    .foto-superior {
       width: 100%;
-      aspect-ratio: 16 / 10;
+      height: 196px;
       border-radius: 22px;
       overflow: hidden;
-      background: #cbd5e1;
-      box-shadow: 0 8px 20px rgba(15, 42, 92, 0.08);
+      background: #94a3b8;
     }
 
-    .banner-espacio img {
+    .foto-superior img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    /* Nota informativa */
+    /* Línea informativa con (i) */
     .nota-info {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #64748b;
+      margin: 0;
+      color: #6b7280;
       font-size: 13px;
-      margin: -2px 0;
     }
 
     .nota-info svg {
       flex-shrink: 0;
-      color: #475569;
+      color: #334155;
     }
 
-    /* Secciones de filtro */
+    /* Secciones */
     .grupo-filtro {
       display: flex;
       flex-direction: column;
@@ -105,7 +103,7 @@
 
     .subtitulo-filtro {
       margin: 0;
-      color: #0f2a5c;
+      color: #0e2959;
       font-size: 16px;
       font-weight: 700;
     }
@@ -120,21 +118,17 @@
       border: none;
       border-radius: 999px;
       padding: 9px 18px;
-      background: #486094;
+      background: #476094;
       color: #ffffff;
       font-family: inherit;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 500;
       cursor: pointer;
-      transition: background-color 0.15s ease, transform 0.12s ease;
-    }
-
-    .pildora-opcion:hover {
-      background: #364c7c;
+      transition: background-color 0.15s ease;
     }
 
     .pildora-opcion.activa {
-      background: #0f2a5c;
+      background: #0e2959;
       font-weight: 600;
     }
 
@@ -143,7 +137,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: #0f2a5c;
+      color: #0e2959;
       font-size: 13px;
       font-weight: 600;
     }
@@ -154,7 +148,13 @@
       width: 100%;
       height: 5px;
       border-radius: 999px;
-      background: linear-gradient(to right, #0f2a5c 0%, #0f2a5c var(--progreso, 100%), #b9c7e2 var(--progreso, 100%), #b9c7e2 100%);
+      background: linear-gradient(
+        to right,
+        #0e2959 0%,
+        #0e2959 var(--progreso, 96%),
+        #b6c5e2 var(--progreso, 96%),
+        #b6c5e2 100%
+      );
       outline: none;
       cursor: pointer;
       margin: 2px 0;
@@ -163,34 +163,34 @@
     .slider-cercania::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: #0f2a5c;
-      border: 3px solid #ffffff;
-      box-shadow: 0 2px 6px rgba(15, 42, 92, 0.25);
+      background: #0e2959;
+      border: 2.5px solid #ffffff;
+      box-shadow: 0 1px 4px rgba(14, 41, 89, 0.3);
       cursor: pointer;
     }
 
     .slider-cercania::-moz-range-thumb {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: #0f2a5c;
-      border: 3px solid #ffffff;
-      box-shadow: 0 2px 6px rgba(15, 42, 92, 0.25);
+      background: #0e2959;
+      border: 2.5px solid #ffffff;
+      box-shadow: 0 1px 4px rgba(14, 41, 89, 0.3);
       cursor: pointer;
     }
 
-    /* Características desplegables */
+    /* Características + cuadro blanco inferior */
     .btn-acordeon-caracteristicas {
       border: none;
       background: transparent;
-      padding: 2px 0;
+      padding: 0;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      color: #0f2a5c;
+      gap: 7px;
+      color: #0e2959;
       font-family: inherit;
       font-size: 16px;
       font-weight: 700;
@@ -206,17 +206,16 @@
       transform: rotate(-90deg);
     }
 
-    .tarjeta-caracteristicas {
+    .cuadro-caracteristicas {
       background: #ffffff;
-      border-radius: 24px;
+      border-radius: 22px;
       padding: 22px 20px;
-      box-shadow: 0 8px 22px rgba(15, 42, 92, 0.06);
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
 
-    .tarjeta-caracteristicas.oculta {
+    .cuadro-caracteristicas.oculto {
       display: none;
     }
 
@@ -225,65 +224,59 @@
       align-items: center;
       gap: 12px;
       color: #1e293b;
-      font-size: 15px;
+      font-size: 14.5px;
       cursor: pointer;
       user-select: none;
     }
 
     .item-caracteristica input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #0f2a5c;
-      border-radius: 4px;
+      width: 17px;
+      height: 17px;
+      accent-color: #364e82;
       cursor: pointer;
       margin: 0;
     }
 
-    /* Botón principal inferior */
+    /* Botón inferior */
     .btn-ver-resultados {
-      margin-top: auto;
+      margin-top: 6px;
       width: 100%;
       border: none;
       border-radius: 16px;
-      padding: 16px 20px;
-      background: #385185;
+      padding: 15px 20px;
+      background: #364f82;
       color: #ffffff;
       font-family: inherit;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(15, 42, 92, 0.16);
-      transition: background-color 0.15s ease, transform 0.12s ease;
+      transition: background-color 0.15s ease;
     }
 
     .btn-ver-resultados:hover {
-      background: #0f2a5c;
-    }
-
-    .btn-ver-resultados:active {
-      transform: scale(0.99);
+      background: #0e2959;
     }
   </style>
 </head>
 <body>
   <main class="app-filtrar">
 
-    <!-- Cabecera -->
+    <!-- Encabezado -->
     <header class="cabecera-filtrar">
       <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
       </button>
       <h1 class="titulo-filtrar">Filtrar espacios</h1>
     </header>
 
-    <!-- Fotografía del espacio -->
-    <div class="banner-espacio">
+    <!-- Fotografía superior -->
+    <div class="foto-superior">
       <img src="../img/filtrar-espacio.jpg" alt="">
     </div>
 
-    <!-- Nota informativa -->
+    <!-- Descripción -->
     <p class="nota-info">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="10"></circle>
@@ -294,8 +287,8 @@
     </p>
 
     <!-- Tipo de espacio -->
-    <section class="grupo-filtro" aria-labelledby="lbl-tipo-espacio">
-      <h2 id="lbl-tipo-espacio" class="subtitulo-filtro">Tipo de espacio</h2>
+    <section class="grupo-filtro" aria-labelledby="lbl-tipo">
+      <h2 id="lbl-tipo" class="subtitulo-filtro">Tipo de espacio</h2>
       <div class="fila-pildoras" data-grupo="tipo">
         <button type="button" class="pildora-opcion activa" data-valor="Descanso">Descanso</button>
         <button type="button" class="pildora-opcion" data-valor="Estudio">Estudio</button>
@@ -304,8 +297,8 @@
     </section>
 
     <!-- Disponibilidad -->
-    <section class="grupo-filtro" aria-labelledby="lbl-disponibilidad">
-      <h2 id="lbl-disponibilidad" class="subtitulo-filtro">Disponibilidad</h2>
+    <section class="grupo-filtro" aria-labelledby="lbl-disp">
+      <h2 id="lbl-disp" class="subtitulo-filtro">Disponibilidad</h2>
       <div class="fila-pildoras" data-grupo="disponibilidad">
         <button type="button" class="pildora-opcion activa" data-valor="Disponible">Disponible</button>
         <button type="button" class="pildora-opcion" data-valor="Por confirmar">Por confirmar</button>
@@ -319,20 +312,20 @@
         <span>Más cerca</span>
         <span>Más lejos</span>
       </div>
-      <input type="range" id="rango-cercania" class="slider-cercania" min="50" max="500" step="10" value="500" aria-label="Cercanía en metros">
+      <input type="range" id="rango-cercania" class="slider-cercania" min="50" max="500" step="10" value="480" aria-label="Cercanía">
     </section>
 
-    <!-- Características -->
+    <!-- Características y cuadro blanco inferior -->
     <section class="grupo-filtro" aria-label="Características">
-      <button type="button" id="btn-toggle-caracteristicas" class="btn-acordeon-caracteristicas" aria-expanded="true" aria-controls="panel-caracteristicas">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <button type="button" id="btn-toggle-caracteristicas" class="btn-acordeon-caracteristicas" aria-expanded="true" aria-controls="cuadro-caracteristicas">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <polyline points="19 12 12 19 5 12"></polyline>
         </svg>
         <span>Características</span>
       </button>
 
-      <div id="panel-caracteristicas" class="tarjeta-caracteristicas">
+      <div id="cuadro-caracteristicas" class="cuadro-caracteristicas">
         <label class="item-caracteristica">
           <input type="checkbox" name="caracteristica" value="Con mesas">
           <span>Con mesas</span>
@@ -366,10 +359,9 @@
     const btnRegresar = document.getElementById('btn-regresar');
     const rangoCercania = document.getElementById('rango-cercania');
     const btnToggleCaracteristicas = document.getElementById('btn-toggle-caracteristicas');
-    const panelCaracteristicas = document.getElementById('panel-caracteristicas');
+    const cuadroCaracteristicas = document.getElementById('cuadro-caracteristicas');
     const btnVerResultados = document.getElementById('btn-ver-resultados');
 
-    // Selección de píldoras por grupo
     document.querySelectorAll('.fila-pildoras').forEach((grupo) => {
       const botones = grupo.querySelectorAll('.pildora-opcion');
       botones.forEach((btn) => {
@@ -383,7 +375,6 @@
       });
     });
 
-    // Progreso visual del slider de cercanía
     function actualizarProgresoSlider() {
       const min = Number(rangoCercania.min);
       const max = Number(rangoCercania.max);
@@ -395,15 +386,13 @@
     rangoCercania.addEventListener('input', actualizarProgresoSlider);
     actualizarProgresoSlider();
 
-    // Plejar/desplegar tarjeta de características
     btnToggleCaracteristicas.addEventListener('click', () => {
       const estaAbierto = btnToggleCaracteristicas.getAttribute('aria-expanded') === 'true';
       btnToggleCaracteristicas.setAttribute('aria-expanded', String(!estaAbierto));
       btnToggleCaracteristicas.classList.toggle('colapsado', estaAbierto);
-      panelCaracteristicas.classList.toggle('oculta', estaAbierto);
+      cuadroCaracteristicas.classList.toggle('oculto', estaAbierto);
     });
 
-    // Botón regresar
     btnRegresar.addEventListener('click', () => {
       if (window.history.length > 1) {
         window.history.back();
@@ -412,7 +401,6 @@
       }
     });
 
-    // Guardar filtros y pasar a resultados-espacios.html
     btnVerResultados.addEventListener('click', () => {
       const tipoActivo = document.querySelector('[data-grupo="tipo"] .pildora-opcion.activa');
       const dispActiva = document.querySelector('[data-grupo="disponibilidad"] .pildora-opcion.activa');
@@ -420,14 +408,12 @@
         document.querySelectorAll('input[name="caracteristica"]:checked')
       ).map((cb) => cb.value);
 
-      const filtrosGuardados = {
+      sessionStorage.setItem('ucaSpaceFiltros', JSON.stringify({
         tipo: tipoActivo ? tipoActivo.dataset.valor : null,
         disponibilidad: dispActiva ? dispActiva.dataset.valor : null,
         distanciaMax: Number(rangoCercania.value),
         caracteristicas
-      };
-
-      sessionStorage.setItem('ucaSpaceFiltros', JSON.stringify(filtrosGuardados));
+      }));
 
       if (RUTAS_FILTRAR.resultados) {
         window.location.href = RUTAS_FILTRAR.resultados;
