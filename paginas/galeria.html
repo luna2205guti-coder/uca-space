@@ -341,7 +341,6 @@
       inicio: 'pantalla-inicio.html'
     };
 
-    // Reemplaza las rutas ../img/... por los nombres reales de tus fotos en la carpeta img/
     const sectores = [
       {
         nombre: 'Área de descanso',
@@ -382,7 +381,7 @@
     ];
 
     let sectorActual = 0;
-    let vistaActiva = 0;
+    let vistaActiva = -1;
 
     const tituloSectorEl = document.getElementById('titulo-sector');
     const fotoPrincipalEl = document.getElementById('foto-principal');
@@ -436,13 +435,30 @@
       textoSectoresEl.textContent = `${sectorActual + 1} de ${sectores.length} sectores`;
     }
 
-    // Inicia mostrando la foto principal del sector 1 y resaltando Vista 1 como en la captura
-    vistaActiva = -1;
     renderGaleria();
     const primeraVista = gridVistasEl.querySelector('.item-vista');
     if (primeraVista) primeraVista.classList.add('activa');
 
+    // Lógica para recordar si saliste desde aquí usando la barra inferior
+    const CLAVE_VOLVER_GALERIA = 'ucaSpaceVolverGaleria';
+
+    if (sessionStorage.getItem(CLAVE_VOLVER_GALERIA) === 'true') {
+      sessionStorage.removeItem(CLAVE_VOLVER_GALERIA);
+      document.querySelectorAll('.nav-tab').forEach((t) => {
+        t.classList.toggle('activa', t.querySelector('span')?.textContent.trim() === 'Inicio');
+      });
+      sectorActual = 0;
+      vistaActiva = -1;
+      renderGaleria();
+    }
+
     btnRegresar.addEventListener('click', () => {
+      if (sessionStorage.getItem(CLAVE_VOLVER_GALERIA) === 'true') {
+        sessionStorage.removeItem(CLAVE_VOLVER_GALERIA);
+        window.location.reload();
+        return;
+      }
+
       if (window.history.length > 1) {
         window.history.back();
       } else {
@@ -456,8 +472,20 @@
 
     document.querySelectorAll('.nav-tab').forEach((tab) => {
       tab.addEventListener('click', () => {
+        const esInicio = tab.querySelector('span')?.textContent.trim() === 'Inicio';
         const ruta = tab.dataset.ruta;
+
+        if (esInicio) {
+          document.querySelectorAll('.nav-tab').forEach((t) => t.classList.remove('activa'));
+          tab.classList.add('activa');
+          sectorActual = 0;
+          vistaActiva = -1;
+          renderGaleria();
+          return;
+        }
+
         if (ruta) {
+          sessionStorage.setItem(CLAVE_VOLVER_GALERIA, 'true');
           window.location.href = ruta;
         }
       });
