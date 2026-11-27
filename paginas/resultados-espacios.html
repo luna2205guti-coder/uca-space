@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados de espacios - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: inherit;
+      background: #f4f6fb;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-resultados {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      padding: 20px 18px 36px;
+      background: linear-gradient(160deg, #f3f5fc 0%, #e7ecf9 55%, #d6e0f8 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Cabecera con regresar */
+    .cabecera-resultados {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-top: 4px;
+    }
+
+    .btn-regresar {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: #0f2a5c;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-regresar:hover {
+      background: rgba(15, 42, 92, 0.08);
+    }
+
+    .titulo-pagina {
+      margin: 0;
+      color: #0f2a5c;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* Fila de acciones: Filtros y Mapa */
+    .barra-acciones {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    .btn-filtro-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230f2a5c' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 12px center;
+      border: 1px solid #d5dde9;
+      border-radius: 999px;
+      padding: 8px 32px 8px 14px;
+      color: #0f2a5c;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      box-shadow: 0 2px 8px rgba(15, 42, 92, 0.04);
+    }
+
+    .btn-mapa-pill {
+      background: #ffffff;
+      border: 1px solid #d5dde9;
+      border-radius: 999px;
+      padding: 8px 16px;
+      color: #0f2a5c;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(15, 42, 92, 0.04);
+    }
+
+    .btn-mapa-pill:hover {
+      background: #eef3fc;
+    }
+
+    /* Píldoras de zonas */
+    .fila-zonas {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill-zona {
+      background: #ffffff;
+      border: 1.5px solid #2b4c8c;
+      border-radius: 999px;
+      padding: 7px 16px;
+      color: #0f2a5c;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .pill-zona.activa {
+      background: #0f2a5c;
+      color: #ffffff;
+      border-color: #0f2a5c;
+    }
+
+    /* Contador */
+    .contador-espacios {
+      margin: 2px 0 0 0;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* Lista de tarjetas */
+    .lista-espacios {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tarjeta-espacio-item {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 16px 18px;
+      box-shadow: 0 6px 18px rgba(15, 42, 92, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .tarjeta-espacio-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15, 42, 92, 0.09);
+    }
+
+    .codigo-mesa {
+      margin: 0;
+      color: #0f2a5c;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .badge-estado {
+      display: inline-block;
+      background: #d1fae5;
+      color: #15803d;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .badge-estado.ocupado {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .meta-espacio {
+      margin: 2px 0 0 0;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .mensaje-vacio {
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      color: #475569;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <main class="app-resultados">
+
+    <!-- Encabezado -->
+    <header class="cabecera-resultados">
+      <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h1 class="titulo-pagina">Resultados de espacios</h1>
+    </header>
+
+    <!-- Filtros y Mapa -->
+    <div class="barra-acciones">
+      <select id="filtro-estado" class="btn-filtro-select" aria-label="Filtros de disponibilidad">
+        <option value="todos">Filtros</option>
+        <option value="Libre">Solo libres</option>
+        <option value="cerca">Más cercanos (≤ 150 m)</option>
+      </select>
+
+      <button type="button" id="btn-ir-mapa" class="btn-mapa-pill">Mapa</button>
+    </div>
+
+    <!-- Píldoras de zonas -->
+    <div class="fila-zonas" role="group" aria-label="Filtrar por zona">
+      <button type="button" class="pill-zona" data-zona="CRAI">CRAI</button>
+      <button type="button" class="pill-zona" data-zona="Cafetería">Cafetería</button>
+      <button type="button" class="pill-zona" data-zona="Bosque">Bosque</button>
+    </div>
+
+    <!-- Contador -->
+    <p id="contador-espacios" class="contador-espacios">22 espacios encontrados</p>
+
+    <!-- Tarjetas -->
+    <section id="lista-espacios" class="lista-espacios" aria-live="polite"></section>
+
+  </main>
+
+  <script>
+    // Lista base (puedes ampliar hasta completar los 22 espacios cuando gustes)
+    const espaciosBase = [
+      { codigo: 'M5', estado: 'Libre', zona: 'Bosque', distancia: 130 },
+      { codigo: 'M6', estado: 'Libre', zona: 'Bosque', distancia: 140 },
+      { codigo: 'M1', estado: 'Libre', zona: 'Bosque', distancia: 145 },
+      { codigo: 'M7', estado: 'Libre', zona: 'Bosque', distancia: 151 },
+      { codigo: 'B5', estado: 'Libre', zona: 'Biblioteca', distancia: 152 },
+      { codigo: 'M2', estado: 'Libre', zona: 'Bosque', distancia: 154 },
+      { codigo: 'CR1', estado: 'Libre', zona: 'CRAI', distancia: 95 },
+      { codigo: 'CR2', estado: 'Libre', zona: 'CRAI', distancia: 110 },
+      { codigo: 'CF1', estado: 'Libre', zona: 'Cafetería', distancia: 85 },
+      { codigo: 'CF2', estado: 'Libre', zona: 'Cafetería', distancia: 105 }
+    ];
+
+    // Mantiene el conteo inicial de 22 espacios cuando no hay filtros activos
+    const TOTAL_INICIAL = 22;
+
+    let zonaActiva = null;
+    let filtroEstado = 'todos';
+
+    const listaEl = document.getElementById('lista-espacios');
+    const contadorEl = document.getElementById('contador-espacios');
+    const filtroEl = document.getElementById('filtro-estado');
+    const pillsZona = document.querySelectorAll('.pill-zona');
+    const btnRegresar = document.getElementById('btn-regresar');
+    const btnMapa = document.getElementById('btn-ir-mapa');
+
+    const RUTAS_RESULTADOS = {
+      volver: 'inicio.html',
+      mapa: null
+    };
+
+    function renderEspacios() {
+      const filtrados = espaciosBase.filter((item) => {
+        const coincideZona = !zonaActiva || item.zona === zonaActiva;
+        let coincideFiltro = true;
+
+        if (filtroEstado === 'Libre') {
+          coincideFiltro = item.estado === 'Libre';
+        } else if (filtroEstado === 'cerca') {
+          coincideFiltro = item.distancia <= 150;
+        }
+
+        return coincideZona && coincideFiltro;
+      });
+
+      const sinFiltros = !zonaActiva && filtroEstado === 'todos';
+      const totalMostrar = sinFiltros ? TOTAL_INICIAL : filtrados.length;
+      contadorEl.textContent = `${totalMostrar} espacios encontrados`;
+
+      listaEl.innerHTML = '';
+
+      if (filtrados.length === 0) {
+        listaEl.innerHTML = '<div class="mensaje-vacio">No hay espacios que coincidan con este filtro.</div>';
+        return;
+      }
+
+      filtrados.forEach((espacio) => {
+        const card = document.createElement('article');
+        card.className = 'tarjeta-espacio-item';
+        card.innerHTML = `
+          <h2 class="codigo-mesa">${espacio.codigo}</h2>
+          <span class="badge-estado ${espacio.estado !== 'Libre' ? 'ocupado' : ''}">${espacio.estado}</span>
+          <p class="meta-espacio">${espacio.zona} · ${espacio.distancia} m</p>
+        `;
+        listaEl.appendChild(card);
+      });
+    }
+
+    pillsZona.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const zona = pill.dataset.zona;
+        if (zonaActiva === zona) {
+          zonaActiva = null;
+          pill.classList.remove('activa');
+        } else {
+          pillsZona.forEach((p) => p.classList.remove('activa'));
+          zonaActiva = zona;
+          pill.classList.add('activa');
+        }
+        renderEspacios();
+      });
+    });
+
+    filtroEl.addEventListener('change', () => {
+      filtroEstado = filtroEl.value;
+      renderEspacios();
+    });
+
+    btnRegresar.addEventListener('click', () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else if (RUTAS_RESULTADOS.volver) {
+        window.location.href = RUTAS_RESULTADOS.volver;
+      }
+    });
+
+    btnMapa.addEventListener('click', () => {
+      if (RUTAS_RESULTADOS.mapa) {
+        window.location.href = RUTAS_RESULTADOS.mapa;
+      }
+    });
+
+    renderEspacios();
+  </script>
+</body>
+</html>
