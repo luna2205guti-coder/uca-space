@@ -119,7 +119,7 @@ body {
   text-align: center;
 }
 
-.contenedor-plano {
+.mapa-niveldos {
   width: 100%;
   max-width: 310px;
   min-height: 240px;
@@ -127,6 +127,15 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
+}
+
+.imagen-plano-biblioteca {
+  width: 100%;
+  height: auto;
+  max-height: 410px;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
 }
 
 .plano-vectorial-crai {
