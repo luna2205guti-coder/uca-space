@@ -6,53 +6,433 @@
   <title>Filtrar espacios - UCA Space</title>
   <link rel="stylesheet" href="../css/variables.css">
   <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: inherit;
+      background: #f4f6fb;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-filtrar {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      padding: 20px 18px 32px;
+      background: linear-gradient(165deg, #f3f5fc 0%, #e6ecf9 55%, #d6e0f8 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Cabecera */
+    .cabecera-filtrar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-top: 2px;
+    }
+
+    .btn-regresar {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: #0f2a5c;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .btn-regresar:hover {
+      background: rgba(15, 42, 92, 0.08);
+    }
+
+    .titulo-filtrar {
+      margin: 0;
+      color: #0f2a5c;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* Imagen superior */
+    .banner-espacio {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #cbd5e1;
+      box-shadow: 0 8px 20px rgba(15, 42, 92, 0.08);
+    }
+
+    .banner-espacio img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Nota informativa */
+    .nota-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #64748b;
+      font-size: 13px;
+      margin: -2px 0;
+    }
+
+    .nota-info svg {
+      flex-shrink: 0;
+      color: #475569;
+    }
+
+    /* Secciones de filtro */
+    .grupo-filtro {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .subtitulo-filtro {
+      margin: 0;
+      color: #0f2a5c;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .fila-pildoras {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pildora-opcion {
+      border: none;
+      border-radius: 999px;
+      padding: 9px 18px;
+      background: #486094;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .pildora-opcion:hover {
+      background: #364c7c;
+    }
+
+    .pildora-opcion.activa {
+      background: #0f2a5c;
+      font-weight: 600;
+    }
+
+    /* Cercanía */
+    .etiquetas-cercania {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #0f2a5c;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .slider-cercania {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #0f2a5c 0%, #0f2a5c var(--progreso, 100%), #b9c7e2 var(--progreso, 100%), #b9c7e2 100%);
+      outline: none;
+      cursor: pointer;
+      margin: 2px 0;
+    }
+
+    .slider-cercania::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #0f2a5c;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(15, 42, 92, 0.25);
+      cursor: pointer;
+    }
+
+    .slider-cercania::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #0f2a5c;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(15, 42, 92, 0.25);
+      cursor: pointer;
+    }
+
+    /* Características desplegables */
+    .btn-acordeon-caracteristicas {
+      border: none;
+      background: transparent;
+      padding: 2px 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #0f2a5c;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .btn-acordeon-caracteristicas svg {
+      transition: transform 0.2s ease;
+    }
+
+    .btn-acordeon-caracteristicas.colapsado svg {
+      transform: rotate(-90deg);
+    }
+
+    .tarjeta-caracteristicas {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 22px 20px;
+      box-shadow: 0 8px 22px rgba(15, 42, 92, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .tarjeta-caracteristicas.oculta {
+      display: none;
+    }
+
+    .item-caracteristica {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #1e293b;
+      font-size: 15px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .item-caracteristica input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #0f2a5c;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    /* Botón principal inferior */
+    .btn-ver-resultados {
+      margin-top: auto;
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      padding: 16px 20px;
+      background: #385185;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(15, 42, 92, 0.16);
+      transition: background-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .btn-ver-resultados:hover {
+      background: #0f2a5c;
+    }
+
+    .btn-ver-resultados:active {
+      transform: scale(0.99);
+    }
+  </style>
 </head>
 <body>
-  <main class="app filtros">
-    <header class="encabezado-pantalla">
-      <a href="inicio.html" aria-label="Volver">
-        <img src="../img/icono-atras.png" alt="" width="24" height="24">
-      </a>
-      <h1>Filtrar espacios</h1>
+  <main class="app-filtrar">
+
+    <!-- Cabecera -->
+    <header class="cabecera-filtrar">
+      <button type="button" id="btn-regresar" class="btn-regresar" aria-label="Regresar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h1 class="titulo-filtrar">Filtrar espacios</h1>
     </header>
 
-    <p class="filtros__texto">Encuentra un lugar según tus necesidades</p>
+    <!-- Fotografía del espacio -->
+    <div class="banner-espacio">
+      <img src="../img/filtrar-espacio.jpg" alt="">
+    </div>
 
-    <form action="resultados.html">
-      <fieldset class="grupo">
-        <legend>Tipo de espacio</legend>
-        <div class="fichas">
-          <label class="ficha"><input type="checkbox" name="tipo" value="descanso"><span>Descanso</span></label>
-          <label class="ficha"><input type="checkbox" name="tipo" value="estudio"><span>Estudio</span></label>
-          <label class="ficha"><input type="checkbox" name="tipo" value="reunion"><span>Reunión</span></label>
-        </div>
-      </fieldset>
+    <!-- Nota informativa -->
+    <p class="nota-info">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span>Encuentra un lugar según tus necesidades.</span>
+    </p>
 
-      <fieldset class="grupo">
-        <legend>Disponibilidad</legend>
-        <div class="fichas">
-          <label class="ficha"><input type="checkbox" name="disponibilidad" value="disponible"><span>Disponible</span></label>
-          <label class="ficha"><input type="checkbox" name="disponibilidad" value="por-confirmar"><span>Por confirmar</span></label>
-        </div>
-      </fieldset>
+    <!-- Tipo de espacio -->
+    <section class="grupo-filtro" aria-labelledby="lbl-tipo-espacio">
+      <h2 id="lbl-tipo-espacio" class="subtitulo-filtro">Tipo de espacio</h2>
+      <div class="fila-pildoras" data-grupo="tipo">
+        <button type="button" class="pildora-opcion activa" data-valor="Descanso">Descanso</button>
+        <button type="button" class="pildora-opcion" data-valor="Estudio">Estudio</button>
+        <button type="button" class="pildora-opcion" data-valor="Reunión">Reunión</button>
+      </div>
+    </section>
 
-      <fieldset class="grupo">
-        <legend>Distancia</legend>
-        <input class="deslizador" type="range" name="distancia" min="0" max="1" step="0.1" value="0.5">
-        <div class="deslizador__rango"><span>Min 0 km</span><span>Max 1 km</span></div>
-      </fieldset>
+    <!-- Disponibilidad -->
+    <section class="grupo-filtro" aria-labelledby="lbl-disponibilidad">
+      <h2 id="lbl-disponibilidad" class="subtitulo-filtro">Disponibilidad</h2>
+      <div class="fila-pildoras" data-grupo="disponibilidad">
+        <button type="button" class="pildora-opcion activa" data-valor="Disponible">Disponible</button>
+        <button type="button" class="pildora-opcion" data-valor="Por confirmar">Por confirmar</button>
+      </div>
+    </section>
 
-      <fieldset class="grupo">
-        <legend>Características</legend>
-        <label class="casilla"><input type="checkbox" name="caracteristica" value="mesas"> Con mesas</label>
-        <label class="casilla"><input type="checkbox" name="caracteristica" value="aire-libre"> Aire libre</label>
-        <label class="casilla"><input type="checkbox" name="caracteristica" value="enchufes"> Con enchufes</label>
-        <label class="casilla"><input type="checkbox" name="caracteristica" value="grupos"> Para grupos</label>
-      </fieldset>
+    <!-- Cercanía -->
+    <section class="grupo-filtro" aria-labelledby="lbl-cercania">
+      <h2 id="lbl-cercania" class="subtitulo-filtro">Cercanía</h2>
+      <div class="etiquetas-cercania">
+        <span>Más cerca</span>
+        <span>Más lejos</span>
+      </div>
+      <input type="range" id="rango-cercania" class="slider-cercania" min="50" max="500" step="10" value="500" aria-label="Cercanía en metros">
+    </section>
 
-      <button class="boton boton--oscuro boton--auto" type="submit">Ver resultados</button>
-    </form>
+    <!-- Características -->
+    <section class="grupo-filtro" aria-label="Características">
+      <button type="button" id="btn-toggle-caracteristicas" class="btn-acordeon-caracteristicas" aria-expanded="true" aria-controls="panel-caracteristicas">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <polyline points="19 12 12 19 5 12"></polyline>
+        </svg>
+        <span>Características</span>
+      </button>
+
+      <div id="panel-caracteristicas" class="tarjeta-caracteristicas">
+        <label class="item-caracteristica">
+          <input type="checkbox" name="caracteristica" value="Con mesas">
+          <span>Con mesas</span>
+        </label>
+        <label class="item-caracteristica">
+          <input type="checkbox" name="caracteristica" value="Al aire libre">
+          <span>Al aire libre</span>
+        </label>
+        <label class="item-caracteristica">
+          <input type="checkbox" name="caracteristica" value="Con sombra">
+          <span>Con sombra</span>
+        </label>
+        <label class="item-caracteristica">
+          <input type="checkbox" name="caracteristica" value="Para grupos">
+          <span>Para grupos</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Botón Ver resultados -->
+    <button type="button" id="btn-ver-resultados" class="btn-ver-resultados">Ver resultados</button>
+
   </main>
-  <script src="../js/main.js"></script>
+
+  <script>
+    const RUTAS_FILTRAR = {
+      volver: 'pantalla-inicio.html',
+      resultados: 'resultados-espacios.html'
+    };
+
+    const btnRegresar = document.getElementById('btn-regresar');
+    const rangoCercania = document.getElementById('rango-cercania');
+    const btnToggleCaracteristicas = document.getElementById('btn-toggle-caracteristicas');
+    const panelCaracteristicas = document.getElementById('panel-caracteristicas');
+    const btnVerResultados = document.getElementById('btn-ver-resultados');
+
+    // Selección de píldoras por grupo
+    document.querySelectorAll('.fila-pildoras').forEach((grupo) => {
+      const botones = grupo.querySelectorAll('.pildora-opcion');
+      botones.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const yaActiva = btn.classList.contains('activa');
+          botones.forEach((b) => b.classList.remove('activa'));
+          if (!yaActiva) {
+            btn.classList.add('activa');
+          }
+        });
+      });
+    });
+
+    // Progreso visual del slider de cercanía
+    function actualizarProgresoSlider() {
+      const min = Number(rangoCercania.min);
+      const max = Number(rangoCercania.max);
+      const val = Number(rangoCercania.value);
+      const porcentaje = ((val - min) / (max - min)) * 100;
+      rangoCercania.style.setProperty('--progreso', `${porcentaje}%`);
+    }
+
+    rangoCercania.addEventListener('input', actualizarProgresoSlider);
+    actualizarProgresoSlider();
+
+    // Plejar/desplegar tarjeta de características
+    btnToggleCaracteristicas.addEventListener('click', () => {
+      const estaAbierto = btnToggleCaracteristicas.getAttribute('aria-expanded') === 'true';
+      btnToggleCaracteristicas.setAttribute('aria-expanded', String(!estaAbierto));
+      btnToggleCaracteristicas.classList.toggle('colapsado', estaAbierto);
+      panelCaracteristicas.classList.toggle('oculta', estaAbierto);
+    });
+
+    // Botón regresar
+    btnRegresar.addEventListener('click', () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else if (RUTAS_FILTRAR.volver) {
+        window.location.href = RUTAS_FILTRAR.volver;
+      }
+    });
+
+    // Guardar filtros y pasar a resultados-espacios.html
+    btnVerResultados.addEventListener('click', () => {
+      const tipoActivo = document.querySelector('[data-grupo="tipo"] .pildora-opcion.activa');
+      const dispActiva = document.querySelector('[data-grupo="disponibilidad"] .pildora-opcion.activa');
+      const caracteristicas = Array.from(
+        document.querySelectorAll('input[name="caracteristica"]:checked')
+      ).map((cb) => cb.value);
+
+      const filtrosGuardados = {
+        tipo: tipoActivo ? tipoActivo.dataset.valor : null,
+        disponibilidad: dispActiva ? dispActiva.dataset.valor : null,
+        distanciaMax: Number(rangoCercania.value),
+        caracteristicas
+      };
+
+      sessionStorage.setItem('ucaSpaceFiltros', JSON.stringify(filtrosGuardados));
+
+      if (RUTAS_FILTRAR.resultados) {
+        window.location.href = RUTAS_FILTRAR.resultados;
+      }
+    });
+  </script>
 </body>
 </html>
