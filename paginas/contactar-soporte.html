@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contactar soporte - UCA Space</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/contactar-soporte.css">
+</head>
+<body class="soporte">
+  <main class="soporte__contenido">
+
+    <header class="soporte__cabecera">
+      <a href="preguntas-frecuentes.html" aria-label="Volver">
+        <img src="../img/icono-atras.png" alt="" width="24" height="24">
+      </a>
+      <h1>Contactar soporte</h1>
+    </header>
+
+    <p class="soporte__intro">¿Necesitas ayuda? Estamos aquí para orientarte.</p>
+
+    <a class="soporte__ayuda" href="preguntas-frecuentes.html">
+      <img src="../img/icono-audifonos.png" alt="" width="32" height="32">
+      <div>
+        <h2>Centro de ayuda</h2>
+        <p>Cuéntanos qué te sucede y te ayudaremos a resolverlo.</p>
+      </div>
+    </a>
+
+    <h3 class="soporte__subtitulo">Envíanos un mensaje</h3>
+
+    <form class="soporte__formulario" id="formulario-soporte">
+      <label class="soporte__etiqueta" for="motivo">Motivo de contacto</label>
+      <input class="soporte__campo" type="text" id="motivo" name="motivo" required>
+
+      <label class="soporte__etiqueta" for="correo">Correo institucional</label>
+      <input class="soporte__campo" type="email" id="correo" name="correo" required>
+
+      <label class="soporte__etiqueta" for="consulta">Describe tu consulta</label>
+      <textarea class="soporte__campo soporte__campo--grande" id="consulta" name="consulta" required></textarea>
+
+      <span class="soporte__etiqueta">Adjuntar fotografía (opcional)</span>
+      <label class="soporte__adjuntar" for="foto">
+        <img src="../img/icono-camara.png" alt="" width="24" height="24">
+        <span id="texto-foto">Toca para adjuntar una imagen</span>
+      </label>
+      <input class="soporte__archivo" type="file" id="foto" name="foto" accept="image/*">
+
+      <button class="soporte__boton" type="submit">Enviar mensaje</button>
+    </form>
+
+  </main>
+  <script src="../js/contactar-soporte.js"></script>
+</body>
+</html>

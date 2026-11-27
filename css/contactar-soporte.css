@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ==========================================
+   Pantalla: Contactar soporte
+   ========================================== */
+.soporte {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #0f2a5c;
+  background: linear-gradient(180deg, #f4f6fd 0%, #e9ecf8 55%, #e3ddfd 85%, #c9d9fc 100%);
+}
+.soporte * { box-sizing: border-box; }
+
+.soporte__contenido {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  padding: 24px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ----- Cabecera ----- */
+.soporte__cabecera { display: flex; align-items: center; gap: 16px; }
+.soporte__cabecera h1 { margin: 0; font-size: 1.1rem; font-weight: 700; }
+
+.soporte__intro { margin: 24px 0 0; font-size: 0.85rem; }
+
+/* ----- Centro de ayuda ----- */
+.soporte__ayuda {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1.5px solid #0f2a5c;
+  border-radius: 12px;
+  color: #0f2a5c;
+  text-decoration: none;
+}
+.soporte__ayuda h2 { margin: 0 0 4px; font-size: 0.95rem; font-weight: 700; }
+.soporte__ayuda p { margin: 0; font-size: 0.75rem; line-height: 1.4; }
+
+.soporte__subtitulo { margin: 8px 0 0; font-size: 0.95rem; font-weight: 700; }
+
+/* ----- Formulario ----- */
+.soporte__formulario { display: flex; flex-direction: column; gap: 6px; }
+.soporte__etiqueta { margin-top: 8px; font-size: 0.8rem; }
+
+.soporte__campo {
+  width: 100%;
+  padding: 12px;
+  background: #ffffff;
+  border: 1.5px solid #0f2a5c;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #0f2a5c;
+}
+.soporte__campo--grande { min-height: 110px; resize: vertical; }
+.soporte__campo:focus { outline: 2px solid #3077e8; }
+
+/* ----- Adjuntar fotografía ----- */
+.soporte__adjuntar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1.5px dashed #3a5088;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.soporte__archivo { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.soporte__archivo:focus-visible + .soporte__boton { outline: 2px solid #3077e8; }
+
+/* ----- Botón enviar ----- */
+.soporte__boton {
+  margin-top: 20px;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  background: #3a5088;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.soporte__boton:disabled { opacity: 0.6; cursor: default; }
